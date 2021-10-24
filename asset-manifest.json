@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/movie-client/static/css/main.ee8c58a9.chunk.css",
+    "main.js": "/movie-client/static/js/main.ca2bf049.chunk.js",
+    "main.js.map": "/movie-client/static/js/main.ca2bf049.chunk.js.map",
+    "runtime-main.js": "/movie-client/static/js/runtime-main.7d0a097b.js",
+    "runtime-main.js.map": "/movie-client/static/js/runtime-main.7d0a097b.js.map",
+    "static/js/2.2d352645.chunk.js": "/movie-client/static/js/2.2d352645.chunk.js",
+    "static/js/2.2d352645.chunk.js.map": "/movie-client/static/js/2.2d352645.chunk.js.map",
+    "index.html": "/movie-client/index.html",
+    "service-worker.js": "/movie-client/service-worker.js",
+    "service-worker.js.map": "/movie-client/service-worker.js.map",
+    "static/css/main.ee8c58a9.chunk.css.map": "/movie-client/static/css/main.ee8c58a9.chunk.css.map",
+    "static/js/2.2d352645.chunk.js.LICENSE.txt": "/movie-client/static/js/2.2d352645.chunk.js.LICENSE.txt",
+    "static/media/fonts.css": "/movie-client/static/media/roboto-v27-latin-regular.9b78ea3b.woff"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.7d0a097b.js",
+    "static/js/2.2d352645.chunk.js",
+    "static/css/main.ee8c58a9.chunk.css",
+    "static/js/main.ca2bf049.chunk.js"
+  ]
+}
