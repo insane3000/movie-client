@@ -22,6 +22,8 @@ const Home = () => {
       <ReactPlayer
         url="https://www.mediafire.com/file/725l2aamowyv925/Jungle_Cruise.mp4/file"
         controls={true}
+        width="100%"
+        height="100%"
       />
     </HomeSt>
   );
