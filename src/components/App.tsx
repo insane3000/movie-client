@@ -15,6 +15,7 @@ import Error404 from "./Error404";
 // import Menu from "./organisms/Menu";
 // *Fonts
 import "fonts/fonts.css";
+import Movie from "./home/pages/Movie";
 // import FloatMenu from "./home/organisms/FloatMenu";
 
 const AppSt = styled.div`
@@ -39,7 +40,7 @@ function App() {
       <AppSt id="app">
         <Switch>
           <Route path="/" exact component={Home} />
-          {/* <Route path="/admin" component={Admin} /> */}
+          <Route path="/movie/:id" component={Movie} />
           <Route component={Error404} />
         </Switch>
       </AppSt>
