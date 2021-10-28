@@ -1,22 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import { HashRouter as Router, Switch, Route } from "react-router-dom";
-// *Redux
-// import { useSelector } from "react-redux";
-// import { showMenu } from "redux/actions/appAction";
 
-//* INTERFACE APP
-// import { StoreInterface } from "interfaces/storeTemplate";
 // *Components
-import Home from "./home/pages/Home";
-// import Admin from "./Admin/Admin";
+// import Home from "./home/pages/Home";
+import User from "./user/pages/User";
 
 import Error404 from "./Error404";
-// import Menu from "./organisms/Menu";
 // *Fonts
 import "fonts/fonts.css";
-import Movie from "./home/pages/Movie";
-// import FloatMenu from "./home/organisms/FloatMenu";
 
 const AppSt = styled.div`
   width: 100%;
@@ -39,8 +31,8 @@ function App() {
     <Router>
       <AppSt id="app">
         <Switch>
-          <Route path="/" exact component={Home} />
-          <Route path="/movie/:id" component={Movie} />
+          <Route path="/" exact component={User} />
+          {/* <Route path="/:id" component={User} /> */}
           <Route component={Error404} />
         </Switch>
       </AppSt>

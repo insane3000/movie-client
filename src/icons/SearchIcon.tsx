@@ -1,4 +1,4 @@
-import * as React from "react"
+import * as React from "react";
 
 function SvgComponent(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -9,15 +9,18 @@ function SvgComponent(props: React.SVGProps<SVGSVGElement>) {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <path
-        d="M10.5 2.5a3 3 0 013 3v2a3 3 0 11-6 0v-2a3 3 0 013-3zm7 14v-.728c0-3.187-3.686-5.272-7-5.272s-7 2.085-7 5.272v.728a1 1 0 001 1h12a1 1 0 001-1z"
+      <g
         fill="none"
+        fillRule="evenodd"
         stroke="currentColor"
         strokeLinecap="round"
         strokeLinejoin="round"
-      />
+      >
+        <circle cx={8.5} cy={8.5} r={5} />
+        <path d="M17.571 17.5L12 12" />
+      </g>
     </svg>
-  )
+  );
 }
 
-export default SvgComponent
+export default SvgComponent;

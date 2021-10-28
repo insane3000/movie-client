@@ -1,164 +1,33 @@
 import React from "react";
 import styled from "styled-components";
-import ReactPlayer from "react-player";
+// import ReactPlayer from "react-player";
+import Pattern from "img/pattern.png";
 const HomeSt = styled.div`
   width: 100%;
   height: 100%;
   color: white;
-  background: #1a1919;
+  background: #070707;
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
     display: flex;
     flex-direction: column;
-    justify-content: start;
+    justify-content: center;
     align-items: center;
     font-family: "Roboto 900";
     font-size: 4rem;
     padding: 1rem 0;
     overflow-y: scroll;
+    /* background-color: transparent; */
+    background-image: url(${Pattern});
+    background-size: 4.6875rem;
+    background-repeat: repeat;
+    background-attachment: fixed;
   }
 `;
 const Home = () => {
   return (
     <HomeSt>
-      <ReactPlayer
-        url={[
-          {
-            src: "https://www.mediafire.com/file/x72tc0zxugu7eym/S01_E1_%25C2%25BFQu%25C3%25A9_pasar%25C3%25ADa_si...-_Temporada_1_%25282021%2529.mp4/file",
-            type: "video/mp4",
-          },
-        ]}
-        controls={true}
-        config={{
-          file: {
-            attributes: {
-              controlsList: "nodownload",
-              onContextMenu: (e: any) => e.preventDefault(), //<- this is the important bit
-            },
-          },
-        }}
-      />
-      <ReactPlayer
-        url={[
-          {
-            src: "https://www.mediafire.com/file/pyhn5qb8rqnnmyd/S01_E2_%25C2%25BFQu%25C3%25A9_pasar%25C3%25ADa_si...-_Temporada_1_%25282021%2529.mp4/file",
-            type: "video/mp4",
-          },
-        ]}
-        controls={true}
-        config={{
-          file: {
-            attributes: {
-              controlsList: "nodownload",
-              onContextMenu: (e: any) => e.preventDefault(), //<- this is the important bit
-            },
-          },
-        }}
-      />
-      <ReactPlayer
-        url={[
-          {
-            src: "https://www.mediafire.com/file/qeii1i558rusys6/S01_E3_%25C2%25BFQu%25C3%25A9_pasar%25C3%25ADa_si...-_Temporada_1_%25282021%2529.mp4/file",
-            type: "video/mp4",
-          },
-        ]}
-        controls={true}
-        config={{
-          file: {
-            attributes: {
-              controlsList: "nodownload",
-              onContextMenu: (e: any) => e.preventDefault(), //<- this is the important bit
-            },
-          },
-        }}
-      />
-      <ReactPlayer
-        url={[
-          {
-            src: "https://www.mediafire.com/file/q3j71dui09tabwj/S01_E4_%25C2%25BFQu%25C3%25A9_pasar%25C3%25ADa_si...-_Temporada_1_%25282021%2529.mp4/file",
-            type: "video/mp4",
-          },
-        ]}
-        controls={true}
-        config={{
-          file: {
-            attributes: {
-              controlsList: "nodownload",
-              onContextMenu: (e: any) => e.preventDefault(), //<- this is the important bit
-            },
-          },
-        }}
-      />
-      <ReactPlayer
-        url={[
-          {
-            src: "https://www.mediafire.com/file/qrvn8ysofuqg5kn/S01_E5_%25C2%25BFQu%25C3%25A9_pasar%25C3%25ADa_si...-_Temporada_1_%25282021%2529.mp4/file",
-            type: "video/mp4",
-          },
-        ]}
-        controls={true}
-        config={{
-          file: {
-            attributes: {
-              controlsList: "nodownload",
-              onContextMenu: (e: any) => e.preventDefault(), //<- this is the important bit
-            },
-          },
-        }}
-      />
-
-      <ReactPlayer
-        url={[
-          {
-            src: "https://www.mediafire.com/file/rs90r9gv551ks6r/S01_E7_%25C2%25BFQu%25C3%25A9_pasar%25C3%25ADa_si...-_Temporada_1_%25282021%2529.mp4/file",
-            type: "video/mp4",
-          },
-        ]}
-        controls={true}
-        config={{
-          file: {
-            attributes: {
-              controlsList: "nodownload",
-              onContextMenu: (e: any) => e.preventDefault(), //<- this is the important bit
-            },
-          },
-        }}
-      />
-      <ReactPlayer
-        url={[
-          {
-            src: "https://www.mediafire.com/file/ox7llf7wohbckdq/S01_E8_%25C2%25BFQu%25C3%25A9_pasar%25C3%25ADa_si...-_Temporada_1_%25282021%2529.mp4/file",
-            type: "video/mp4",
-          },
-        ]}
-        controls={true}
-        config={{
-          file: {
-            attributes: {
-              controlsList: "nodownload",
-              onContextMenu: (e: any) => e.preventDefault(), //<- this is the important bit
-            },
-          },
-        }}
-      />
-
-      <ReactPlayer
-        url={[
-          {
-            src: "https://www.mediafire.com/file/gy0ajsxbc1x96py/S01_E9_%25C2%25BFQu%25C3%25A9_pasar%25C3%25ADa_si...-_Temporada_1_%25282021%2529.mp4/file",
-            type: "video/mp4",
-          },
-        ]}
-        controls={true}
-        config={{
-          file: {
-            attributes: {
-              controlsList: "nodownload",
-              onContextMenu: (e: any) => e.preventDefault(), //<- this is the important bit
-            },
-          },
-        }}
-      />
+      <h1>HOME</h1>
     </HomeSt>
   );
 };

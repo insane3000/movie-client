@@ -32,9 +32,9 @@ body{
 }
 // !Media query a partir de 568px  
 @media only screen and (min-width: 568px) {
-  html{
+  /* html{
     font-size: 8px;
-  }
+  } */
   *{
     // Chrome
         input[type="number"]::-webkit-outer-spin-button,
@@ -57,17 +57,22 @@ body{
           margin: 0;
         }
     // !Firefox
-      scrollbar-width: thin;
+    scrollbar-color: #acacac none; 
+  scrollbar-width: thin;
     // !Chrome
     &::-webkit-scrollbar {
       width: .5rem;
-      height: .5rem;
+      height: 0rem;
     }
     &::-webkit-scrollbar-track {
+      background: rgb(19, 18, 18);
+      background: rgb(14, 13, 13);
       background: none;
+
     }
     &::-webkit-scrollbar-thumb {
-      background: rgb(49, 49, 49);
+      background: rgb(124, 124, 124);
+      background: rgb(211, 211, 211);
       border-radius: 0.1rem;
     }
     &::-webkit-scrollbar-thumb:hover {
@@ -79,7 +84,7 @@ body{
     }
   }
 }
-// !Media query a partir de 768px  
+/* // !Media query a partir de 768px  
 @media only screen and (min-width: 768px) {
   html{
     font-size: 10px;
@@ -127,6 +132,6 @@ body{
   html{
     font-size:80px;
   }
-} 
+}  */
 `;
 export default GlobalStyle;
