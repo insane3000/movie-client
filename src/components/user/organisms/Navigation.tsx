@@ -76,7 +76,7 @@ const Navigation = () => {
   return (
     <NavigationSt>
       <Link className="title" to="/">
-        PLEX
+        MOVIE STORE CBBA
       </Link>
       <section className="ul">
         <Link className="li" to="/user">
