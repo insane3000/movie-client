@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/movie-client/static/css/main.ee8c58a9.chunk.css",
-    "main.js": "/movie-client/static/js/main.206d4287.chunk.js",
-    "main.js.map": "/movie-client/static/js/main.206d4287.chunk.js.map",
+    "main.js": "/movie-client/static/js/main.b5b9a976.chunk.js",
+    "main.js.map": "/movie-client/static/js/main.b5b9a976.chunk.js.map",
     "runtime-main.js": "/movie-client/static/js/runtime-main.7d0a097b.js",
     "runtime-main.js.map": "/movie-client/static/js/runtime-main.7d0a097b.js.map",
     "static/js/2.fb333afc.chunk.js": "/movie-client/static/js/2.fb333afc.chunk.js",
@@ -21,13 +21,12 @@
     "static/media/movie07.8b69f783.jpg": "/movie-client/static/media/movie07.8b69f783.jpg",
     "static/media/movie08.3be80880.jpg": "/movie-client/static/media/movie08.3be80880.jpg",
     "static/media/movie09.0d728088.jpg": "/movie-client/static/media/movie09.0d728088.jpg",
-    "static/media/movie10.a5e724bc.jpg": "/movie-client/static/media/movie10.a5e724bc.jpg",
     "static/media/fonts.css": "/movie-client/static/media/roboto-v27-latin-regular.9b78ea3b.woff"
   },
   "entrypoints": [
     "static/js/runtime-main.7d0a097b.js",
     "static/js/2.fb333afc.chunk.js",
     "static/css/main.ee8c58a9.chunk.css",
-    "static/js/main.206d4287.chunk.js"
+    "static/js/main.b5b9a976.chunk.js"
   ]
 }
