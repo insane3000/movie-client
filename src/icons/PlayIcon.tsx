@@ -9,13 +9,14 @@ function SvgComponent(props: React.SVGProps<SVGSVGElement>) {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth={2}
+      strokeWidth={1.5}
       strokeLinecap="round"
       strokeLinejoin="round"
-      className="prefix__feather prefix__feather-play"
+      className="prefix__feather prefix__feather-play-circle"
       {...props}
     >
-      <path d="M5 3l14 9-14 9V3z" />
+      <circle cx={12} cy={12} r={10} />
+      <path d="M10 8l6 4-6 4V8z" />
     </svg>
   )
 }
