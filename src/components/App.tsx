@@ -3,8 +3,8 @@ import styled from "styled-components";
 import { HashRouter as Router, Switch, Route } from "react-router-dom";
 
 // *Components
-// import Home from "./home/pages/Home";
-import User from "./user/pages/User";
+import Home from "./home/pages/Home";
+import Reseller from "./user/pages/Reseller";
 
 import Error404 from "./Error404";
 // *Fonts
@@ -17,8 +17,11 @@ const AppSt = styled.div`
   display: flex;
   justify-content: center;
   align-items: center; */
+
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
+    background: #080808;
+    background: linear-gradient(90deg, #0d0c13 0%, #120d25 100%);
   }
 `;
 
@@ -31,8 +34,8 @@ function App() {
     <Router>
       <AppSt id="app">
         <Switch>
-          <Route path="/" exact component={User} />
-          {/* <Route path="/:id" component={User} /> */}
+          <Route path="/" exact component={Home} />
+          <Route path="/reseller" component={Reseller} />
           <Route component={Error404} />
         </Switch>
       </AppSt>

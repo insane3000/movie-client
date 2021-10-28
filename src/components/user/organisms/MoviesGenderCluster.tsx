@@ -4,7 +4,7 @@ import styled from "styled-components";
 //*Icons
 import ArrowLeftIcon from "icons/ArrowLeftIcon";
 import ArrowRightIcon from "icons/ArrowRightIcon";
-import PlayICon from "icons/PlayIcon";
+// import PlayICon from "icons/PlayIcon";
 // *Images
 import movie01 from "img/posters/movie01.jpg";
 import movie02 from "img/posters/movie02.jpg";
@@ -16,6 +16,7 @@ import movie07 from "img/posters/movie07.jpg";
 import movie08 from "img/posters/movie08.jpg";
 import movie09 from "img/posters/movie09.jpg";
 import movie10 from "img/posters/movie10.jpg";
+import play from "img/play.png";
 const MoviesGenderSt = styled.div`
   width: 100%;
   height: 100%;
@@ -101,8 +102,12 @@ const MoviesGenderSt = styled.div`
             transition: 0.1s;
             position: absolute;
             top: 0;
-            background: rgb(0,0,0);
-background: linear-gradient(0deg, rgba(0,0,0,0.969625350140056) 0%, rgba(253,187,45,0) 100%);
+            background: rgb(0, 0, 0);
+            background: linear-gradient(
+              0deg,
+              rgba(0, 0, 0, 0.969625350140056) 0%,
+              rgba(253, 187, 45, 0) 100%
+            );
             display: none;
             .rating {
               position: absolute;
@@ -117,9 +122,13 @@ background: linear-gradient(0deg, rgba(0,0,0,0.969625350140056) 0%, rgba(253,187
               }
             }
             .play-icon {
+              width: 5rem;
+              width: 5rem;
               position: absolute;
               font-size: 5rem;
               color: white;
+              -webkit-filter: invert(100%);
+              filter: invert(100%);
               /* text-shadow: 20px 20px 10px #000000; */
             }
           }
@@ -143,7 +152,7 @@ const MoviesGender = (props: Props) => {
   return (
     <MoviesGenderSt>
       <div className="subtitle">
-        <Link className="text" to="/users/news">
+        <Link className="text" to="/reseller/genre/asdasd">
           {props.subtitle}
         </Link>
       </div>
@@ -152,94 +161,94 @@ const MoviesGender = (props: Props) => {
           <ArrowLeftIcon className="sysIconArrow" />
         </section>
         <div ref={moviesGender} className="list-movies-gender">
-          <Link className="toMovie" to="/">
+          <Link className="toMovie" to={`/reseller/movie/a123c12313123cc`}>
             <img className="poster" src={movie01} alt="Movie" loading="lazy" />
             <div className="gradient">
               <span className="rating">
                 6.8<span className="barra">/10</span>
               </span>
-              <PlayICon className="play-icon" />
+              <img className="play-icon" src={play} alt="play-icon" />
             </div>
           </Link>
-          <Link className="toMovie" to="/">
+          <Link className="toMovie" to={`/reseller/movie/a123c12313123cc`}>
             <img className="poster" src={movie02} alt="Movie" loading="lazy" />
             <div className="gradient">
               <span className="rating">
                 5.8<span className="barra">/10</span>
               </span>
-              <PlayICon className="play-icon" />
+              <img className="play-icon" src={play} alt="play-icon" />
             </div>
           </Link>
-          <Link className="toMovie" to="/">
+          <Link className="toMovie" to={`/reseller/movie/a123c12313123cc`}>
             <img className="poster" src={movie03} alt="Movie" loading="lazy" />
             <div className="gradient">
               <span className="rating">
                 6.8<span className="barra">/10</span>
               </span>
-              <PlayICon className="play-icon" />
+              <img className="play-icon" src={play} alt="play-icon" />
             </div>
           </Link>
-          <Link className="toMovie" to="/">
+          <Link className="toMovie" to={`/reseller/movie/a123c12313123cc`}>
             <img className="poster" src={movie04} alt="Movie" loading="lazy" />
             <div className="gradient">
               <span className="rating">
                 2.8<span className="barra">/10</span>
               </span>
-              <PlayICon className="play-icon" />
+              <img className="play-icon" src={play} alt="play-icon" />
             </div>
           </Link>
-          <Link className="toMovie" to="/">
+          <Link className="toMovie" to={`/reseller/movie/a123c12313123cc`}>
             <img className="poster" src={movie05} alt="Movie" loading="lazy" />
             <div className="gradient">
               <span className="rating">
                 5.8<span className="barra">/10</span>
               </span>
-              <PlayICon className="play-icon" />
+              <img className="play-icon" src={play} alt="play-icon" />
             </div>
           </Link>
-          <Link className="toMovie" to="/">
+          <Link className="toMovie" to={`/reseller/movie/a123c12313123cc`}>
             <img className="poster" src={movie06} alt="Movie" loading="lazy" />
             <div className="gradient">
               <span className="rating">
                 6.8<span className="barra">/10</span>
               </span>
-              <PlayICon className="play-icon" />
+              <img className="play-icon" src={play} alt="play-icon" />
             </div>
           </Link>
-          <Link className="toMovie" to="/">
+          <Link className="toMovie" to={`/reseller/movie/a123c12313123cc`}>
             <img className="poster" src={movie07} alt="Movie" loading="lazy" />
             <div className="gradient">
               <span className="rating">
                 5.5<span className="barra">/10</span>
               </span>
-              <PlayICon className="play-icon" />
+              <img className="play-icon" src={play} alt="play-icon" />
             </div>
           </Link>
-          <Link className="toMovie" to="/">
+          <Link className="toMovie" to={`/reseller/movie/a123c12313123cc`}>
             <img className="poster" src={movie08} alt="Movie" loading="lazy" />
             <div className="gradient">
               <span className="rating">
                 3.8<span className="barra">/10</span>
               </span>
-              <PlayICon className="play-icon" />
+              <img className="play-icon" src={play} alt="play-icon" />
             </div>
           </Link>
-          <Link className="toMovie" to="/">
+          <Link className="toMovie" to={`/reseller/movie/a123c12313123cc`}>
             <img className="poster" src={movie09} alt="Movie" loading="lazy" />
             <div className="gradient">
               <span className="rating">
                 1.8<span className="barra">/10</span>
               </span>
-              <PlayICon className="play-icon" />
+              <img className="play-icon" src={play} alt="play-icon" />
             </div>
           </Link>
-          <Link className="toMovie" to="/">
+          <Link className="toMovie" to={`/reseller/movie/a123c12313123cc`}>
             <img className="poster" src={movie10} alt="Movie" loading="lazy" />
             <div className="gradient">
               <span className="rating">
                 6.8<span className="barra">/10</span>
               </span>
-              <PlayICon className="play-icon" />
+              <img className="play-icon" src={play} alt="play-icon" />
             </div>
           </Link>
         </div>

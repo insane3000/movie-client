@@ -12,11 +12,10 @@ function SvgComponent(props: React.SVGProps<SVGSVGElement>) {
       strokeWidth={1.5}
       strokeLinecap="round"
       strokeLinejoin="round"
-      className="prefix__feather prefix__feather-play-circle"
+      className="prefix__feather prefix__feather-play"
       {...props}
     >
-      <circle cx={12} cy={12} r={10} />
-      <path d="M10 8l6 4-6 4V8z" />
+      <path d="M5 3l14 9-14 9V3z" />
     </svg>
   )
 }

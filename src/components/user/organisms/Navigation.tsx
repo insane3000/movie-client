@@ -76,22 +76,22 @@ const Navigation = () => {
   return (
     <NavigationSt>
       <Link className="title" to="/">
-        MOVIE STORE CBBA
+        PLEX
       </Link>
       <section className="ul">
-        <Link className="li" to="/user">
+        <Link className="li" to="/reseller">
           Home
         </Link>
-        <Link className="li" to="/series">
+        <Link className="li" to="/reseller/series/all-series">
           Series
         </Link>
-        <Link className="li" to="/movies">
+        <Link className="li" to="/reseller/movies/all-movies">
           Películas
         </Link>
-        <Link className="li" to="/news">
+        <Link className="li" to="/reseller/premieres">
           Estrenos
         </Link>
-        <Link className="li" to="/mylist">
+        <Link className="li" to="/reseller/mylist">
           Mi lista
         </Link>
       </section>
