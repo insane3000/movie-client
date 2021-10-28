@@ -1,23 +1,33 @@
 {
   "files": {
     "main.css": "/movie-client/static/css/main.ee8c58a9.chunk.css",
-    "main.js": "/movie-client/static/js/main.0f661a6c.chunk.js",
-    "main.js.map": "/movie-client/static/js/main.0f661a6c.chunk.js.map",
+    "main.js": "/movie-client/static/js/main.027fc43a.chunk.js",
+    "main.js.map": "/movie-client/static/js/main.027fc43a.chunk.js.map",
     "runtime-main.js": "/movie-client/static/js/runtime-main.7d0a097b.js",
     "runtime-main.js.map": "/movie-client/static/js/runtime-main.7d0a097b.js.map",
-    "static/js/2.3b33d1e4.chunk.js": "/movie-client/static/js/2.3b33d1e4.chunk.js",
-    "static/js/2.3b33d1e4.chunk.js.map": "/movie-client/static/js/2.3b33d1e4.chunk.js.map",
+    "static/js/2.489b346c.chunk.js": "/movie-client/static/js/2.489b346c.chunk.js",
+    "static/js/2.489b346c.chunk.js.map": "/movie-client/static/js/2.489b346c.chunk.js.map",
     "index.html": "/movie-client/index.html",
     "service-worker.js": "/movie-client/service-worker.js",
     "service-worker.js.map": "/movie-client/service-worker.js.map",
     "static/css/main.ee8c58a9.chunk.css.map": "/movie-client/static/css/main.ee8c58a9.chunk.css.map",
-    "static/js/2.3b33d1e4.chunk.js.LICENSE.txt": "/movie-client/static/js/2.3b33d1e4.chunk.js.LICENSE.txt",
+    "static/js/2.489b346c.chunk.js.LICENSE.txt": "/movie-client/static/js/2.489b346c.chunk.js.LICENSE.txt",
+    "static/media/movie01.e65dd848.jpg": "/movie-client/static/media/movie01.e65dd848.jpg",
+    "static/media/movie02.fcb48d20.jpg": "/movie-client/static/media/movie02.fcb48d20.jpg",
+    "static/media/movie03.41fb98a4.jpg": "/movie-client/static/media/movie03.41fb98a4.jpg",
+    "static/media/movie04.e1844c9f.jpg": "/movie-client/static/media/movie04.e1844c9f.jpg",
+    "static/media/movie05.2f5a7e34.jpg": "/movie-client/static/media/movie05.2f5a7e34.jpg",
+    "static/media/movie06.255fff68.png": "/movie-client/static/media/movie06.255fff68.png",
+    "static/media/movie07.8b69f783.jpg": "/movie-client/static/media/movie07.8b69f783.jpg",
+    "static/media/movie08.3be80880.jpg": "/movie-client/static/media/movie08.3be80880.jpg",
+    "static/media/movie09.0d728088.jpg": "/movie-client/static/media/movie09.0d728088.jpg",
+    "static/media/movie10.a5e724bc.jpg": "/movie-client/static/media/movie10.a5e724bc.jpg",
     "static/media/fonts.css": "/movie-client/static/media/roboto-v27-latin-regular.9b78ea3b.woff"
   },
   "entrypoints": [
     "static/js/runtime-main.7d0a097b.js",
-    "static/js/2.3b33d1e4.chunk.js",
+    "static/js/2.489b346c.chunk.js",
     "static/css/main.ee8c58a9.chunk.css",
-    "static/js/main.0f661a6c.chunk.js"
+    "static/js/main.027fc43a.chunk.js"
   ]
 }
