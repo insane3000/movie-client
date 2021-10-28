@@ -15,7 +15,7 @@ import movie06 from "img/posters/movie06.png";
 import movie07 from "img/posters/movie07.jpg";
 import movie08 from "img/posters/movie08.jpg";
 import movie09 from "img/posters/movie09.jpg";
-import movie10 from "img/posters/movie10.jpg";
+// import movie10 from "img/posters/movie10.jpg";
 import play from "img/play.png";
 const MoviesGenderSt = styled.div`
   width: 100%;
@@ -114,8 +114,8 @@ const MoviesGenderSt = styled.div`
               bottom: 1rem;
               font-family: "Roboto 900";
               font-size: 4rem;
-              color: white;
               text-shadow: 2px 2px 3px #000000;
+              color: white;
               .barra {
                 font-family: "Roboto 900";
                 font-size: 2rem;
@@ -132,6 +132,22 @@ const MoviesGenderSt = styled.div`
               /* text-shadow: 20px 20px 10px #000000; */
             }
           }
+          .end-cluster {
+            background: #0c0613;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 1rem;
+            .text {
+              font-family: "Roboto 300";
+              font-size: 2rem;
+              color: white;
+              text-align:center;
+
+            }
+          }
         }
       }
     }
@@ -139,6 +155,7 @@ const MoviesGenderSt = styled.div`
 `;
 interface Props {
   subtitle: string;
+  text:string
 }
 const MoviesGender = (props: Props) => {
   const moviesGender = useRef<any>();
@@ -242,13 +259,11 @@ const MoviesGender = (props: Props) => {
               <img className="play-icon" src={play} alt="play-icon" />
             </div>
           </Link>
-          <Link className="toMovie" to={`/reseller/movie/a123c12313123cc`}>
-            <img className="poster" src={movie10} alt="Movie" loading="lazy" />
-            <div className="gradient">
-              <span className="rating">
-                6.8<span className="barra">/10</span>
-              </span>
-              <img className="play-icon" src={play} alt="play-icon" />
+          <Link className="toMovie" to={`/reseller/genre/asdasd`}>
+            {/* <img className="poster" src={movie10} alt="Movie" loading="lazy" /> */}
+            <div className="end-cluster">
+              <span className="text">{props.text}</span>
+              {/* <img className="play-icon" src={play} alt="play-icon" /> */}
             </div>
           </Link>
         </div>

@@ -1,8 +1,6 @@
 import styled from "styled-components";
 // import ReactPlayer from "react-player";
-import Pattern from "img/pattern.png";
 import MoviesGenderCluster from "../organisms/MoviesGenderCluster";
-import Navigation from "../organisms/Navigation";
 const HomeResellerSt = styled.div`
   width: 100%;
   height: 100%;
@@ -17,10 +15,13 @@ const HomeResellerSt = styled.div`
 const HomeReseller = () => {
   return (
     <HomeResellerSt>
-      <MoviesGenderCluster subtitle="Estrenos" />
-      <MoviesGenderCluster subtitle="Accion" />
-      <MoviesGenderCluster subtitle="Comedia" />
-      <MoviesGenderCluster subtitle="Terror" />
+      <MoviesGenderCluster
+        subtitle="Estrenos"
+        text="Ir a todos los estrenos."
+      />
+      <MoviesGenderCluster subtitle="Accion" text="Ir a accion." />
+      <MoviesGenderCluster subtitle="Comedia" text="Ir a comedia." />
+      <MoviesGenderCluster subtitle="Terror" text="Ir a terror." />
     </HomeResellerSt>
   );
 };
