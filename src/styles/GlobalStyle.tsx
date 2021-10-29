@@ -65,7 +65,13 @@ body{
     }
   }
 }
-/* // !Media query a partir de 768px  
+// !Media query a partir de 768px  
+@media only screen and (max-width: 768px) {
+  html{
+    font-size: 8px;
+  }
+}
+// !Media query a partir de 768px  
 @media only screen and (min-width: 768px) {
   html{
     font-size: 10px;
@@ -113,6 +119,6 @@ body{
   html{
     font-size:80px;
   }
-}  */
+} 
 `;
 export default GlobalStyle;

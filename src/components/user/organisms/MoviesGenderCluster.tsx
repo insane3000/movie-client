@@ -20,13 +20,82 @@ import movie09 from "img/posters/movie09.jpg";
 import MoviePoster from "../molecules/MoviePoster";
 const MoviesGenderSt = styled.div`
   width: 100%;
-  height: 100%;
-  color: white;
+  height: 33rem;
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+  .subtitle {
+    width: 100%;
+    height: 3rem;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    .text {
+      margin-left: 0.5rem;
+      font-family: "Roboto 700";
+      font-size: 2rem;
+      text-decoration: none;
+      color: white;
+    }
+  }
+  .movies-gender {
+    width: 100%;
+    height: calc(100% - 3rem);
+    display: grid;
+    /* grid-template-columns: 4rem calc(100% - 8rem) 4rem; */
+    grid-template-columns: 100%;
+
+    .arrow {
+      background: #00000092;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      &:hover {
+        .sysIconArrow {
+          color: white;
+        }
+      }
+      .sysIconArrow {
+        color: #ffffff2f;
+        width: 100%;
+        height: 3rem;
+      }
+    }
+    .arrow-none {
+      display: none;
+    }
+    .list-movies-gender {
+      width: 100%;
+      height: 100%;
+      display: grid;
+      grid-template-columns: repeat(10, 20rem);
+      grid-template-rows: 100%;
+      gap: 0.5rem;
+      overflow-x: scroll;
+      overflow-y: hidden;
+      .toGenre {
+        background: #00000030;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: "Roboto 100";
+        font-size: 2rem;
+        text-decoration: none;
+        color: #ffffff6c;
+        padding: 0 2rem;
+        text-align: center;
+        &:hover {
+          background: #120825;
+          color: white;
+        }
+      }
+    }
+  }
   /* margin-top: 1rem; */
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
     width: 100%;
-    height: 35rem;
+    height: 33rem;
     margin-top: 4rem;
     margin-bottom: 4rem;
     .subtitle {
@@ -65,6 +134,9 @@ const MoviesGenderSt = styled.div`
           height: 3rem;
         }
       }
+      .arrow-none {
+        display: flex;
+      }
       .list-movies-gender {
         width: 100%;
         height: 100%;
@@ -85,7 +157,7 @@ const MoviesGenderSt = styled.div`
           color: #ffffff6c;
           padding: 0 2rem;
           text-align: center;
-          &:hover{
+          &:hover {
             background: #120825;
             color: white;
           }
@@ -115,7 +187,7 @@ const MoviesGender = (props: Props) => {
         </Link>
       </div>
       <div className="movies-gender">
-        <section className="arrow" onClick={ScrollLeft}>
+        <section className="arrow arrow-none" onClick={ScrollLeft}>
           <ArrowLeftIcon className="sysIconArrow" />
         </section>
         <div ref={moviesGender} className="list-movies-gender">
@@ -135,7 +207,7 @@ const MoviesGender = (props: Props) => {
             </div>
           </Link>
         </div>
-        <section className="arrow" onClick={ScrollRight}>
+        <section className="arrow arrow-none" onClick={ScrollRight}>
           <ArrowRightIcon className="sysIconArrow" />
         </section>
       </div>

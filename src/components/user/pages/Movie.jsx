@@ -3,7 +3,76 @@ import ReactJWPlayer from "react-jw-player";
 import movie01 from "img/posters/movie01.jpg";
 const MovieSt = styled.div`
   width: 100%;
-  height: 100%;
+  height: auto;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  .container-poster-data {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    margin-top: 02rem;
+    .container-poster {
+      width: 30rem;
+      height: 42em;
+      .img-movie {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+    .container-data {
+      width: 90%;
+      height: auto;
+      padding: 0rem 0rem;
+      .title-movie {
+        font-family: "Roboto 900";
+        font-size: 5rem;
+        margin-bottom: 0rem;
+        text-align: center;
+      }
+      .year {
+        font-family: "Roboto 100";
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+        text-align: center;
+      }
+
+      .rate {
+        font-family: "Roboto regular";
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+        text-align: center;
+        span {
+          color: #ff0062;
+        }
+      }
+      .actors {
+        font-family: "Roboto regular";
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+        span {
+          color: #ff0062;
+        }
+      }
+      .synopsis {
+        font-family: "Roboto 300";
+        font-size: 1.3rem;
+      }
+    }
+  }
+
+  .player {
+    width: 90%;
+    height: auto;
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+  }
   color: white;
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
@@ -15,7 +84,7 @@ const MovieSt = styled.div`
     justify-content: start;
     align-items: center;
     .container-poster-data {
-      width: 80rem;
+      width: 75%;
       height: auto;
       display: flex;
       flex-direction: row;
@@ -31,7 +100,7 @@ const MovieSt = styled.div`
         }
       }
       .container-data {
-        width: 60rem;
+        width: calc(100% - 20rem);
         height: 100%;
         padding: 1rem 2rem;
 
@@ -39,17 +108,20 @@ const MovieSt = styled.div`
           font-family: "Roboto 900";
           font-size: 5rem;
           margin-bottom: 0.5rem;
+          text-align: left;
         }
         .year {
           font-family: "Roboto 100";
           font-size: 1.2rem;
           margin-bottom: 0.5rem;
+          text-align: left;
         }
 
         .rate {
           font-family: "Roboto regular";
           font-size: 1.5rem;
           margin-bottom: 0.5rem;
+          text-align: left;
           span {
             color: #ff0062;
           }
@@ -70,8 +142,8 @@ const MovieSt = styled.div`
     }
 
     .player {
-      width: 85.375rem;
-      height: 48rem;
+      width: 75%;
+      height: auto;
       margin-bottom: 2rem;
       margin-top: 2rem;
     }

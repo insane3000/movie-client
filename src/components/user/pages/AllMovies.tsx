@@ -15,27 +15,39 @@ import movie10 from "img/posters/movie10.jpg";
 const AllMoviesSt = styled.div`
   width: 100%;
   height: 100%;
-  color: white;
+
+  .container-movies {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    /* grid-template-columns: repeat(2, 20rem); */
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 20rem));
+
+    grid-auto-rows: 30rem;
+    justify-content: center;
+    align-content: flex-start;
+    gap: 1rem;
+    overflow-y: scroll;
+    padding: 2rem 2rem;
+  }
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
     width: 100%;
     height: 100%;
+
     .container-movies {
       width: 100%;
       height: 100%;
       display: grid;
-      grid-template-columns: repeat(4, 20rem);
+      /* grid-template-columns: repeat(4, 20rem); */
+
+      grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
       grid-auto-rows: 35rem;
       justify-content: center;
       align-content: flex-start;
       gap: 1rem;
       overflow-y: scroll;
-      padding: 2rem 0;
-    }
-    .pagination {
-      width: 100%;
-      height: 5rem;
-      background: red;
+      padding: 2rem 10rem;
     }
   }
 `;

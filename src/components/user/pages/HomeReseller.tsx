@@ -5,6 +5,8 @@ const HomeResellerSt = styled.div`
   width: 100%;
   height: 100%;
   color: white;
+  overflow-y: scroll;
+    overflow-x: hidden;
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
     overflow-y: scroll;

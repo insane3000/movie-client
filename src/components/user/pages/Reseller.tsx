@@ -14,6 +14,11 @@ import Movie from "./Movie";
 const ResellerSt = styled.div`
   width: 100%;
   height: 100%;
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: 5rem calc(100% - 5rem);
+  justify-content: center;
+  align-content: center;
   color: white;
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {

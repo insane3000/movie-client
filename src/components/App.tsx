@@ -17,7 +17,8 @@ const AppSt = styled.div`
   display: flex;
   justify-content: center;
   align-items: center; */
-
+  background: #080808;
+    background: linear-gradient(90deg, #0d0c13 0%, #120d25 100%);
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
     background: #080808;
