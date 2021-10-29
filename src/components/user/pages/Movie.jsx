@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import ReactJWPlayer from "react-jw-player";
 import movie01 from "img/posters/movie01.jpg";
+import { useRef } from "react";
 const MovieSt = styled.div`
   width: 100%;
   height: auto;
@@ -149,8 +150,13 @@ const MovieSt = styled.div`
     }
   }
 `;
-
 const Movie = () => {
+  const setup = {
+    playlist: "https://cdn.jwplayer.com/v2/playlists/1a2Bc3d4",
+    height: 360,
+    width: 640,
+    cast: {},
+  };
   return (
     <MovieSt>
       <div className="container-poster-data">
@@ -180,10 +186,16 @@ const Movie = () => {
       <ReactJWPlayer
         className="player"
         playerId="jw-player"
-        playerScript="https://cdn.jwplayer.com/libraries/KLYWXiec.js"
+        playerScript="https://content.jwplatform.com/libraries/KB5zFt7A.js"
         // playlist={playlist}
         file="https://www.mediafire.com/file/k9ekfwvvj11y8jd/Muerte_instant%25C3%25A1nea.mp4"
         onBeforePlay={() => console.log("onBeforePlay fired!")}
+        image={movie01}
+        customProps={{
+          // playbackRateControls: [1, 1.25, 1.5],
+          autostart: false,
+          cast: {},
+        }}
       />
     </MovieSt>
   );
