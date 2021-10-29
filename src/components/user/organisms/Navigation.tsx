@@ -91,9 +91,9 @@ const Navigation = () => {
         <Link className="li" to="/reseller/premieres">
           Estrenos
         </Link>
-        <Link className="li" to="/reseller/mylist">
+        {/* <Link className="li" to="/reseller/mylist">
           Mi lista
-        </Link>
+        </Link> */}
       </section>
       <div className="buttons-right">
         <SearchIcon className="search" />

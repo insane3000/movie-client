@@ -4,12 +4,12 @@ import { Switch, Route } from "react-router-dom";
 import HomeReseller from "./HomeReseller";
 import AllMovies from "./AllMovies";
 import AllSeries from "./AllSeries";
-import Movie from "./Movie";
 import Premieres from "./Premieres";
-import Mylist from "./Mylist";
+// import Mylist from "./Mylist";
 import ListMoviesGenre from "./ListMoviesGenre";
 import Navigation from "../organisms/Navigation";
 import styled from "styled-components";
+import Movie from "./Movie";
 
 const ResellerSt = styled.div`
   width: 100%;
@@ -17,9 +17,13 @@ const ResellerSt = styled.div`
   color: white;
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
+    width: 100%;
+    height: 100%;
     display: grid;
     grid-template-columns: 100%;
     grid-template-rows: 5rem calc(100% - 5rem);
+    justify-content: center;
+    align-content: center;
   }
 `;
 const Reseller = () => {
@@ -29,11 +33,13 @@ const Reseller = () => {
       <Switch>
         <Route path="/reseller" exact component={HomeReseller} />
         <Route path="/reseller/movies/all-movies" component={AllMovies} />
+        {/* <Route path="/reseller/movie/:id" component={Movie} /> */}
         <Route path="/reseller/movie/:id" component={Movie} />
+
         <Route path="/reseller/genre/:genre" component={ListMoviesGenre} />
         <Route path="/reseller/series/all-series" component={AllSeries} />
         <Route path="/reseller/premieres" component={Premieres} />
-        <Route path="/reseller/mylist" component={Mylist} />
+        {/* <Route path="/reseller/mylist" component={Mylist} /> */}
         <Route component={Error404} />
       </Switch>
     </ResellerSt>

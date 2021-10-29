@@ -36,26 +36,7 @@ body{
     font-size: 8px;
   } */
   *{
-    // Chrome
-        input[type="number"]::-webkit-outer-spin-button,
-        input[type="number"]::-webkit-inner-spin-button {
-          -webkit-appearance: none;
-          margin: 0;
-        }
-        //Firefox:
-        input[type="number"] {
-          -moz-appearance: textfield;
-        }
-        input[type="number"]:hover,
-        input[type="number"]:focus {
-          -moz-appearance: number-input;
-        }
-        //Other
-        input[type="number"]::-webkit-inner-spin-button,
-        input[type="number"]::-webkit-outer-spin-button {
-          -webkit-appearance: none;
-          margin: 0;
-        }
+    
     // !Firefox
     scrollbar-color: #acacac none; 
   scrollbar-width: thin;
