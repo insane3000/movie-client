@@ -1,7 +1,10 @@
 import styled from "styled-components";
 import ReactJWPlayer from "react-jw-player";
-import movie01 from "img/posters/movie01.jpg";
-import { useRef } from "react";
+import MoviesGenderCluster from "../organisms/MoviesGenderCluster";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import SpinnerImg from "../atoms/SpinnerImg";
+import { useParams } from "react-router";
 const MovieSt = styled.div`
   width: 100%;
   height: auto;
@@ -39,31 +42,35 @@ const MovieSt = styled.div`
       }
       .year {
         font-family: "Roboto 100";
-        font-size: 1.2rem;
+        font-size: 1.5rem;
         margin-bottom: 0.5rem;
         text-align: center;
       }
 
       .rate {
-        font-family: "Roboto regular";
-        font-size: 1.5rem;
+        font-family: "Roboto 900";
+        font-size: 2rem;
         margin-bottom: 0.5rem;
         text-align: center;
         span {
           color: #ff0062;
+          font-family: "Roboto 900";
+          font-size: 2rem;
         }
       }
       .actors {
-        font-family: "Roboto regular";
+        font-family: "Roboto 900";
         font-size: 1.5rem;
         margin-bottom: 0.5rem;
         span {
           color: #ff0062;
+          font-family: "Roboto 900";
+          font-size: 1.5rem;
         }
       }
       .synopsis {
         font-family: "Roboto 300";
-        font-size: 1.3rem;
+        font-size: 1.5rem;
       }
     }
   }
@@ -94,6 +101,7 @@ const MovieSt = styled.div`
       .container-poster {
         width: 20rem;
         height: 32em;
+        position: relative;
         .img-movie {
           width: 100%;
           height: 100%;
@@ -119,20 +127,24 @@ const MovieSt = styled.div`
         }
 
         .rate {
-          font-family: "Roboto regular";
+          font-family: "Roboto 900";
           font-size: 1.5rem;
           margin-bottom: 0.5rem;
           text-align: left;
           span {
             color: #ff0062;
+            font-family: "Roboto 900";
+            font-size: 1.5rem;
           }
         }
         .actors {
-          font-family: "Roboto regular";
+          font-family: "Roboto 900";
           font-size: 1.5rem;
           margin-bottom: 0.5rem;
           span {
             color: #ff0062;
+            font-family: "Roboto 900";
+            font-size: 1.5rem;
           }
         }
         .synopsis {
@@ -142,61 +154,101 @@ const MovieSt = styled.div`
       }
     }
 
-    .player {
+    .player-container {
       width: 75%;
       height: auto;
-      margin-bottom: 2rem;
+      /* margin-bottom: 2rem; */
       margin-top: 2rem;
+      /* background: red; */
+      .player {
+        width: 100%;
+        height: 100%;
+      }
     }
   }
 `;
+
+// interface Params {
+//   id: string;
+//   // pais: string;
+// }
+const movieTemplate = {
+  id: "",
+  title: "",
+  rating: 0,
+  year: "",
+  genre: "",
+  time: "",
+  actors: "",
+  synopsis: "",
+  link: "",
+  image: "",
+};
 const Movie = () => {
-  const setup = {
-    playlist: "https://cdn.jwplayer.com/v2/playlists/1a2Bc3d4",
-    height: 360,
-    width: 640,
-    cast: {},
-  };
+  const params = useParams();
+  // const params = useParams<Params>();
+  const [state, setState] = useState(movieTemplate);
+  const [imageLoad, setImageLoad] = useState(false);
+  const modifyLink = state.link?.split(".mp4")[0];
+
+  useEffect(() => {
+    const fetchData = () => {
+      axios
+        .get(`http://192.168.0.148:5000/book/${params.id}`)
+        .then(function (response) {
+          setState(response.data);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    };
+    fetchData();
+  }, [params.id]);
   return (
     <MovieSt>
       <div className="container-poster-data">
         <div className="container-poster">
-          <img className="img-movie" src={movie01} alt="" />
+          <img
+            className="img-movie"
+            src={state.image}
+            alt="poster movie"
+            onLoad={() => setImageLoad(!imageLoad)}
+          />
+          {!imageLoad && <SpinnerImg />}
         </div>
         <div className="container-data">
-          <h2 className="title-movie">Dune</h2>
-          <h3 className="year">2021 • Acción, Aventura, Drama • 2h 35m</h3>
+          <h2 className="title-movie">{state.title}</h2>
+          <h3 className="year">
+            {state.year} • {state.genre} • {state.time}
+          </h3>
           <h3 className="rate">
-            <span>Calificación:</span> 7.2
+            <span>Calificación:</span> {state.rating}
           </h3>
           <h3 className="actors">
-            <span>Actores:</span> Babs Olusanmokun, Balázs Megyeri, Benjamin
-            Clémentine, Björn Freiberg,
+            <span>Actores:</span> {state.actors}
           </h3>
-          <span className="synopsis">
-            El hijo de una familia noble trata de vengarse de la muerte de su
-            padre al mismo tiempo que salva un planeta rico en especias que se
-            le encomienda proteger. Nueva adaptación al cine de las novelas de
-            Frank Herbert, que ya fueron trasladadas a la gran pantalla por
-            David Lynch en 1984.
-          </span>
+          <span className="synopsis">{state.synopsis}</span>
         </div>
       </div>
 
-      <ReactJWPlayer
-        className="player"
-        playerId="jw-player"
-        playerScript="https://content.jwplatform.com/libraries/KB5zFt7A.js"
-        // playlist={playlist}
-        file="https://www.mediafire.com/file/k9ekfwvvj11y8jd/Muerte_instant%25C3%25A1nea.mp4"
-        onBeforePlay={() => console.log("onBeforePlay fired!")}
-        image={movie01}
-        customProps={{
-          // playbackRateControls: [1, 1.25, 1.5],
-          autostart: false,
-          cast: {},
-        }}
-      />
+      <div className="player-container">
+        <ReactJWPlayer
+          className="player"
+          playerId="jw-player"
+          playerScript="https://content.jwplatform.com/libraries/KB5zFt7A.js"
+          // playlist={playlist}
+          file={`${modifyLink}.mp4`}
+          onBeforePlay={() => console.log("onBeforePlay fired!")}
+          image={state.image}
+          type="mp4"
+          customProps={{
+            // playbackRateControls: [1, 1.25, 1.5],
+            autostart: false,
+            cast: {},
+          }}
+        />
+      </div>
+      <MoviesGenderCluster subtitle="Ver mas" text="Ver todo." />
     </MovieSt>
   );
 };

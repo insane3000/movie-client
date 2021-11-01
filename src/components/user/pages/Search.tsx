@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import MoviePoster from "../molecules/MoviePoster";
-
-import axios from "axios";
-const AllMoviesSt = styled.div`
+import { useSelector } from "react-redux";
+import { StoreInterface } from "interfaces/storeTemplate";
+const SearchSt = styled.div`
   width: 100%;
   height: 100%;
 
@@ -40,50 +39,29 @@ const AllMoviesSt = styled.div`
       overflow-y: scroll;
       padding: 2rem 10rem;
     }
+    .alertEmptyMovies {
+      font-family: "Roboto 900";
+      font-size: 2rem;
+    }
   }
 `;
-interface MovieIT {
-  _id: "";
-  title: "";
-  rating: 0;
-  year: "";
-  genre: "";
-  time: "";
-  actors: "";
-  synopsis: "";
-  link: "";
-  image: "";
-}
-type Movies = [MovieIT];
-const ListMoviesGenre = () => {
-  const year = new Date().getFullYear();
 
-  const [state, setState] = useState<Movies>();
-  // console.log(state);
-  const fetchData = () => {
-    axios
-      .get(`http://192.168.0.148:5000/year/${year}`)
-      .then(function (response: any) {
-        setState(response.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-        // history.push(`/admin/login`);
-      });
-  };
-  useEffect(() => {
-    fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+const Search = () => {
+  const app = useSelector((store: StoreInterface) => store.app);
+
   return (
-    <AllMoviesSt>
+    <SearchSt>
       <div className="container-movies">
-        {state?.map((i) => (
-          <MoviePoster key={i._id} img={i.image} id={i._id} />
-        ))}
+        {app.search.length !== 0 ? (
+          app.search.map(
+            (i) => i && <MoviePoster key={i.title} img={i.image} id={i._id} />
+          )
+        ) : (
+          <h1 className="alertEmptyMovies">Ningun resultado.</h1>
+        )}
       </div>
-    </AllMoviesSt>
+    </SearchSt>
   );
 };
 
-export default ListMoviesGenre;
+export default Search;

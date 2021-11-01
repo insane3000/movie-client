@@ -13,7 +13,7 @@ const GlobalStyle = createGlobalStyle`
 
     /* user-select: none; */
     scroll-behavior: smooth;
-    user-select: none;
+    /* user-select: none; */
 
 
 }
@@ -35,6 +35,7 @@ body{
   /* html{
     font-size: 8px;
   } */
+
   *{
     
     // !Firefox
@@ -63,6 +64,26 @@ body{
     &::-webkit-scrollbar-thumb:active {
       background-color: rgb(41, 41, 41);
     }
+    // Chrome
+    input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+        //Firefox:
+        input[type="number"] {
+          -moz-appearance: textfield;
+        }
+        input[type="number"]:hover,
+        input[type="number"]:focus {
+          -moz-appearance: number-input;
+        }
+        //Other
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
   }
 }
 // !Media query a partir de 768px  

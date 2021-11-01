@@ -1,17 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import MoviePoster from "../molecules/MoviePoster";
-// *Images
-import movie01 from "img/posters/movie01.jpg";
-import movie02 from "img/posters/movie02.jpg";
-import movie03 from "img/posters/movie03.jpg";
-import movie04 from "img/posters/movie04.jpg";
-import movie05 from "img/posters/movie05.jpg";
-import movie06 from "img/posters/movie06.png";
-import movie07 from "img/posters/movie07.jpg";
-import movie08 from "img/posters/movie08.jpg";
-import movie09 from "img/posters/movie09.jpg";
-import movie10 from "img/posters/movie10.jpg";
+
+import axios from "axios";
 const AllMoviesSt = styled.div`
   width: 100%;
   height: 100%;
@@ -51,20 +42,43 @@ const AllMoviesSt = styled.div`
     }
   }
 `;
+interface MovieIT {
+  _id: "";
+  title: "";
+  rating: 0;
+  year: "";
+  genre: "";
+  time: "";
+  actors: "";
+  synopsis: "";
+  link: "";
+  image: "";
+}
+type Movies = [MovieIT];
 const AllMovies = () => {
+  const [state, setState] = useState<Movies>();
+  console.log(state);
+  const fetchData = () => {
+    axios
+      .get(`http://192.168.0.148:5000/book`)
+      .then(function (response: any) {
+        setState(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+        // history.push(`/admin/login`);
+      });
+  };
+  useEffect(() => {
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <AllMoviesSt>
       <div className="container-movies">
-        <MoviePoster img={movie01} />
-        <MoviePoster img={movie02} />
-        <MoviePoster img={movie03} />
-        <MoviePoster img={movie04} />
-        <MoviePoster img={movie05} />
-        <MoviePoster img={movie06} />
-        <MoviePoster img={movie07} />
-        <MoviePoster img={movie08} />
-        <MoviePoster img={movie09} />
-        <MoviePoster img={movie10} />
+        {state?.map((i) => (
+          <MoviePoster key={i.title} img={i.image} id={i._id} />
+        ))}
       </div>
     </AllMoviesSt>
   );

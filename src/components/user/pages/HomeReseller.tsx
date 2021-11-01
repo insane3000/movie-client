@@ -6,7 +6,7 @@ const HomeResellerSt = styled.div`
   height: 100%;
   color: white;
   overflow-y: scroll;
-    overflow-x: hidden;
+  overflow-x: hidden;
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
     overflow-y: scroll;
@@ -17,13 +17,21 @@ const HomeResellerSt = styled.div`
 const HomeReseller = () => {
   return (
     <HomeResellerSt>
-      <MoviesGenderCluster
+      {/* <MoviesGenderCluster
         subtitle="Estrenos"
         text="Ir a todos los estrenos."
+      /> */}
+      <MoviesGenderCluster genre="acci" subtitle="Accion" text="Ir a accion." />
+      <MoviesGenderCluster
+        genre="comedia"
+        subtitle="Comedia"
+        text="Ir a comedia."
       />
-      <MoviesGenderCluster subtitle="Accion" text="Ir a accion." />
-      <MoviesGenderCluster subtitle="Comedia" text="Ir a comedia." />
-      <MoviesGenderCluster subtitle="Terror" text="Ir a terror." />
+      <MoviesGenderCluster
+        genre="terror"
+        subtitle="Terror"
+        text="Ir a terror."
+      />
     </HomeResellerSt>
   );
 };

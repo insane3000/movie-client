@@ -1,8 +1,8 @@
-// import { cashRegisterTemplate, CashRegisterIT } from "interfaces/Cashregister";
+import { MovieIT } from "interfaces/MovieInterface";
 
 export type AppInterface = {
   showMenu: boolean;
-
+  search: [MovieIT?];
   login: {
     user: string;
     token: string;
@@ -11,7 +11,7 @@ export type AppInterface = {
 };
 export const appTemplate: AppInterface = {
   showMenu: false,
-
+  search: [],
   login: {
     user: "",
     token: "",

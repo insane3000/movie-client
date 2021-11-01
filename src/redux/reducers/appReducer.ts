@@ -18,6 +18,11 @@ const appReducer = (state = initialState, action: ActionsInterface) => {
         ...state,
         login: { ...state.login, user: action.user, token: action.token },
       };
+    case ActionType.SEARCH:
+      return {
+        ...state,
+        search: action.payload,
+      };
     default:
       return state;
   }

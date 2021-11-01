@@ -1,23 +1,12 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 //*Icons
 import ArrowLeftIcon from "icons/ArrowLeftIcon";
 import ArrowRightIcon from "icons/ArrowRightIcon";
-// import PlayICon from "icons/PlayIcon";
-// *Images
-import movie01 from "img/posters/movie01.jpg";
-import movie02 from "img/posters/movie02.jpg";
-import movie03 from "img/posters/movie03.jpg";
-import movie04 from "img/posters/movie04.jpg";
-import movie05 from "img/posters/movie05.jpg";
-import movie06 from "img/posters/movie06.png";
-import movie07 from "img/posters/movie07.jpg";
-import movie08 from "img/posters/movie08.jpg";
-import movie09 from "img/posters/movie09.jpg";
-// import movie10 from "img/posters/movie10.jpg";
-// import play from "img/play.png";
+
 import MoviePoster from "../molecules/MoviePoster";
+import axios from "axios";
 const MoviesGenderSt = styled.div`
   width: 100%;
   height: 33rem;
@@ -147,7 +136,7 @@ const MoviesGenderSt = styled.div`
         overflow-x: scroll;
         overflow-y: hidden;
         .toGenre {
-          background: #00000030;
+          background: #1d1231;
           display: flex;
           justify-content: center;
           align-items: center;
@@ -158,7 +147,7 @@ const MoviesGenderSt = styled.div`
           padding: 0 2rem;
           text-align: center;
           &:hover {
-            background: #120825;
+            background: #1a0f2f;
             color: white;
           }
         }
@@ -169,20 +158,52 @@ const MoviesGenderSt = styled.div`
 interface Props {
   subtitle: string;
   text: string;
+  genre: string;
 }
+interface MovieIT {
+  _id: "";
+  title: "";
+  rating: 0;
+  year: "";
+  genre: "";
+  time: "";
+  actors: "";
+  synopsis: "";
+  link: "";
+  image: "";
+}
+type Movies = [MovieIT];
+
 const MoviesGender = (props: Props) => {
-  const moviesGender = useRef<any>();
+  const moviesGenderRef = useRef<any>();
   const ScrollRight = () => {
-    moviesGender.current.scrollLeft += 1000;
-    console.log(moviesGender);
+    moviesGenderRef.current.scrollLeft += 1000;
+    // console.log(moviesGenderRef);
   };
   const ScrollLeft = () => {
-    moviesGender.current.scrollLeft -= 1000;
+    moviesGenderRef.current.scrollLeft -= 1000;
   };
+  const [state, setState] = useState<Movies>();
+  // console.log(props.genre);
+  const fetchData = () => {
+    axios
+      .get(`http://192.168.0.148:5000/genre/${props.genre}`)
+      .then(function (response: any) {
+        setState(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+        // history.push(`/admin/login`);
+      });
+  };
+  useEffect(() => {
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <MoviesGenderSt>
       <div className="subtitle">
-        <Link className="text" to="/reseller/genre/asdasd">
+        <Link className="text" to={`/reseller/genre/${props.genre}`}>
           {props.subtitle}
         </Link>
       </div>
@@ -190,18 +211,12 @@ const MoviesGender = (props: Props) => {
         <section className="arrow arrow-none" onClick={ScrollLeft}>
           <ArrowLeftIcon className="sysIconArrow" />
         </section>
-        <div ref={moviesGender} className="list-movies-gender">
-          <MoviePoster img={movie01} />
-          <MoviePoster img={movie02} />
-          <MoviePoster img={movie03} />
-          <MoviePoster img={movie04} />
-          <MoviePoster img={movie05} />
-          <MoviePoster img={movie06} />
-          <MoviePoster img={movie07} />
-          <MoviePoster img={movie08} />
-          <MoviePoster img={movie09} />
+        <div ref={moviesGenderRef} className="list-movies-gender">
+          {state?.map((i) => (
+            <MoviePoster key={i._id} img={i.image} id={i._id} />
+          ))}
 
-          <Link className="toGenre" to={`/reseller/genre/genreparams`}>
+          <Link className="toGenre" to={`/reseller/genre/${props.genre}`}>
             <div className="end-cluster">
               <span className="text">{props.text}</span>
             </div>

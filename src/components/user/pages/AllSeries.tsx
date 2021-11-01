@@ -55,16 +55,16 @@ const AllMovies = () => {
   return (
     <AllMoviesSt>
       <div className="container-movies">
-        <MoviePoster img={movie03} />
-        <MoviePoster img={movie04} />
-        <MoviePoster img={movie01} />
-        <MoviePoster img={movie02} />
-        <MoviePoster img={movie07} />
-        <MoviePoster img={movie08} />
-        <MoviePoster img={movie05} />
-        <MoviePoster img={movie06} />
-        <MoviePoster img={movie09} />
-        <MoviePoster img={movie10} />
+        <MoviePoster img={movie03} id={'asdasd'}/>
+        <MoviePoster img={movie04} id={'asdasd'}/>
+        <MoviePoster img={movie01} id={'asdasd'}/>
+        <MoviePoster img={movie02} id={'asdasd'}/>
+        <MoviePoster img={movie07} id={'asdasd'}/>
+        <MoviePoster img={movie08} id={'asdasd'}/>
+        <MoviePoster img={movie05} id={'asdasd'}/>
+        <MoviePoster img={movie06} id={'asdasd'}/>
+        <MoviePoster img={movie09} id={'asdasd'}/>
+        <MoviePoster img={movie10} id={'asdasd'}/>
       </div>
     </AllMoviesSt>
   );

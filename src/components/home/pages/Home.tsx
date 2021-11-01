@@ -65,7 +65,7 @@ const Home = () => {
   return (
     <HomeSt>
       <h1>HOME</h1>
-      <Link className="resellerBtn" to="/reseller">
+      <Link className="resellerBtn" to="/reseller/home">
         Reseller
       </Link>
     </HomeSt>
