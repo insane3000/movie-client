@@ -7,38 +7,37 @@ const AllMoviesSt = styled.div`
   width: 100%;
   height: 100%;
 
-  .container-movies {
-    width: 100%;
-    height: 100%;
-    display: grid;
-    /* grid-template-columns: repeat(2, 20rem); */
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 20rem));
-
-    grid-auto-rows: 30rem;
-    justify-content: center;
-    align-content: flex-start;
-    gap: 1rem;
-    overflow-y: scroll;
-    padding: 2rem 2rem;
-  }
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
     width: 100%;
     height: 100%;
-
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    overflow-y: scroll;
+    .title-component {
+      width: 80%;
+      height: 3rem;
+      line-height: 3rem;
+      font-family: "Roboto 900";
+      font-size: 4rem;
+      text-align: center;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+    }
     .container-movies {
-      width: 100%;
-      height: 100%;
+      width: 80%;
+      height: auto;
       display: grid;
-      /* grid-template-columns: repeat(4, 20rem); */
-
-      grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
-      grid-auto-rows: 35rem;
+      grid-template-columns: repeat(auto-fill, minmax(10rem, 18rem));
+      /* grid-template-columns: 18rem 18rem 18rem 18rem; */
+      grid-auto-rows: 28rem;
       justify-content: center;
       align-content: flex-start;
       gap: 1rem;
-      overflow-y: scroll;
-      padding: 2rem 10rem;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
     }
   }
 `;
@@ -75,11 +74,13 @@ const AllMovies = () => {
   }, []);
   return (
     <AllMoviesSt>
+      <h2 className="title-component">Películas</h2>
       <div className="container-movies">
         {state?.map((i) => (
           <MoviePoster key={i.title} img={i.image} id={i._id} />
         ))}
       </div>
+      <span>pagination</span>
     </AllMoviesSt>
   );
 };

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import ReactJWPlayer from "react-jw-player";
-import MoviesGenderCluster from "../organisms/MoviesGenderCluster";
-import { useEffect, useState } from "react";
+import Cluster from "../organisms/Cluster";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import SpinnerImg from "../atoms/SpinnerImg";
 import { useParams } from "react-router";
@@ -37,6 +37,7 @@ const MovieSt = styled.div`
       .title-movie {
         font-family: "Roboto 900";
         font-size: 5rem;
+        line-height: 5rem;
         margin-bottom: 0rem;
         text-align: center;
       }
@@ -93,7 +94,7 @@ const MovieSt = styled.div`
     align-items: center;
     .container-poster-data {
       width: 75%;
-      height: auto;
+      height: 32rem;
       display: flex;
       flex-direction: row;
       justify-content: start;
@@ -102,6 +103,8 @@ const MovieSt = styled.div`
         width: 20rem;
         height: 32em;
         position: relative;
+        border-radius: 0.5rem;
+        overflow: hidden;
         .img-movie {
           width: 100%;
           height: 100%;
@@ -138,9 +141,16 @@ const MovieSt = styled.div`
           }
         }
         .actors {
+          width: 100%;
+          height: 2rem;
+          line-height: 2rem;
           font-family: "Roboto 900";
           font-size: 1.5rem;
           margin-bottom: 0.5rem;
+          // Dots ...
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
           span {
             color: #ff0062;
             font-family: "Roboto 900";
@@ -155,14 +165,18 @@ const MovieSt = styled.div`
     }
 
     .player-container {
-      width: 75%;
+      width: 70%;
+      min-height: 38rem;
       height: auto;
-      /* margin-bottom: 2rem; */
       margin-top: 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       /* background: red; */
       .player {
         width: 100%;
         height: 100%;
+        margin: 0;
       }
     }
   }
@@ -190,29 +204,43 @@ const Movie = () => {
   const [state, setState] = useState(movieTemplate);
   const [imageLoad, setImageLoad] = useState(false);
   const modifyLink = state.link?.split(".mp4")[0];
-
+  const handleLoadImg = (e) => {
+    e.currentTarget.complete && setImageLoad(true);
+  };
+  // ! Scroll to TOP
+  const movieRef = useRef();
+  const scrollToTop = () => {
+    movieRef.current.scrollTop = 0;
+  };
+  // const refreshPage = () => {
+  //   window.location.reload();
+  // };
   useEffect(() => {
     const fetchData = () => {
       axios
         .get(`http://192.168.0.148:5000/book/${params.id}`)
         .then(function (response) {
           setState(response.data);
+          scrollToTop();
         })
         .catch(function (error) {
           console.log(error);
         });
     };
     fetchData();
+    console.log(params.id);
   }, [params.id]);
+  let genero = state.genre.slice(0, 4).toLowerCase();
+
   return (
-    <MovieSt>
+    <MovieSt ref={movieRef}>
       <div className="container-poster-data">
         <div className="container-poster">
           <img
             className="img-movie"
             src={state.image}
             alt="poster movie"
-            onLoad={() => setImageLoad(!imageLoad)}
+            onLoad={(e) => handleLoadImg(e)}
           />
           {!imageLoad && <SpinnerImg />}
         </div>
@@ -239,7 +267,7 @@ const Movie = () => {
           // playlist={playlist}
           file={`${modifyLink}.mp4`}
           onBeforePlay={() => console.log("onBeforePlay fired!")}
-          image={state.image}
+          // image={state.image}
           type="mp4"
           customProps={{
             // playbackRateControls: [1, 1.25, 1.5],
@@ -248,7 +276,9 @@ const Movie = () => {
           }}
         />
       </div>
-      <MoviesGenderCluster subtitle="Ver mas" text="Ver todo." />
+      {genero === "" ? null : (
+        <Cluster genre={genero} subtitle="Ver mas" text="Ver todo." />
+      )}
     </MovieSt>
   );
 };

@@ -107,6 +107,7 @@ const MoviesPosterSt = styled.div`
         width: 100%;
         height: 100%;
         object-fit: cover;
+        background: none;
       }
       .gradient {
         width: 100%;
@@ -156,15 +157,23 @@ interface Props {
 }
 const MoviePoster = (props: Props) => {
   const [imageLoad, setImageLoad] = useState(false);
+  const handleLoadImg = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    e.currentTarget.complete && setImageLoad(true);
+  };
+
   return (
     <MoviesPosterSt>
-      <Link className="toMovie" to={`/reseller/movie/${props.id}`}>
+      <Link
+        className="toMovie"
+        to={`/movie/${props.id}`}
+        // onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+      >
         <img
           className="poster"
           src={props.img}
           alt="Movie"
-          // loading="lazy"
-          onLoad={() => setImageLoad(!imageLoad)}
+          loading="lazy"
+          onLoad={(e) => handleLoadImg(e)}
         />
         <div className="gradient">
           <span className="rating">
@@ -173,7 +182,8 @@ const MoviePoster = (props: Props) => {
           <img className="play-icon" src={play} alt="play-icon" />
         </div>
       </Link>
-      {!imageLoad && <SpinnerImg />}
+
+      {imageLoad === false ? <SpinnerImg /> : null}
     </MoviesPosterSt>
   );
 };

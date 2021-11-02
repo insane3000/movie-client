@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-const AllMoviesSt = styled.div`
+const LoginSt = styled.div`
   width: 100%;
   height: 100%;
   color: white;
@@ -16,8 +16,8 @@ const AllMoviesSt = styled.div`
     overflow-y: scroll;
   }
 `;
-const AllMovies = () => {
-  return <AllMoviesSt>My list</AllMoviesSt>;
+const Login = () => {
+  return <LoginSt>Login</LoginSt>;
 };
 
-export default AllMovies;
+export default Login;

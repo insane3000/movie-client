@@ -49,7 +49,7 @@ const SearchSt = styled.div`
       position: relative;
       .tRow {
         display: grid;
-        grid-template-columns: calc(15% - 2.5rem) 5% 5% 5% 15% 15% 5% 25%  5% 5%;
+        grid-template-columns: calc(15% - 2.5rem) 5% 5% 5% 15% 15% 5% 25% 5% 5%;
         grid-template-rows: 100%;
         column-gap: 0.2rem;
         justify-content: center;
@@ -199,7 +199,7 @@ const Search = () => {
           </div>
         ))}
       </div>
-      <Link className="addMedia" to="/reseller/media/add-media">
+      <Link className="addMedia" to="/media/add-media">
         +
       </Link>
     </SearchSt>

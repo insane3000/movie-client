@@ -86,7 +86,7 @@ const NavigationSt = styled.nav`
 
     .title {
       font-family: "Roboto 900";
-      font-size: 3rem;
+      font-size: 2rem;
       text-decoration: none;
       color: #ffffff;
     }
@@ -209,7 +209,7 @@ const NavigationSt = styled.nav`
         }
       }
       .options {
-        width: 15rem;
+        width: 10rem;
         /* min-height: 10rem; */
         height: auto;
         background: #030013;
@@ -239,10 +239,10 @@ const NavigationSt = styled.nav`
         }
         .link {
           width: 100%;
-          height: 2.5rem;
-          line-height: 2.5rem;
+          height: 2rem;
+          line-height: 2rem;
           font-family: "Roboto regular";
-          font-size: 1.2rem;
+          font-size: 1rem;
           text-decoration: none;
           padding: 0 0.5rem;
           color: #d8d8d8;
@@ -251,6 +251,9 @@ const NavigationSt = styled.nav`
             background: #19142e;
             color: #ffffff;
           }
+        }
+        .active {
+          background: #ff0055;
         }
       }
     }
@@ -271,7 +274,7 @@ const Navigation = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     fetchData();
-    history.push("/reseller/search");
+    history.push("/search");
   };
   const fetchData = () => {
     axios
@@ -288,36 +291,25 @@ const Navigation = () => {
   return (
     <NavigationSt>
       <Link className="title" to="/">
-        MOBA
+        Movie Store Cbba
       </Link>
       <section className="ul">
-        <NavLink className="li" to="/reseller/home" activeClassName="active">
+        <NavLink className="li" to="/home">
           Home
         </NavLink>
-        <NavLink
-          className="li"
-          to="/reseller/series/all-series"
-          activeClassName="active"
-        >
-          Series
-        </NavLink>
-        <NavLink
-          className="li"
-          to="/reseller/movies/all-movies"
-          activeClassName="active"
-        >
+
+        <NavLink className="li" to="/movies">
           Películas
         </NavLink>
-        <NavLink
-          className="li"
-          to="/reseller/premieres"
-          activeClassName="active"
-        >
+        <NavLink className="li" to="/premieres">
           Estrenos
         </NavLink>
-        {/* <Link className="li" to="/reseller/mylist">
-          Mi lista
-        </Link> */}
+        <NavLink className="li" to="/category">
+          Categorias
+        </NavLink>
+        {/* <NavLink className="li" to="/series">
+          Series
+        </NavLink> */}
       </section>
       <form className="search-container" onSubmit={handleSubmit}>
         <input
@@ -337,30 +329,18 @@ const Navigation = () => {
         {user && (
           <section className="options">
             <CloseIcon className="close-user" onClick={handleShowUser} />
-            <Link
-              className="link"
-              to="/reseller/profile"
-              onClick={handleShowUser}
-            >
+            <NavLink className="link" to="/profile" onClick={handleShowUser}>
               Perfil
-            </Link>
-            <Link
-              className="link"
-              to="/reseller/clients"
-              onClick={handleShowUser}
-            >
+            </NavLink>
+            <NavLink className="link" to="/clients" onClick={handleShowUser}>
               Clientes
-            </Link>
-            <Link
-              className="link"
-              to="/reseller/media"
-              onClick={handleShowUser}
-            >
+            </NavLink>
+            <NavLink className="link" to="/media" onClick={handleShowUser}>
               Contenido
-            </Link>
-            <Link className="link" to="/">
+            </NavLink>
+            <NavLink className="link" to="/login" onClick={handleShowUser}>
               Salir
-            </Link>
+            </NavLink>
           </section>
         )}
       </div>
