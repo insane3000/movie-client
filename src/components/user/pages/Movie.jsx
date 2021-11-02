@@ -3,6 +3,7 @@ import ReactJWPlayer from "react-jw-player";
 import Cluster from "../organisms/Cluster";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
+import { URI } from "config/axios";
 import SpinnerImg from "../atoms/SpinnerImg";
 import { useParams } from "react-router";
 const MovieSt = styled.div`
@@ -218,7 +219,8 @@ const Movie = () => {
   useEffect(() => {
     const fetchData = () => {
       axios
-        .get(`http://192.168.0.148:5000/book/${params.id}`)
+        .get(`${URI}/book/${params.id}`)
+
         .then(function (response) {
           setState(response.data);
           scrollToTop();
@@ -228,10 +230,11 @@ const Movie = () => {
         });
     };
     fetchData();
-    console.log(params.id);
   }, [params.id]);
+  //!para validar query
   let genero = state.genre.slice(0, 4).toLowerCase();
 
+  const cleanText = state.genre?.replace("|", ".");
   return (
     <MovieSt ref={movieRef}>
       <div className="container-poster-data">
@@ -247,7 +250,8 @@ const Movie = () => {
         <div className="container-data">
           <h2 className="title-movie">{state.title}</h2>
           <h3 className="year">
-            {state.year} • {state.genre} • {state.time}
+            {state.year} • {cleanText.split(" ")[0]} {cleanText.split(" ")[1]}{" "}
+            {cleanText.split(" ")[2]} {cleanText.split(" ")[3]} • {state.time}
           </h3>
           <h3 className="rate">
             <span>Calificación:</span> {state.rating}

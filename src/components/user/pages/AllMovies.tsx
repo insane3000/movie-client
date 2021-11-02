@@ -3,6 +3,7 @@ import styled from "styled-components";
 import MoviePoster from "../molecules/MoviePoster";
 
 import axios from "axios";
+import { URI } from "config/axios";
 const AllMoviesSt = styled.div`
   width: 100%;
   height: 100%;
@@ -56,10 +57,10 @@ interface MovieIT {
 type Movies = [MovieIT];
 const AllMovies = () => {
   const [state, setState] = useState<Movies>();
-  console.log(state);
+  // console.log(state);
   const fetchData = () => {
     axios
-      .get(`http://192.168.0.148:5000/book`)
+      .get(`${URI}/book`)
       .then(function (response: any) {
         setState(response.data);
       })

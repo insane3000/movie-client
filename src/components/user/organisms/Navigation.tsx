@@ -9,6 +9,7 @@ import CloseIcon from "icons/CloseIcon";
 import { useDispatch } from "react-redux";
 import { search } from "redux/actions/appAction";
 import axios from "axios";
+import { URI } from "config/axios";
 const NavigationSt = styled.nav`
   width: 100%;
   height: 5rem;
@@ -278,7 +279,7 @@ const Navigation = () => {
   };
   const fetchData = () => {
     axios
-      .get(`http://192.168.0.148:5000/movie-search/${state}`)
+      .get(`${URI}/movie-search/${state}`)
       .then(function (response: any) {
         dispacth(search(response.data));
       })

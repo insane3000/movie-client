@@ -1,4 +1,5 @@
 import axios from "axios";
+import { URI } from "config/axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -154,7 +155,7 @@ const Search = () => {
   console.log(state);
   const fetchData = () => {
     axios
-      .get(`http://192.168.0.148:5000/book`)
+      .get(`${URI}/book`)
       .then(function (response: any) {
         setState(response.data);
       })

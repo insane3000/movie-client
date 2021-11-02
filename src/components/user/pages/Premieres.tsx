@@ -3,6 +3,7 @@ import styled from "styled-components";
 import MoviePoster from "../molecules/MoviePoster";
 
 import axios from "axios";
+import { URI } from "config/axios";
 const AllMoviesSt = styled.div`
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
@@ -58,7 +59,7 @@ const ListMoviesGenre = () => {
   // console.log(state);
   const fetchData = () => {
     axios
-      .get(`http://192.168.0.148:5000/year/${year}`)
+      .get(`${URI}/year/${year}`)
       .then(function (response: any) {
         setState(response.data);
       })

@@ -14,4 +14,4 @@
 // export const URI = "http://192.168.0.148:5000";
 
 // !Production
-export const URI = "https://shoke.cc";
+export const URI = "https://clockks.net";

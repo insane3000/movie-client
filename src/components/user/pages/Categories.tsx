@@ -42,12 +42,12 @@ const Categories = () => {
     { color: "B5179E", to: "comedia", name: "Comedia" },
     { color: "7209B7", to: "terror", name: "Terror" },
     { color: "560BAD", to: "animaci", name: "Animacion" },
-    { color: "480CA8", to: "crimen", name: "Crimen" },
+    { color: "480CA8", to: "crime", name: "Crimen" },
     { color: "3A0CA3", to: "documental", name: "Documental" },
     { color: "3F37C9", to: "drama", name: "Drama" },
-    { color: "4361EE", to: "music", name: "Music" },
+    { color: "4361EE", to: "music", name: "Musicales" },
     { color: "4895EF", to: "romance", name: "Romance" },
-    { color: "4CC9F0", to: "ciencia", name: "Cienca Ficcion" },
+    { color: "4CC9F0", to: "cienc", name: "Cienca Ficcion" },
   ];
 
   return (

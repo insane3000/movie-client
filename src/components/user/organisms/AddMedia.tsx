@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import { URI } from "config/axios";
 const SearchSt = styled.div`
   width: 100%;
   height: 100%;
@@ -160,10 +161,10 @@ const Search = () => {
     formData.append("link", link);
     formData.append("file", file);
     await axios
-      .post("http://192.168.0.148:5000/book", formData)
+      .post(`${URI}/book`, formData)
       .then((response) => {
         if (response.statusText === "OK") {
-          history.push("/reseller/media");
+          history.push("/media");
         }
       });
   };

@@ -7,6 +7,7 @@ import ArrowRightIcon from "icons/ArrowRightIcon";
 
 import MoviePoster from "../molecules/MoviePoster";
 import axios from "axios";
+import { URI } from "config/axios";
 const ClusterSt = styled.div`
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
@@ -117,7 +118,7 @@ const MoviesGender = (props: Props) => {
   // console.log(props.genre);
   const fetchData = () => {
     axios
-      .get(`http://192.168.0.148:5000/genre/${props.genre}`)
+      .get(`${URI}/genre/${props.genre}`)
       .then(function (response: any) {
         setState(response.data);
       })

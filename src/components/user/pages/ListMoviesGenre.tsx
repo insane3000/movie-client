@@ -4,6 +4,7 @@ import MoviePoster from "../molecules/MoviePoster";
 
 import axios from "axios";
 import { useParams } from "react-router";
+import { URI } from "config/axios";
 const AllMoviesSt = styled.div`
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
@@ -62,7 +63,7 @@ const ListMoviesGenre = () => {
   console.log(params.genre);
   const fetchData = () => {
     axios
-      .get(`http://192.168.0.148:5000/genre/${params.genre}`)
+      .get(`${URI}/genre/${params.genre}`)
       .then(function (response: any) {
         setState(response.data);
       })
@@ -86,6 +87,27 @@ const ListMoviesGenre = () => {
       break;
     case "terror":
       genero = "Terror";
+      break;
+    case "animaci":
+      genero = "Animacion";
+      break;
+    case "crime":
+      genero = "Crimen";
+      break;
+    case "documental":
+      genero = "Documental";
+      break;
+    case "drama":
+      genero = "Drama";
+      break;
+    case "music":
+      genero = "Musicales";
+      break;
+    case "romance":
+      genero = "Romance";
+      break;
+    case "cienc":
+      genero = "Ciencia Ficcion";
       break;
     default:
       break;
