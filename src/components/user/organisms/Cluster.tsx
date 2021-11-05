@@ -143,7 +143,7 @@ const MoviesGender = (props: Props) => {
         </section>
         <div ref={moviesGenderRef} className="list-posters">
           {state?.map((i) => (
-            <MoviePoster key={i._id} img={i.image} id={i._id} />
+            <MoviePoster key={i._id} img={i.image} id={i._id}  rating={i.rating} />
           ))}
           <Link className="toGenre" to={`/genre/${props.genre}`} >
             <span className="text">{props.text}</span>

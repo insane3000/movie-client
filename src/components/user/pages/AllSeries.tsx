@@ -13,7 +13,7 @@ import movie08 from "img/posters/movie08.jpg";
 import movie09 from "img/posters/movie09.jpg";
 import movie10 from "img/posters/movie10.jpg";
 const AllMoviesSt = styled.div`
- width: 100%;
+  width: 100%;
   height: 100%;
 
   .container-movies {
@@ -55,16 +55,16 @@ const AllMovies = () => {
   return (
     <AllMoviesSt>
       <div className="container-movies">
-        <MoviePoster img={movie03} id={'asdasd'}/>
-        <MoviePoster img={movie04} id={'asdasd'}/>
-        <MoviePoster img={movie01} id={'asdasd'}/>
-        <MoviePoster img={movie02} id={'asdasd'}/>
-        <MoviePoster img={movie07} id={'asdasd'}/>
-        <MoviePoster img={movie08} id={'asdasd'}/>
-        <MoviePoster img={movie05} id={'asdasd'}/>
-        <MoviePoster img={movie06} id={'asdasd'}/>
-        <MoviePoster img={movie09} id={'asdasd'}/>
-        <MoviePoster img={movie10} id={'asdasd'}/>
+        <MoviePoster img={movie03} id={"asdasd"} rating={0} />
+        <MoviePoster img={movie04} id={"asdasd"} rating={0} />
+        <MoviePoster img={movie01} id={"asdasd"} rating={0} />
+        <MoviePoster img={movie02} id={"asdasd"} rating={0} />
+        <MoviePoster img={movie07} id={"asdasd"} rating={0} />
+        <MoviePoster img={movie08} id={"asdasd"} rating={0} />
+        <MoviePoster img={movie05} id={"asdasd"} rating={0} />
+        <MoviePoster img={movie06} id={"asdasd"} rating={0} />
+        <MoviePoster img={movie09} id={"asdasd"} rating={0} />
+        <MoviePoster img={movie10} id={"asdasd"} rating={0} />
       </div>
     </AllMoviesSt>
   );

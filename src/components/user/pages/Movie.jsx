@@ -119,7 +119,7 @@ const MovieSt = styled.div`
 
         .title-movie {
           font-family: "Roboto 900";
-          font-size: 5rem;
+          font-size: 4rem;
           margin-bottom: 0.5rem;
           text-align: left;
         }

@@ -154,6 +154,7 @@ const MoviesPosterSt = styled.div`
 interface Props {
   img: string;
   id: string;
+  rating: Number;
 }
 const MoviePoster = (props: Props) => {
   const [imageLoad, setImageLoad] = useState(false);
@@ -166,6 +167,7 @@ const MoviePoster = (props: Props) => {
       <Link
         className="toMovie"
         to={`/movie/${props.id}`}
+        // target="_blank"
         // onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       >
         <img
@@ -177,7 +179,8 @@ const MoviePoster = (props: Props) => {
         />
         <div className="gradient">
           <span className="rating">
-            6.8<span className="barra">/10</span>
+            {props.rating}
+            <span className="barra">/10</span>
           </span>
           <img className="play-icon" src={play} alt="play-icon" />
         </div>

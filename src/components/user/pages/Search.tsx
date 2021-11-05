@@ -52,7 +52,15 @@ const Search = () => {
       <div className="container-movies">
         {app.search.length !== 0 ? (
           app.search.map(
-            (i) => i && <MoviePoster key={i.title} img={i.image} id={i._id} />
+            (i) =>
+              i && (
+                <MoviePoster
+                  key={i.title}
+                  img={i.image}
+                  id={i._id}
+                  rating={i.rating}
+                />
+              )
           )
         ) : (
           <h1 className="alertEmptyMovies">Ningun resultado.</h1>

@@ -78,7 +78,7 @@ const AllMovies = () => {
       <h2 className="title-component">Películas</h2>
       <div className="container-movies">
         {state?.map((i) => (
-          <MoviePoster key={i.title} img={i.image} id={i._id} />
+          <MoviePoster key={i._id} id={i._id} img={i.image} rating={i.rating} />
         ))}
       </div>
       <span>pagination</span>

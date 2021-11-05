@@ -1,6 +1,5 @@
 {
-  "homepage": "https://insane3000.github.io/movie-client/",
-  "name": "client",
+  "name": "msc",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -44,7 +43,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "gh-pages -d build",
+    "deploy": "aws s3 sync build/ s3://movie-store-cbba-web --acl public-read",
     "predeploy": "npm run build"
   },
   "eslintConfig": {
