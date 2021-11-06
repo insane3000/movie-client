@@ -31,3 +31,13 @@ export const search =
       payload: data,
     });
   };
+// !Seteando SCROLL
+export const restartScroll =
+  (page: String, data: Number) => (dispatch: Dispatch<ActionsInterface>) => {
+    // console.log(page, data);
+    dispatch({
+      type: ActionType.SCROLL,
+      page,
+      payload: data,
+    });
+  };

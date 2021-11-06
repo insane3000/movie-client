@@ -219,7 +219,7 @@ const Movie = () => {
   useEffect(() => {
     const fetchData = () => {
       axios
-        .get(`${URI}/book/${params.id}`)
+        .get(`${URI}/movies/${params.id}`)
 
         .then(function (response) {
           setState(response.data);

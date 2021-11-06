@@ -23,6 +23,14 @@ const appReducer = (state = initialState, action: ActionsInterface) => {
         ...state,
         search: action.payload,
       };
+    case ActionType.SCROLL:
+      return {
+        ...state,
+        scroll: {
+          ...state.scroll,
+          [action.page.toString()]: action.payload,
+        },
+      };
     default:
       return state;
   }

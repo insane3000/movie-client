@@ -1,7 +1,9 @@
 import styled from "styled-components";
 import MoviePoster from "../molecules/MoviePoster";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { StoreInterface } from "interfaces/storeTemplate";
+import { useEffect, useRef } from "react";
+import { restartScroll } from "redux/actions/appAction";
 const SearchSt = styled.div`
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
@@ -44,10 +46,22 @@ const SearchSt = styled.div`
 `;
 
 const Search = () => {
+  const searchRef = useRef<HTMLDivElement>(null);
+  const dispatch = useDispatch();
   const app = useSelector((store: StoreInterface) => store.app);
-
+  const restoreScroll = () => {
+    dispatch(
+      restartScroll(
+        "search",
+        searchRef.current === null ? 0 : searchRef.current.scrollTop
+      )
+    );
+  };
+  useEffect(() => {
+    searchRef.current && (searchRef.current.scrollTop = app.scroll.search);
+  });
   return (
-    <SearchSt>
+    <SearchSt ref={searchRef} onClick={restoreScroll}>
       <h2 className="title-component"> </h2>
       <div className="container-movies">
         {app.search.length !== 0 ? (

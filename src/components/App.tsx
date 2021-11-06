@@ -1,10 +1,11 @@
 import React from "react";
 import {
   HashRouter as Router,
-  Switch,
+  Routes,
   Route,
-  Redirect,
+  Navigate,
 } from "react-router-dom";
+
 // *Components
 
 import Home from "components/user/pages/Home";
@@ -59,29 +60,28 @@ function App() {
   // const handleShowMenu = () => {
   //   dispacth(showMenu(!app.showMenu));
   // };
+  
   return (
     <Router>
       <AppSt id="app">
         <Navigation />
-        <Switch>
-          <Route exact path="/">
-            <Redirect to="/home" />
-          </Route>
-          <Route path="/home" component={Home} />
-          <Route path="/premieres" component={Premieres} />
-          <Route path="/movies" component={AllMovies} />
-          <Route path="/series" component={AllSeries} />
-          <Route path="/search" component={Search} />
-          <Route path="/profile" component={Profile} />
-          <Route path="/clients" component={Clients} />
-          <Route path="/media" exact component={MediaContent} />
-          <Route path="/media/add-media" component={AddMedia} />
-          <Route path="/movie/:id" component={Movie} />
-          <Route path="/genre/:genre" component={ListMoviesGenre} />
-          <Route path="/login" component={Login} />
-          <Route path="/category" component={Categories} />
-          <Route component={Error404} />
-        </Switch>
+        <Routes>
+          <Route path="/" element={<Navigate to="/home" />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/premieres" element={<Premieres />} />
+          <Route path="/movies" element={<AllMovies />} />
+          <Route path="/series" element={<AllSeries />} />
+          <Route path="/search" element={<Search />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/clients" element={<Clients />} />
+          <Route path="/media" element={<MediaContent />} />
+          <Route path="/media/add-media" element={<AddMedia />} />
+          <Route path="/movie/:id" element={<Movie />} />
+          <Route path="/genre/:genre" element={<ListMoviesGenre />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/category" element={<Categories />} />
+          <Route element={<Error404 />} />
+        </Routes>
       </AppSt>
     </Router>
   );

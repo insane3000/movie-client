@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { URI } from "config/axios";
 const SearchSt = styled.div`
   width: 100%;
@@ -86,7 +86,7 @@ const SearchSt = styled.div`
   }
 `;
 const Search = () => {
-  let history = useHistory();
+  let navigate = useNavigate();
   const [file, setFile] = useState<any>();
   const [title, setTitle] = useState<any>("");
   const [titleEsp, setTitleEsp] = useState<any>("");
@@ -160,13 +160,11 @@ const Search = () => {
     formData.append("synopsis", synopsis);
     formData.append("link", link);
     formData.append("file", file);
-    await axios
-      .post(`${URI}/book`, formData)
-      .then((response) => {
-        if (response.statusText === "OK") {
-          history.push("/media");
-        }
-      });
+    await axios.post(`${URI}/movies`, formData).then((response) => {
+      if (response.statusText === "OK") {
+        navigate("/media");
+      }
+    });
   };
   return (
     <SearchSt>

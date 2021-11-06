@@ -155,7 +155,7 @@ const Search = () => {
   console.log(state);
   const fetchData = () => {
     axios
-      .get(`${URI}/book`)
+      .get(`${URI}/movies`)
       .then(function (response: any) {
         setState(response.data);
       })

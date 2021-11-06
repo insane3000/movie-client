@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import MoviePoster from "../molecules/MoviePoster";
 
 import axios from "axios";
 import { URI } from "config/axios";
-const AllMoviesSt = styled.div`
+import { useDispatch, useSelector } from "react-redux";
+import { StoreInterface } from "interfaces/storeTemplate";
+import { restartScroll } from "redux/actions/appAction";
+const PremieresSt = styled.div`
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
     width: 100%;
@@ -52,7 +55,22 @@ interface MovieIT {
   image: "";
 }
 type Movies = [MovieIT];
-const ListMoviesGenre = () => {
+const Premieres = () => {
+  const premieresRef = useRef<HTMLDivElement>(null);
+  const dispatch = useDispatch();
+  const app = useSelector((store: StoreInterface) => store.app);
+  const restoreScroll = () => {
+    dispatch(
+      restartScroll(
+        "premieres",
+        premieresRef.current === null ? 0 : premieresRef.current.scrollTop
+      )
+    );
+  };
+  useEffect(() => {
+    premieresRef.current &&
+      (premieresRef.current.scrollTop = app.scroll.premieres);
+  });
   const year = new Date().getFullYear();
 
   const [state, setState] = useState<Movies>();
@@ -73,15 +91,15 @@ const ListMoviesGenre = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    <AllMoviesSt>
+    <PremieresSt ref={premieresRef} onClick={restoreScroll}>
       <h2 className="title-component">Estrenos</h2>
       <div className="container-movies">
         {state?.map((i) => (
-          <MoviePoster key={i._id} img={i.image} id={i._id} rating={i.rating}/>
+          <MoviePoster key={i._id} img={i.image} id={i._id} rating={i.rating} />
         ))}
       </div>
-    </AllMoviesSt>
+    </PremieresSt>
   );
 };
 
-export default ListMoviesGenre;
+export default Premieres;

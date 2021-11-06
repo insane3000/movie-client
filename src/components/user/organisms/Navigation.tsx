@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 // *Icons
 import UserIconLight from "icons/UserIconLight";
 import SearchIcon from "icons/SearchIcon";
 import CloseIcon from "icons/CloseIcon";
 import { useDispatch } from "react-redux";
-import { search } from "redux/actions/appAction";
+import { restartScroll, search } from "redux/actions/appAction";
 import axios from "axios";
 import { URI } from "config/axios";
 const NavigationSt = styled.nav`
@@ -261,7 +261,7 @@ const NavigationSt = styled.nav`
   }
 `;
 const Navigation = () => {
-  let history = useHistory();
+  let navigate = useNavigate();
   const dispacth = useDispatch();
   const [state, setState] = useState("");
   const [user, setUser] = useState(false);
@@ -275,7 +275,9 @@ const Navigation = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     fetchData();
-    history.push("/search");
+    navigate("/search");
+    dispacth(restartScroll("search", 0))
+
   };
   const fetchData = () => {
     axios
@@ -291,18 +293,34 @@ const Navigation = () => {
 
   return (
     <NavigationSt>
-      <Link className="title" to="/">
+      <Link
+        className="title"
+        to="/"
+        onClick={() => dispacth(restartScroll("home", 0))}
+      >
         Movie Store Cbba
       </Link>
       <section className="ul">
-        <NavLink className="li" to="/home">
+        <NavLink
+          className="li"
+          to="/home"
+          onClick={() => dispacth(restartScroll("home", 0))}
+        >
           Home
         </NavLink>
 
-        <NavLink className="li" to="/movies">
+        <NavLink
+          className="li"
+          to="/movies"
+          onClick={() => dispacth(restartScroll("movies", 0))}
+        >
           Películas
         </NavLink>
-        <NavLink className="li" to="/premieres">
+        <NavLink
+          className="li"
+          to="/premieres"
+          onClick={() => dispacth(restartScroll("premieres", 0))}
+        >
           Estrenos
         </NavLink>
         <NavLink className="li" to="/category">

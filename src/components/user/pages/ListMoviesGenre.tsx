@@ -3,7 +3,7 @@ import styled from "styled-components";
 import MoviePoster from "../molecules/MoviePoster";
 
 import axios from "axios";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { URI } from "config/axios";
 const AllMoviesSt = styled.div`
   // !Estilos para Desktop
@@ -54,13 +54,13 @@ interface MovieIT {
   image: "";
 }
 type Movies = [MovieIT];
-interface Params {
-  genre: string;
-}
+// interface Params {
+//   genre: string;
+// }
 const ListMoviesGenre = () => {
-  const params = useParams<Params>();
+  const params = useParams();
   const [state, setState] = useState<Movies>();
-  console.log(params.genre);
+  // console.log(params.genre);
   const fetchData = () => {
     axios
       .get(`${URI}/genre/${params.genre}`)
@@ -112,7 +112,7 @@ const ListMoviesGenre = () => {
     default:
       break;
   }
-  console.log(genero);
+  // console.log(genero);
   return (
     <AllMoviesSt>
       <h2 className="title-component">{genero}</h2>

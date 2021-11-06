@@ -13,5 +13,10 @@ interface search {
   type: ActionType.SEARCH;
   payload: MovieIT;
 }
+interface scroll {
+  type: ActionType.SCROLL;
+  page: String;
+  payload: Number;
+}
 
-export type ActionsInterface = showMenu | loginServer | search;
+export type ActionsInterface = showMenu | loginServer | search | scroll;

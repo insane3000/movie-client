@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import MoviePoster from "../molecules/MoviePoster";
 
 import axios from "axios";
 import { URI } from "config/axios";
+import { useDispatch, useSelector } from "react-redux";
+import { StoreInterface } from "interfaces/storeTemplate";
+import { restartScroll } from "redux/actions/appAction";
 const AllMoviesSt = styled.div`
   width: 100%;
   height: 100%;
@@ -56,11 +59,13 @@ interface MovieIT {
 }
 type Movies = [MovieIT];
 const AllMovies = () => {
+  const moviesRef = useRef<HTMLDivElement>(null);
+  const dispatch = useDispatch();
   const [state, setState] = useState<Movies>();
   // console.log(state);
   const fetchData = () => {
     axios
-      .get(`${URI}/book`)
+      .get(`${URI}/movies`)
       .then(function (response: any) {
         setState(response.data);
       })
@@ -73,8 +78,21 @@ const AllMovies = () => {
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  const app = useSelector((store: StoreInterface) => store.app);
+  const restoreScroll = () => {
+    console.log(moviesRef);
+    dispatch(
+      restartScroll(
+        "movies",
+        moviesRef.current === null ? 0 : moviesRef.current.scrollTop
+      )
+    );
+  };
+  useEffect(() => {
+    moviesRef.current && (moviesRef.current.scrollTop = app.scroll.movies);
+  });
   return (
-    <AllMoviesSt>
+    <AllMoviesSt ref={moviesRef} onClick={restoreScroll}>
       <h2 className="title-component">Películas</h2>
       <div className="container-movies">
         {state?.map((i) => (
