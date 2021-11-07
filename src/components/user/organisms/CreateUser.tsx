@@ -1,0 +1,187 @@
+import { useState } from "react";
+import styled from "styled-components";
+// *Icons
+import HashIcon from "icons/HashIcon";
+import axios from "axios";
+import { URI } from "config/axios";
+import { useNavigate } from "react-router";
+const CreateUserSt = styled.div`
+  width: 100%;
+  height: 100%;
+  color: white;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  // !Estilos para Desktop
+  @media only screen and (min-width: 568px) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .titleCreateUser {
+      font-family: "Roboto 900";
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      text-transform: uppercase;
+    }
+
+    .createUserForm {
+      background: #0a0a0a;
+      width: 25rem;
+      height: 35rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border-radius: 0.5rem;
+
+      .containerUserName {
+        width: 80%;
+        height: 3rem;
+        /* background: #ffffff; */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        border-radius: 0.3125rem;
+        overflow: hidden;
+        .cellInputName {
+          width: calc(100% - 3rem);
+          height: 3rem;
+          color: white;
+          outline: none;
+          border-style: none;
+          color: black;
+          background: white;
+          padding: 0 1rem;
+          font-family: "Roboto 300";
+          font-size: 1rem;
+          text-transform: uppercase;
+        }
+        .hashIcon {
+          width: 3rem;
+          height: 3rem;
+          background: #3c00ff;
+          color: white;
+          /* border-radius: 0.3rem; */
+          padding: 0.5rem;
+          cursor: pointer;
+          &:hover {
+            background: #000000;
+            color: white;
+          }
+        }
+      }
+      .cellInput {
+        width: 80%;
+        height: 3rem;
+        background: white;
+        color: white;
+        outline: none;
+        border-style: none;
+        margin-bottom: 3rem;
+        color: black;
+        border-radius: 0.3rem;
+        padding: 0 1rem;
+        font-family: "Roboto 300";
+        font-size: 1rem;
+        text-transform: uppercase;
+      }
+      .submit {
+        font-family: "Roboto 900";
+        font-size: 1rem;
+        cursor: pointer;
+        transition: 0.1s;
+        background: #3c00ff;
+        color: white;
+
+        &:hover {
+          background: #ffffff;
+          color: #000000;
+          transition: 0.1s;
+        }
+      }
+    }
+  }
+`;
+interface User {
+  user: string;
+  password: string;
+  date: string;
+  role: string;
+}
+const CreateUser = () => {
+  let navigate = useNavigate();
+  const [state, setState] = useState<User>({
+    user: "",
+    password: "",
+    date: "",
+    role: "user",
+  });
+
+  function makeid(length: number) {
+    var result = "";
+    var characters = "abcdefghjklmnpqrstuvwxyz123456789";
+    var charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+  }
+
+  const handleCreateUser = () => {
+    setState({
+      ...state,
+      user: makeid(5),
+    });
+  };
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value.toLowerCase();
+    let name = e.target.name;
+    let type = e.target.type;
+
+    setState({
+      ...state,
+      [name]: type === "datetime-local" ? new Date(value).toISOString() : value,
+    });
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    await axios
+      .post(`${URI}/signup`, state)
+      .then(function (response) {
+        console.log(response);
+        navigate("/clients");
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+  return (
+    <CreateUserSt>
+      <form className="createUserForm" onSubmit={handleSubmit}>
+        <h2 className="titleCreateUser">Crear Usuario</h2>
+
+        <div className="containerUserName">
+          <input
+            name="user"
+            className="cellInputName"
+            type="text"
+            value={state.user}
+            onChange={handleChange}
+            required
+          />
+          <HashIcon className="hashIcon" onClick={handleCreateUser} />
+        </div>
+        <input
+          name="date"
+          className="cellInput"
+          type="datetime-local"
+          onChange={handleChange}
+        />
+        <input className="cellInput submit" type="submit" value="CREAR" />
+      </form>
+    </CreateUserSt>
+  );
+};
+
+export default CreateUser;

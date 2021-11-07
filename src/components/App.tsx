@@ -5,7 +5,8 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-
+// *Fonts
+import "fonts/fonts.css";
 // *Components
 
 import Home from "components/user/pages/Home";
@@ -26,11 +27,11 @@ import Login from "components/user/pages//Login";
 // import Reseller from "./user/pages/Reseller";
 
 import Error404 from "./Error404";
-// *Fonts
-import "fonts/fonts.css";
+
 import Categories from "./user/pages/Categories";
-// *Hooks
-// import ScrollMemory from "react-router-scroll-memory";
+import Welcome from "./user/pages/Welcome";
+import CreateUser from "./user/organisms/CreateUser";
+import UpdateUser from "./user/organisms/UpdateUser";
 
 const AppSt = styled.div`
   width: 100%;
@@ -60,13 +61,14 @@ function App() {
   // const handleShowMenu = () => {
   //   dispacth(showMenu(!app.showMenu));
   // };
-  
+
   return (
     <Router>
       <AppSt id="app">
         <Navigation />
         <Routes>
-          <Route path="/" element={<Navigate to="/home" />} />
+          <Route path="/" element={<Navigate to="/welcome" />} />
+          <Route path="/welcome" element={<Welcome />} />
           <Route path="/home" element={<Home />} />
           <Route path="/premieres" element={<Premieres />} />
           <Route path="/movies" element={<AllMovies />} />
@@ -79,6 +81,8 @@ function App() {
           <Route path="/movie/:id" element={<Movie />} />
           <Route path="/genre/:genre" element={<ListMoviesGenre />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/create-user" element={<CreateUser />} />
+          <Route path="/update-user/:id" element={<UpdateUser />} />
           <Route path="/category" element={<Categories />} />
           <Route element={<Error404 />} />
         </Routes>
