@@ -7,6 +7,8 @@ import { Link } from "react-router-dom";
 // *Icons
 import HashIcon from "icons/HashIcon";
 import CloseIcon from "icons/CloseIcon";
+import { StoreInterface } from "interfaces/storeTemplate";
+import { useSelector } from "react-redux";
 const CreateUserSt = styled.div`
   width: 100%;
   height: 100%;
@@ -43,7 +45,7 @@ const CreateUserSt = styled.div`
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-bottom: 1.5rem;
+        margin-bottom: 1rem;
         border-radius: 0.3125rem;
         overflow: hidden;
         .cellInputName {
@@ -80,13 +82,16 @@ const CreateUserSt = styled.div`
         color: white;
         outline: none;
         border-style: none;
-        margin-bottom: 3rem;
+        margin-bottom: 1rem;
         color: black;
         border-radius: 0.3rem;
         padding: 0 1rem;
         font-family: "Roboto 300";
         font-size: 1rem;
         text-transform: uppercase;
+      }
+      .profile {
+        text-transform: none;
       }
       .submit {
         font-family: "Roboto 900";
@@ -124,14 +129,20 @@ const CreateUserSt = styled.div`
 interface User {
   user: string;
   password: string;
+  name: string;
+  phone: string;
   date: string;
   role: string;
 }
 const CreateUser = () => {
   let navigate = useNavigate();
+  const app = useSelector((store: StoreInterface) => store.app);
+
   const [state, setState] = useState<User>({
     user: "",
     password: "",
+    name: "",
+    phone: "",
     date: `${formatDate(Date.now())}`,
     role: "user",
   });
@@ -157,16 +168,13 @@ const CreateUser = () => {
     });
   };
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.target.value.toLowerCase();
+    let value = e.target.value;
     let name = e.target.name;
     let type = e.target.type;
 
     setState({
       ...state,
-      [name]:
-        type === "datetime-local"
-          ? formatDate(new Date(value).getTime())
-          : value,
+      [name]: type === "datetime-local" ? formatDate(new Date(value).getTime()) : value,
     });
   };
 
@@ -174,8 +182,13 @@ const CreateUser = () => {
     e.preventDefault();
     let formatToSave: any = new Date(state.date);
     state.date = formatToSave;
+    state.name = state.name.toLowerCase();
     await axios
-      .post(`${URI}/signup`, state)
+      .post(`${URI}/signup`, state, {
+        headers: {
+          authorization: `Bearer ${app.login.token}`,
+        },
+      })
       .then(function (response) {
         console.log(response);
         navigate("/clients");
@@ -188,7 +201,6 @@ const CreateUser = () => {
     <CreateUserSt>
       <form className="createUserForm" onSubmit={handleSubmit}>
         <h2 className="titleCreateUser">Crear Usuario</h2>
-
         <div className="containerUserName">
           <input
             name="user"
@@ -197,16 +209,27 @@ const CreateUser = () => {
             value={state.user}
             onChange={handleChange}
             required
+            maxLength={5}
           />
           <HashIcon className="hashIcon" onClick={handleCreateUser} />
         </div>
         <input
-          name="date"
-          className="cellInput"
-          type="datetime-local"
-          value={state.date}
+          name="name"
+          className="cellInput profile"
+          type="text"
+          value={state.name}
           onChange={handleChange}
+          placeholder="Nombre"
         />
+        <input
+          name="phone"
+          className="cellInput profile"
+          type="number"
+          value={state.phone}
+          onChange={handleChange}
+          placeholder="Celular"
+        />
+        <input name="date" className="cellInput" type="datetime-local" value={state.date} onChange={handleChange} />
         <input className="cellInput submit" type="submit" value="CREAR" />
         <Link className="close" to="/clients">
           <CloseIcon className="sysIconClose" />

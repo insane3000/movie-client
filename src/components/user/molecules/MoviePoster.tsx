@@ -157,6 +157,7 @@ interface Props {
   rating: Number;
 }
 const MoviePoster = (props: Props) => {
+  
   const [imageLoad, setImageLoad] = useState(false);
   const handleLoadImg = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
     e.currentTarget.complete && setImageLoad(true);

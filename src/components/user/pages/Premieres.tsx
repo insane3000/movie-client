@@ -77,7 +77,11 @@ const Premieres = () => {
   // console.log(state);
   const fetchData = () => {
     axios
-      .get(`${URI}/year/${year}`)
+      .get(`${URI}/year/${year}`, {
+        headers: {
+          authorization: `Bearer ${app.login.token}`,
+        },
+      })
       .then(function (response: any) {
         setState(response.data);
       })

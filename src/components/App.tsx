@@ -1,17 +1,12 @@
-import React from "react";
-import {
-  HashRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
+import React, { useEffect } from "react";
+import { HashRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 // *Fonts
 import "fonts/fonts.css";
 // *Components
 
 import Home from "components/user/pages/Home";
 import AllMovies from "components/user/pages/AllMovies";
-import AllSeries from "components/user/pages/AllSeries";
+// import AllSeries from "components/user/pages/AllSeries";
 import Premieres from "components/user/pages/Premieres";
 import ListMoviesGenre from "components/user/pages/ListMoviesGenre";
 import Navigation from "components/user/organisms/Navigation";
@@ -32,6 +27,10 @@ import Categories from "./user/pages/Categories";
 import Welcome from "./user/pages/Welcome";
 import CreateUser from "./user/organisms/CreateUser";
 import UpdateUser from "./user/organisms/UpdateUser";
+import UpdateMedia from "./user/organisms/UpdateMedia";
+import { useDispatch, useSelector } from "react-redux";
+import { StoreInterface } from "interfaces/storeTemplate";
+import { loginServer } from "redux/actions/appAction";
 
 const AppSt = styled.div`
   width: 100%;
@@ -57,34 +56,45 @@ const AppSt = styled.div`
 `;
 
 function App() {
-  // const dispacth = useDispatch();
-  // const handleShowMenu = () => {
-  //   dispacth(showMenu(!app.showMenu));
-  // };
+  const dispatch = useDispatch();
+  const app = useSelector((store: StoreInterface) => store.app);
+  useEffect(() => {
+    if (localStorage.getItem("token") && localStorage.getItem("user")) {
+      dispatch(
+        loginServer(
+          `${localStorage.getItem("user")}`,
+          `${localStorage.getItem("token")}`,
+          `${localStorage.getItem("role")}`
+        )
+      );
+    }
+  }, [dispatch]);
 
   return (
     <Router>
       <AppSt id="app">
         <Navigation />
         <Routes>
-          <Route path="/" element={<Navigate to="/welcome" />} />
-          <Route path="/welcome" element={<Welcome />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/premieres" element={<Premieres />} />
-          <Route path="/movies" element={<AllMovies />} />
-          <Route path="/series" element={<AllSeries />} />
-          <Route path="/search" element={<Search />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/clients" element={<Clients />} />
-          <Route path="/media" element={<MediaContent />} />
-          <Route path="/media/add-media" element={<AddMedia />} />
-          <Route path="/movie/:id" element={<Movie />} />
-          <Route path="/genre/:genre" element={<ListMoviesGenre />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/create-user" element={<CreateUser />} />
-          <Route path="/update-user/:id" element={<UpdateUser />} />
-          <Route path="/category" element={<Categories />} />
-          <Route element={<Error404 />} />
+          <Route path="/" element={app.login.token === "" ? <Navigate to="/welcome" /> : <Navigate to="/home" />} />
+          <Route path="/login" element={app.login.token === "" ? <Login /> : <Navigate to="/" />} />
+          <Route path="/welcome" element={app.login.token === "" ? <Welcome /> : <Navigate to="/" />} />
+          {app.login.token !== "" && <Route path="/home" element={<Home />} />}
+          {app.login.token !== "" && <Route path="/premieres" element={<Premieres />} />}
+          {app.login.token !== "" && <Route path="/movies" element={<AllMovies />} />}
+          {app.login.token !== "" && <Route path="/movie/:id" element={<Movie />} />}
+          {app.login.token !== "" && <Route path="/genre/:genre" element={<ListMoviesGenre />} />}
+          {app.login.token !== "" && <Route path="/category" element={<Categories />} />}
+          {app.login.token !== "" && <Route path="/search" element={<Search />} />}
+          {app.login.token !== "" && <Route path="/profile" element={<Profile />} />}
+          {/* //!Admin */}
+          {app.login.role === "admin" && <Route path="/clients" element={<Clients />} />}
+          {app.login.role === "admin" && <Route path="/create-user" element={<CreateUser />} />}
+          {app.login.role === "admin" && <Route path="/update-user/:id" element={<UpdateUser />} />}
+          {app.login.role === "admin" && <Route path="/media" element={<MediaContent />} />}
+          {app.login.role === "admin" && <Route path="/add-media" element={<AddMedia />} />}
+          {app.login.role === "admin" && <Route path="/update-media/:id" element={<UpdateMedia />} />}
+
+          <Route path="/*" element={<Error404 />} />
         </Routes>
       </AppSt>
     </Router>

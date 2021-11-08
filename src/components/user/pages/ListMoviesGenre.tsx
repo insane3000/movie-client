@@ -5,6 +5,8 @@ import MoviePoster from "../molecules/MoviePoster";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { URI } from "config/axios";
+import { StoreInterface } from "interfaces/storeTemplate";
+import { useSelector } from "react-redux";
 const AllMoviesSt = styled.div`
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
@@ -59,11 +61,16 @@ type Movies = [MovieIT];
 // }
 const ListMoviesGenre = () => {
   const params = useParams();
+  const app = useSelector((store: StoreInterface) => store.app);
   const [state, setState] = useState<Movies>();
   // console.log(params.genre);
   const fetchData = () => {
     axios
-      .get(`${URI}/genre/${params.genre}`)
+      .get(`${URI}/genre/${params.genre}`, {
+        headers: {
+          authorization: `Bearer ${app.login.token}`,
+        },
+      })
       .then(function (response: any) {
         setState(response.data);
       })

@@ -61,11 +61,17 @@ type Movies = [MovieIT];
 const AllMovies = () => {
   const moviesRef = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
+  const app = useSelector((store: StoreInterface) => store.app);
+
   const [state, setState] = useState<Movies>();
   // console.log(state);
   const fetchData = () => {
     axios
-      .get(`${URI}/movies`)
+      .get(`${URI}/movies`, {
+        headers: {
+          authorization: `Bearer ${app.login.token}`,
+        },
+      })
       .then(function (response: any) {
         setState(response.data);
       })
@@ -78,15 +84,9 @@ const AllMovies = () => {
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const app = useSelector((store: StoreInterface) => store.app);
   const restoreScroll = () => {
-    console.log(moviesRef);
-    dispatch(
-      restartScroll(
-        "movies",
-        moviesRef.current === null ? 0 : moviesRef.current.scrollTop
-      )
-    );
+    // console.log(moviesRef);
+    dispatch(restartScroll("movies", moviesRef.current === null ? 0 : moviesRef.current.scrollTop));
   };
   useEffect(() => {
     moviesRef.current && (moviesRef.current.scrollTop = app.scroll.movies);

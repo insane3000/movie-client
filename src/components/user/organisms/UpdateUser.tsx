@@ -8,6 +8,8 @@ import { Link } from "react-router-dom";
 // *Icons
 import HashIcon from "icons/HashIcon";
 import CloseIcon from "icons/CloseIcon";
+import { StoreInterface } from "interfaces/storeTemplate";
+import { useSelector } from "react-redux";
 
 const UpdateUserSt = styled.div`
   width: 100%;
@@ -44,7 +46,7 @@ const UpdateUserSt = styled.div`
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-bottom: 1.5rem;
+        margin-bottom: 1rem;
         border-radius: 0.3125rem;
         overflow: hidden;
         .cellInputName {
@@ -81,13 +83,16 @@ const UpdateUserSt = styled.div`
         color: white;
         outline: none;
         border-style: none;
-        margin-bottom: 3rem;
+        margin-bottom: 1rem;
         color: black;
         border-radius: 0.3rem;
         padding: 0 1rem;
         font-family: "Roboto 300";
         font-size: 1rem;
         text-transform: uppercase;
+      }
+      .profile {
+        text-transform: none;
       }
       .submit {
         font-family: "Roboto 900";
@@ -125,15 +130,21 @@ const UpdateUserSt = styled.div`
 interface User {
   user: string;
   password: string;
+  name: string;
+  phone: string;
   date: string;
   role: string;
 }
 const UpdateUser = () => {
   const params = useParams();
   let navigate = useNavigate();
+  const app = useSelector((store: StoreInterface) => store.app);
+
   const [state, setState] = useState<User>({
     user: "",
     password: "",
+    name: "",
+    phone: "",
     date: `${formatDate(Date.now())}`,
     role: "user",
   });
@@ -161,16 +172,13 @@ const UpdateUser = () => {
     });
   };
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.target.value.toLowerCase();
+    let value = e.target.value;
     let name = e.target.name;
     let type = e.target.type;
 
     setState({
       ...state,
-      [name]:
-        type === "datetime-local"
-          ? formatDate(new Date(value).getTime())
-          : value,
+      [name]: type === "datetime-local" ? formatDate(new Date(value).getTime()) : value,
     });
   };
 
@@ -178,8 +186,13 @@ const UpdateUser = () => {
     e.preventDefault();
     let formatToSave: any = new Date(state.date);
     state.date = formatToSave;
+    state.name = state.name.toLowerCase();
     await axios
-      .put(`${URI}/users/${params.id}`, state)
+      .put(`${URI}/users/${params.id}`, state, {
+        headers: {
+          authorization: `Bearer ${app.login.token}`,
+        },
+      })
       .then(function (response) {
         console.log(response);
         navigate("/clients");
@@ -197,6 +210,8 @@ const UpdateUser = () => {
           setState(() => ({
             ...state,
             user: response.data.user,
+            name: response.data.name,
+            phone: response.data.phone,
             date: formatDate(new Date(response.data.date).getTime()),
           }));
         })
@@ -211,7 +226,7 @@ const UpdateUser = () => {
   return (
     <UpdateUserSt>
       <form className="createUserForm" onSubmit={handleSubmit}>
-        <h2 className="titleCreateUser">Crear Usuario</h2>
+        <h2 className="titleCreateUser">Actualizar</h2>
 
         <div className="containerUserName">
           <input
@@ -221,16 +236,27 @@ const UpdateUser = () => {
             value={state.user}
             onChange={handleChange}
             required
+            maxLength={5}
           />
           <HashIcon className="hashIcon" onClick={handleCreateUser} />
         </div>
         <input
-          name="date"
-          className="cellInput"
-          type="datetime-local"
-          value={state.date}
+          name="name"
+          className="cellInput profile"
+          type="text"
+          value={state.name}
           onChange={handleChange}
+          placeholder="Nombre"
         />
+        <input
+          name="phone"
+          className="cellInput profile"
+          type="number"
+          value={state.phone}
+          onChange={handleChange}
+          placeholder="Celular"
+        />
+        <input name="date" className="cellInput" type="datetime-local" value={state.date} onChange={handleChange} />
         <input className="cellInput submit" type="submit" value="ACTUALIZAR" />
         <Link className="close" to="/clients">
           <CloseIcon className="sysIconClose" />

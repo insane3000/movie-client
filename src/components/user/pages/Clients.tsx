@@ -1,6 +1,8 @@
 import axios from "axios";
 import { URI } from "config/axios";
+import { StoreInterface } from "interfaces/storeTemplate";
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -147,18 +149,28 @@ interface MovieIT {
 }
 type Movies = [MovieIT];
 const Search = () => {
+  const app = useSelector((store: StoreInterface) => store.app);
+
   const [state, setState] = useState<Movies>();
   // console.log(state);
   // !Delete User
   const handleDelete = async (id: string) => {
-    await axios.delete(`${URI}/users/${id}`).then(() => {
+    await axios.delete(`${URI}/users/${id}`, {
+      headers: {
+        authorization: `Bearer ${app.login.token}`,
+      },
+    }).then(() => {
       fetchData();
     });
   };
   // !Get all Users
   const fetchData = () => {
     axios
-      .get(`${URI}/users`)
+      .get(`${URI}/users`, {
+        headers: {
+          authorization: `Bearer ${app.login.token}`,
+        },
+      })
       .then(function (response: any) {
         setState(response.data);
       })

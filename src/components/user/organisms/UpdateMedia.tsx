@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { URI } from "config/axios";
 import { StoreInterface } from "interfaces/storeTemplate";
 import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+
 const SearchSt = styled.div`
   width: 100%;
   height: 100%;
@@ -88,6 +90,7 @@ const SearchSt = styled.div`
   }
 `;
 const Search = () => {
+  const params = useParams();
   let navigate = useNavigate();
   const app = useSelector((store: StoreInterface) => store.app);
   const [file, setFile] = useState<any>();
@@ -101,8 +104,6 @@ const Search = () => {
   const [synopsis, setSynopsis] = useState<any>("");
   const [link, setLink] = useState<any>("");
   const [alertImg, setAlertImg] = useState<any>(false);
-
-  console.log(file);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.currentTarget.files?.[0];
@@ -163,22 +164,52 @@ const Search = () => {
     formData.append("synopsis", synopsis);
     formData.append("link", link);
     formData.append("file", file);
-    // console.log(formData)
+    console.log("put client");
+    console.log(formData)
+
     await axios
-      .post(`${URI}/movies`, formData, {
+      .put(`${URI}/movies/${params.id}`, formData, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
         },
       })
       .then((response) => {
+        console.log(response.data);
         if (response.statusText === "OK") {
-          navigate("/media");
+          // navigate("/media");
         }
       });
   };
+  useEffect(() => {
+    const fetchData = async () => {
+      axios
+        .get(`${URI}/movies/${params.id}`, {
+          headers: {
+            authorization: `Bearer ${app.login.token}`,
+          },
+        })
+        .then(function (response) {
+          setTitle(response.data.title);
+          setTitleEsp(response.data.titleEsp);
+          setRating(response.data.rating);
+          setYear(response.data.year);
+          setGenre(response.data.genre);
+          setTime(response.data.time);
+          setActors(response.data.actors);
+          setSynopsis(response.data.synopsis);
+          setLink(response.data.link);
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    };
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params.id]);
   return (
     <SearchSt>
-      <h2 className="title">Agregar peliculas</h2>
+      <h2 className="title">Actualizar peliculas</h2>
 
       <form className="upload-form" onSubmit={handleSubmit}>
         <input

@@ -32,6 +32,7 @@ const WelcomeSt = styled.div`
       font-family: "Roboto 900";
       font-size: 4rem;
       margin-bottom: 0rem;
+      color: #5900ff;
     }
     .titleCode {
       font-family: "Roboto 100";

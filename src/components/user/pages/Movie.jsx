@@ -6,6 +6,7 @@ import axios from "axios";
 import { URI } from "config/axios";
 import SpinnerImg from "../atoms/SpinnerImg";
 import { useParams } from "react-router";
+import { useSelector } from "react-redux";
 const MovieSt = styled.div`
   width: 100%;
   height: auto;
@@ -202,6 +203,8 @@ const movieTemplate = {
 const Movie = () => {
   const params = useParams();
   // const params = useParams<Params>();
+  const app = useSelector((store) => store.app);
+
   const [state, setState] = useState(movieTemplate);
   const [imageLoad, setImageLoad] = useState(false);
   const modifyLink = state.link?.split(".mp4")[0];
@@ -219,7 +222,11 @@ const Movie = () => {
   useEffect(() => {
     const fetchData = () => {
       axios
-        .get(`${URI}/movies/${params.id}`)
+        .get(`${URI}/movies/${params.id}`, {
+          headers: {
+            authorization: `Bearer ${app.login.token}`,
+          },
+        })
 
         .then(function (response) {
           setState(response.data);
@@ -230,7 +237,7 @@ const Movie = () => {
         });
     };
     fetchData();
-  }, [params.id]);
+  }, [params.id, app.login.token]);
   //!para validar query
   let genero = state.genre.slice(0, 4).toLowerCase();
 
@@ -239,19 +246,14 @@ const Movie = () => {
     <MovieSt ref={movieRef}>
       <div className="container-poster-data">
         <div className="container-poster">
-          <img
-            className="img-movie"
-            src={state.image}
-            alt="poster movie"
-            onLoad={(e) => handleLoadImg(e)}
-          />
+          <img className="img-movie" src={state.image} alt="poster movie" onLoad={(e) => handleLoadImg(e)} />
           {!imageLoad && <SpinnerImg />}
         </div>
         <div className="container-data">
           <h2 className="title-movie">{state.title}</h2>
           <h3 className="year">
-            {state.year} • {cleanText.split(" ")[0]} {cleanText.split(" ")[1]}{" "}
-            {cleanText.split(" ")[2]} {cleanText.split(" ")[3]} • {state.time}
+            {state.year} • {cleanText.split(" ")[0]} {cleanText.split(" ")[1]} {cleanText.split(" ")[2]}{" "}
+            {cleanText.split(" ")[3]} • {state.time}
           </h3>
           <h3 className="rate">
             <span>Calificación:</span> {state.rating}
@@ -280,9 +282,7 @@ const Movie = () => {
           }}
         />
       </div>
-      {genero === "" ? null : (
-        <Cluster genre={genero} subtitle="Ver mas" text="Ver todo." />
-      )}
+      {genero === "" ? null : <Cluster genre={genero} subtitle="Ver mas" text="Ver todo." />}
     </MovieSt>
   );
 };

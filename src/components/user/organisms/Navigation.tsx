@@ -7,10 +7,11 @@ import UserIconLight from "icons/UserIconLight";
 import SearchIcon from "icons/SearchIcon";
 import CloseIcon from "icons/CloseIcon";
 import { useDispatch, useSelector } from "react-redux";
-import { restartScroll, search } from "redux/actions/appAction";
+import { loginServer, restartScroll, search } from "redux/actions/appAction";
 import axios from "axios";
 import { URI } from "config/axios";
 import { StoreInterface } from "interfaces/storeTemplate";
+
 const NavigationSt = styled.nav`
   width: 100%;
   height: 5rem;
@@ -263,14 +264,11 @@ const NavigationSt = styled.nav`
 `;
 const Navigation = () => {
   let navigate = useNavigate();
-  const dispacth = useDispatch();
+  const dispatch = useDispatch();
   const app = useSelector((store: StoreInterface) => store.app);
   const [state, setState] = useState("");
   const [user, setUser] = useState(false);
 
-  const handleShowUser = () => {
-    setUser(!user);
-  };
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setState(e.target.value.trim());
   };
@@ -278,51 +276,45 @@ const Navigation = () => {
     e.preventDefault();
     fetchData();
     navigate("/search");
-    dispacth(restartScroll("search", 0));
+    dispatch(restartScroll("search", 0));
   };
   const fetchData = () => {
     axios
-      .get(`${URI}/movie-search/${state}`)
+      .get(`${URI}/movie-search/${state}`, {
+        headers: {
+          authorization: `Bearer ${app.login.token}`,
+        },
+      })
       .then(function (response: any) {
-        dispacth(search(response.data));
+        dispatch(search(response.data));
       })
       .catch(function (error) {
         console.log(error);
         // history.push(`/admin/login`);
       });
   };
-
+  const logout = () => {
+    dispatch(loginServer("", "", ""));
+    localStorage.setItem("token", "");
+    localStorage.setItem("user", "");
+    localStorage.setItem("role", "");
+    navigate(`/`);
+    setUser(!user);
+  };
   return (
     <NavigationSt>
-      <Link
-        className="title"
-        to="/"
-        onClick={() => dispacth(restartScroll("home", 0))}
-      >
+      <Link className="title" to="/" onClick={() => dispatch(restartScroll("home", 0))}>
         Movie Store Cbba
       </Link>
       {app.login.token === "" ? null : (
         <section className="ul">
-          <NavLink
-            className="li"
-            to="/home"
-            onClick={() => dispacth(restartScroll("home", 0))}
-          >
+          <NavLink className="li" to="/home" onClick={() => dispatch(restartScroll("home", 0))}>
             Home
           </NavLink>
-
-          <NavLink
-            className="li"
-            to="/movies"
-            onClick={() => dispacth(restartScroll("movies", 0))}
-          >
+          <NavLink className="li" to="/movies" onClick={() => dispatch(restartScroll("movies", 0))}>
             Películas
           </NavLink>
-          <NavLink
-            className="li"
-            to="/premieres"
-            onClick={() => dispacth(restartScroll("premieres", 0))}
-          >
+          <NavLink className="li" to="/premieres" onClick={() => dispatch(restartScroll("premieres", 0))}>
             Estrenos
           </NavLink>
           <NavLink className="li" to="/category">
@@ -344,29 +336,40 @@ const Navigation = () => {
           </button>
         </form>
       )}
-      {app.login.token === "" ? null : (
-        <div className="buttons-right">
-          {/* <SearchIcon className="search" onClick={(e) => searchBtn(e)} /> */}
-          <UserIconLight className="user" onClick={handleShowUser} />
-          {user && (
-            <section className="options">
-              <CloseIcon className="close-user" onClick={handleShowUser} />
-              <NavLink className="link" to="/profile" onClick={handleShowUser}>
+
+      <div className="buttons-right">
+        {/* <SearchIcon className="search" onClick={(e) => searchBtn(e)} /> */}
+        <UserIconLight className="user" onClick={() => setUser(!user)} />
+        {user && (
+          <section className="options">
+            <CloseIcon className="close-user" onClick={() => setUser(!user)} />
+            {app.login.token !== "" && (
+              <NavLink className="link" to="/profile" onClick={() => setUser(!user)}>
                 Perfil
               </NavLink>
-              <NavLink className="link" to="/clients" onClick={handleShowUser}>
+            )}
+            {app.login.role === "admin" && (
+              <NavLink className="link" to="/clients" onClick={() => setUser(!user)}>
                 Clientes
               </NavLink>
-              <NavLink className="link" to="/media" onClick={handleShowUser}>
+            )}
+            {app.login.role === "admin" && (
+              <NavLink className="link" to="/media" onClick={() => setUser(!user)}>
                 Contenido
               </NavLink>
-              <NavLink className="link" to="/login" onClick={handleShowUser}>
+            )}
+            {app.login.token === "" ? (
+              <NavLink className="link" to="/login" onClick={() => setUser(!user)}>
+                Login
+              </NavLink>
+            ) : (
+              <NavLink className="link" to="/" onClick={logout}>
                 Salir
               </NavLink>
-            </section>
-          )}
-        </div>
-      )}
+            )}
+          </section>
+        )}
+      </div>
     </NavigationSt>
   );
 };

@@ -1,6 +1,8 @@
 import axios from "axios";
 import { URI } from "config/axios";
+import { StoreInterface } from "interfaces/storeTemplate";
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -151,11 +153,29 @@ interface MovieIT {
 }
 type Movies = [MovieIT];
 const Search = () => {
+  const app = useSelector((store: StoreInterface) => store.app);
+
   const [state, setState] = useState<Movies>();
-  console.log(state);
+  // console.log(state);
+  // !Delete Movie
+  const handleDelete = async (id: string) => {
+    await axios
+      .delete(`${URI}/movies/${id}`, {
+        headers: {
+          authorization: `Bearer ${app.login.token}`,
+        },
+      })
+      .then(() => {
+        fetchData();
+      });
+  };
   const fetchData = () => {
     axios
-      .get(`${URI}/movies`)
+      .get(`${URI}/movies`, {
+        headers: {
+          authorization: `Bearer ${app.login.token}`,
+        },
+      })
       .then(function (response: any) {
         setState(response.data);
       })
@@ -195,12 +215,16 @@ const Search = () => {
             <div className="cell  none">{i.rating}</div>
             {/* <div className="cell  none">{i.image}</div> */}
             <div className="cell  none">{i.link}</div>
-            <div className="cell ">Editar</div>
-            <div className="cell ">Borrar</div>
+            <Link className="cell " to={`/update-media/${i._id}`}>
+              Editar
+            </Link>
+            <div className="cell " onClick={() => handleDelete(i._id)}>
+              Borrar
+            </div>
           </div>
         ))}
       </div>
-      <Link className="addMedia" to="/media/add-media">
+      <Link className="addMedia" to="/add-media">
         +
       </Link>
     </SearchSt>

@@ -8,6 +8,8 @@ import ArrowRightIcon from "icons/ArrowRightIcon";
 import MoviePoster from "../molecules/MoviePoster";
 import axios from "axios";
 import { URI } from "config/axios";
+import { useSelector } from "react-redux";
+import { StoreInterface } from "interfaces/storeTemplate";
 const ClusterSt = styled.div`
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
@@ -107,6 +109,7 @@ type Movies = [MovieIT];
 
 const MoviesGender = (props: Props) => {
   const moviesGenderRef = useRef<any>();
+  const app = useSelector((store: StoreInterface) => store.app);
   const ScrollRight = () => {
     moviesGenderRef.current.scrollLeft += 1000;
     // console.log(moviesGenderRef);
@@ -118,7 +121,11 @@ const MoviesGender = (props: Props) => {
   // console.log(props.genre);
   const fetchData = () => {
     axios
-      .get(`${URI}/genre/${props.genre}`)
+      .get(`${URI}/genre/${props.genre}`,{
+        headers: {
+          authorization: `Bearer ${app.login.token}`,
+        },
+      })
       .then(function (response: any) {
         setState(response.data);
       })
