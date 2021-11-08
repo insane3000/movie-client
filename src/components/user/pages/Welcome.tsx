@@ -5,7 +5,12 @@
 // import { restartScroll } from "redux/actions/appAction";
 // import Cluster from "../organisms/Cluster";
 
+import axios from "axios";
+import { URI } from "config/axios";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
+import { loginServer } from "redux/actions/appAction";
 import styled from "styled-components";
 const WelcomeSt = styled.div`
   width: 100%;
@@ -109,6 +114,8 @@ interface State {
   word4: string;
 }
 const Welcome = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [state, setState] = useState<State>({
     word0: "",
     word1: "",
@@ -126,13 +133,28 @@ const Welcome = () => {
   };
   let user =
     state.word0 + state.word1 + state.word2 + state.word3 + state.word4;
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(user);
+    // setSpinner(true);
+    // console.log(user);
+    await axios
+      .post(`${URI}/login-user`, { user })
+      .then(function (response) {
+        dispatch(loginServer(response.data._id, response.data.token, response.data.role));
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("user", response.data._id);
+        localStorage.setItem("role", response.data.role);
+        navigate(`/home`);
+        console.log(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+        // setSpinner(false);
+        // setErrorUser(true);
+      });
   };
 
   return (
-    // <WelcomeSt ref={homeRef} onClick={restoreScroll}>
     <WelcomeSt>
       <h2 className="titleWelcome">Bienvenido a Movie Store Cbba</h2>
       <span className="titleCode">Inserta tu codigo de activación.</span>

@@ -6,10 +6,11 @@ import styled from "styled-components";
 import UserIconLight from "icons/UserIconLight";
 import SearchIcon from "icons/SearchIcon";
 import CloseIcon from "icons/CloseIcon";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { restartScroll, search } from "redux/actions/appAction";
 import axios from "axios";
 import { URI } from "config/axios";
+import { StoreInterface } from "interfaces/storeTemplate";
 const NavigationSt = styled.nav`
   width: 100%;
   height: 5rem;
@@ -263,6 +264,7 @@ const NavigationSt = styled.nav`
 const Navigation = () => {
   let navigate = useNavigate();
   const dispacth = useDispatch();
+  const app = useSelector((store: StoreInterface) => store.app);
   const [state, setState] = useState("");
   const [user, setUser] = useState(false);
 
@@ -276,8 +278,7 @@ const Navigation = () => {
     e.preventDefault();
     fetchData();
     navigate("/search");
-    dispacth(restartScroll("search", 0))
-
+    dispacth(restartScroll("search", 0));
   };
   const fetchData = () => {
     axios
@@ -300,69 +301,72 @@ const Navigation = () => {
       >
         Movie Store Cbba
       </Link>
-      <section className="ul">
-        <NavLink
-          className="li"
-          to="/home"
-          onClick={() => dispacth(restartScroll("home", 0))}
-        >
-          Home
-        </NavLink>
+      {app.login.token === "" ? null : (
+        <section className="ul">
+          <NavLink
+            className="li"
+            to="/home"
+            onClick={() => dispacth(restartScroll("home", 0))}
+          >
+            Home
+          </NavLink>
 
-        <NavLink
-          className="li"
-          to="/movies"
-          onClick={() => dispacth(restartScroll("movies", 0))}
-        >
-          Películas
-        </NavLink>
-        <NavLink
-          className="li"
-          to="/premieres"
-          onClick={() => dispacth(restartScroll("premieres", 0))}
-        >
-          Estrenos
-        </NavLink>
-        <NavLink className="li" to="/category">
-          Categorias
-        </NavLink>
-        {/* <NavLink className="li" to="/series">
-          Series
-        </NavLink> */}
-      </section>
-      <form className="search-container" onSubmit={handleSubmit}>
-        <input
-          className="search-input"
-          type="text"
-          name="search"
-          placeholder="Buscar..."
-          onChange={(e) => handleSearch(e)}
-        />
-        <button className="btn-submit" type="submit">
-          <SearchIcon className="icon-submit" />
-        </button>
-      </form>
-      <div className="buttons-right">
-        {/* <SearchIcon className="search" onClick={(e) => searchBtn(e)} /> */}
-        <UserIconLight className="user" onClick={handleShowUser} />
-        {user && (
-          <section className="options">
-            <CloseIcon className="close-user" onClick={handleShowUser} />
-            <NavLink className="link" to="/profile" onClick={handleShowUser}>
-              Perfil
-            </NavLink>
-            <NavLink className="link" to="/clients" onClick={handleShowUser}>
-              Clientes
-            </NavLink>
-            <NavLink className="link" to="/media" onClick={handleShowUser}>
-              Contenido
-            </NavLink>
-            <NavLink className="link" to="/login" onClick={handleShowUser}>
-              Salir
-            </NavLink>
-          </section>
-        )}
-      </div>
+          <NavLink
+            className="li"
+            to="/movies"
+            onClick={() => dispacth(restartScroll("movies", 0))}
+          >
+            Películas
+          </NavLink>
+          <NavLink
+            className="li"
+            to="/premieres"
+            onClick={() => dispacth(restartScroll("premieres", 0))}
+          >
+            Estrenos
+          </NavLink>
+          <NavLink className="li" to="/category">
+            Categorias
+          </NavLink>
+        </section>
+      )}
+      {app.login.token === "" ? null : (
+        <form className="search-container" onSubmit={handleSubmit}>
+          <input
+            className="search-input"
+            type="text"
+            name="search"
+            placeholder="Buscar..."
+            onChange={(e) => handleSearch(e)}
+          />
+          <button className="btn-submit" type="submit">
+            <SearchIcon className="icon-submit" />
+          </button>
+        </form>
+      )}
+      {app.login.token === "" ? null : (
+        <div className="buttons-right">
+          {/* <SearchIcon className="search" onClick={(e) => searchBtn(e)} /> */}
+          <UserIconLight className="user" onClick={handleShowUser} />
+          {user && (
+            <section className="options">
+              <CloseIcon className="close-user" onClick={handleShowUser} />
+              <NavLink className="link" to="/profile" onClick={handleShowUser}>
+                Perfil
+              </NavLink>
+              <NavLink className="link" to="/clients" onClick={handleShowUser}>
+                Clientes
+              </NavLink>
+              <NavLink className="link" to="/media" onClick={handleShowUser}>
+                Contenido
+              </NavLink>
+              <NavLink className="link" to="/login" onClick={handleShowUser}>
+                Salir
+              </NavLink>
+            </section>
+          )}
+        </div>
+      )}
     </NavigationSt>
   );
 };

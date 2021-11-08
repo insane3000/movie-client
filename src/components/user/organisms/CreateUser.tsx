@@ -1,10 +1,12 @@
 import { useState } from "react";
 import styled from "styled-components";
-// *Icons
-import HashIcon from "icons/HashIcon";
 import axios from "axios";
 import { URI } from "config/axios";
 import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
+// *Icons
+import HashIcon from "icons/HashIcon";
+import CloseIcon from "icons/CloseIcon";
 const CreateUserSt = styled.div`
   width: 100%;
   height: 100%;
@@ -16,6 +18,7 @@ const CreateUserSt = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+
     .titleCreateUser {
       font-family: "Roboto 900";
       font-size: 2rem;
@@ -32,7 +35,7 @@ const CreateUserSt = styled.div`
       justify-content: center;
       align-items: center;
       border-radius: 0.5rem;
-
+      position: relative;
       .containerUserName {
         width: 80%;
         height: 3rem;
@@ -99,6 +102,22 @@ const CreateUserSt = styled.div`
           transition: 0.1s;
         }
       }
+      .close {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        width: 3rem;
+        height: 3rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        .sysIconClose {
+          width: 100%;
+          height: 100%;
+          color: white;
+        }
+      }
     }
   }
 `;
@@ -113,10 +132,14 @@ const CreateUser = () => {
   const [state, setState] = useState<User>({
     user: "",
     password: "",
-    date: "",
+    date: `${formatDate(Date.now())}`,
     role: "user",
   });
-
+  //! funcion para formatiear la fecha
+  function formatDate(data: number) {
+    return new Date(data - 1000 * 60 * 60 * 4).toISOString().substring(0, 16);
+  }
+  //! funcion para crear un hash o nombre aleatorio
   function makeid(length: number) {
     var result = "";
     var characters = "abcdefghjklmnpqrstuvwxyz123456789";
@@ -140,12 +163,17 @@ const CreateUser = () => {
 
     setState({
       ...state,
-      [name]: type === "datetime-local" ? new Date(value).toISOString() : value,
+      [name]:
+        type === "datetime-local"
+          ? formatDate(new Date(value).getTime())
+          : value,
     });
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    let formatToSave: any = new Date(state.date);
+    state.date = formatToSave;
     await axios
       .post(`${URI}/signup`, state)
       .then(function (response) {
@@ -176,9 +204,13 @@ const CreateUser = () => {
           name="date"
           className="cellInput"
           type="datetime-local"
+          value={state.date}
           onChange={handleChange}
         />
         <input className="cellInput submit" type="submit" value="CREAR" />
+        <Link className="close" to="/clients">
+          <CloseIcon className="sysIconClose" />
+        </Link>
       </form>
     </CreateUserSt>
   );

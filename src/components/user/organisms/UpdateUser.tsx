@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
-// *Icons
-import HashIcon from "icons/HashIcon";
 import axios from "axios";
 import { URI } from "config/axios";
 import { useNavigate } from "react-router";
-const CreateUserSt = styled.div`
+import { Link } from "react-router-dom";
+// *Icons
+import HashIcon from "icons/HashIcon";
+import CloseIcon from "icons/CloseIcon";
+
+const UpdateUserSt = styled.div`
   width: 100%;
   height: 100%;
   color: white;
@@ -33,7 +36,7 @@ const CreateUserSt = styled.div`
       justify-content: center;
       align-items: center;
       border-radius: 0.5rem;
-
+      position: relative;
       .containerUserName {
         width: 80%;
         height: 3rem;
@@ -100,6 +103,22 @@ const CreateUserSt = styled.div`
           transition: 0.1s;
         }
       }
+      .close {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        width: 3rem;
+        height: 3rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        .sysIconClose {
+          width: 100%;
+          height: 100%;
+          color: white;
+        }
+      }
     }
   }
 `;
@@ -109,16 +128,22 @@ interface User {
   date: string;
   role: string;
 }
-const CreateUser = () => {
+const UpdateUser = () => {
   const params = useParams();
   let navigate = useNavigate();
   const [state, setState] = useState<User>({
     user: "",
     password: "",
-    date: "",
+    date: `${formatDate(Date.now())}`,
     role: "user",
   });
+  // console.log(state.date);
+  //! funcion para formatiear la fecha
+  function formatDate(data: number) {
+    return new Date(data - 1000 * 60 * 60 * 4).toISOString().substring(0, 16);
+  }
 
+  //! funcion para crear un hash o nombre aleatorio
   function makeid(length: number) {
     var result = "";
     var characters = "abcdefghjklmnpqrstuvwxyz123456789";
@@ -142,14 +167,19 @@ const CreateUser = () => {
 
     setState({
       ...state,
-      [name]: type === "datetime-local" ? new Date(value).toISOString() : value,
+      [name]:
+        type === "datetime-local"
+          ? formatDate(new Date(value).getTime())
+          : value,
     });
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    let formatToSave: any = new Date(state.date);
+    state.date = formatToSave;
     await axios
-      .post(`${URI}/signup`, state)
+      .put(`${URI}/users/${params.id}`, state)
       .then(function (response) {
         console.log(response);
         navigate("/clients");
@@ -158,8 +188,28 @@ const CreateUser = () => {
         console.log(error);
       });
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      axios
+        .get(`${URI}/users/${params.id}`)
+        .then(function (response) {
+          setState(() => ({
+            ...state,
+            user: response.data.user,
+            date: formatDate(new Date(response.data.date).getTime()),
+          }));
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    };
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params.id]);
+
   return (
-    <CreateUserSt>
+    <UpdateUserSt>
       <form className="createUserForm" onSubmit={handleSubmit}>
         <h2 className="titleCreateUser">Crear Usuario</h2>
 
@@ -178,12 +228,16 @@ const CreateUser = () => {
           name="date"
           className="cellInput"
           type="datetime-local"
+          value={state.date}
           onChange={handleChange}
         />
-        <input className="cellInput submit" type="submit" value="CREAR" />
+        <input className="cellInput submit" type="submit" value="ACTUALIZAR" />
+        <Link className="close" to="/clients">
+          <CloseIcon className="sysIconClose" />
+        </Link>
       </form>
-    </CreateUserSt>
+    </UpdateUserSt>
   );
 };
 
-export default CreateUser;
+export default UpdateUser;

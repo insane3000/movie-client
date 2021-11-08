@@ -16,7 +16,12 @@ const appReducer = (state = initialState, action: ActionsInterface) => {
     case ActionType.LOGIN:
       return {
         ...state,
-        login: { ...state.login, user: action.user, token: action.token },
+        login: {
+          ...state.login,
+          user: action.user,
+          token: action.token,
+          role: action.role,
+        },
       };
     case ActionType.SEARCH:
       return {

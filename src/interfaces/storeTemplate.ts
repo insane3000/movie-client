@@ -12,6 +12,7 @@ export type AppInterface = {
   login: {
     user: string;
     token: string;
+    role: string;
   };
   // CashRegister: CashRegisterIT;
 };
@@ -27,6 +28,7 @@ export const appTemplate: AppInterface = {
   login: {
     user: "",
     token: "",
+    role: "",
   },
   // CashRegister: cashRegisterTemplate,
 };

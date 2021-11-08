@@ -14,12 +14,14 @@ export const showMenu =
   };
 // !Seteando LOGIN
 export const loginServer =
-  (user: string, token: string) => (dispatch: Dispatch<ActionsInterface>) => {
+  (user: string, token: string, role: string) =>
+  (dispatch: Dispatch<ActionsInterface>) => {
     // console.log(data);
     dispatch({
       type: ActionType.LOGIN,
       user,
       token,
+      role,
     });
   };
 // !Seteando SEARCH
