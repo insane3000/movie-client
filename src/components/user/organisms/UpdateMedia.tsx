@@ -4,8 +4,9 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { URI } from "config/axios";
 import { StoreInterface } from "interfaces/storeTemplate";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { loginServer } from "redux/actions/appAction";
 
 const SearchSt = styled.div`
   width: 100%;
@@ -92,6 +93,7 @@ const SearchSt = styled.div`
 const Search = () => {
   const params = useParams();
   let navigate = useNavigate();
+  const dispatch = useDispatch();
   const app = useSelector((store: StoreInterface) => store.app);
   const [file, setFile] = useState<any>();
   const [title, setTitle] = useState<any>("");
@@ -202,6 +204,11 @@ const Search = () => {
         })
         .catch(function (error) {
           console.log(error);
+          dispatch(loginServer("", "", ""));
+        localStorage.setItem("token", "");
+        localStorage.setItem("user", "");
+        localStorage.setItem("role", "");
+        navigate(`/`);
         });
     };
     fetchData();

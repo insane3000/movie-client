@@ -6,7 +6,10 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { URI } from "config/axios";
 import { StoreInterface } from "interfaces/storeTemplate";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { loginServer } from "redux/actions/appAction";
+import { useNavigate } from "react-router";
+
 const AllMoviesSt = styled.div`
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
@@ -60,6 +63,9 @@ type Movies = [MovieIT];
 //   genre: string;
 // }
 const ListMoviesGenre = () => {
+  let navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const params = useParams();
   const app = useSelector((store: StoreInterface) => store.app);
   const [state, setState] = useState<Movies>();
@@ -77,6 +83,11 @@ const ListMoviesGenre = () => {
       .catch(function (error) {
         console.log(error);
         // history.push(`/admin/login`);
+        dispatch(loginServer("", "", ""));
+        localStorage.setItem("token", "");
+        localStorage.setItem("user", "");
+        localStorage.setItem("role", "");
+        navigate(`/`);
       });
   };
   useEffect(() => {

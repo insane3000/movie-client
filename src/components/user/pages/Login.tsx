@@ -218,7 +218,7 @@ const AddProducts = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // setSpinner(true);
-    console.log(login);
+    // console.log(login);
     await axios
       .post(`${URI}/login`, login)
       .then(function (response) {
@@ -227,7 +227,7 @@ const AddProducts = () => {
         localStorage.setItem("user", response.data._id);
         localStorage.setItem("role", response.data.role);
         navigate(`/`);
-        console.log(response.data);
+        // console.log(response.data);
       })
       .catch(function (error) {
         // console.log(error);
@@ -239,6 +239,10 @@ const AddProducts = () => {
   useEffect(() => {
     if (localStorage.getItem("token") && localStorage.getItem("token") !== "") {
       navigate(`/`);
+      dispatch(loginServer("", "", ""));
+        localStorage.setItem("token", "");
+        localStorage.setItem("user", "");
+        localStorage.setItem("role", "");
     }
   });
   return (

@@ -2,9 +2,11 @@ import axios from "axios";
 import { URI } from "config/axios";
 import { StoreInterface } from "interfaces/storeTemplate";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { useNavigate } from "react-router";
+import { loginServer } from "redux/actions/appAction";
 
 const SearchSt = styled.div`
   width: 100%;
@@ -153,6 +155,8 @@ interface MovieIT {
 }
 type Movies = [MovieIT];
 const Search = () => {
+  let navigate = useNavigate();
+  const dispatch = useDispatch();
   const app = useSelector((store: StoreInterface) => store.app);
 
   const [state, setState] = useState<Movies>();
@@ -182,6 +186,11 @@ const Search = () => {
       .catch(function (error) {
         console.log(error);
         // history.push(`/admin/login`);
+        dispatch(loginServer("", "", ""));
+        localStorage.setItem("token", "");
+        localStorage.setItem("user", "");
+        localStorage.setItem("role", "");
+        navigate(`/`);
       });
   };
   useEffect(() => {

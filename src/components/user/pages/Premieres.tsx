@@ -6,7 +6,8 @@ import axios from "axios";
 import { URI } from "config/axios";
 import { useDispatch, useSelector } from "react-redux";
 import { StoreInterface } from "interfaces/storeTemplate";
-import { restartScroll } from "redux/actions/appAction";
+import { loginServer, restartScroll } from "redux/actions/appAction";
+import { useNavigate } from "react-router";
 const PremieresSt = styled.div`
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
@@ -56,20 +57,15 @@ interface MovieIT {
 }
 type Movies = [MovieIT];
 const Premieres = () => {
+  let navigate = useNavigate();
   const premieresRef = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
   const app = useSelector((store: StoreInterface) => store.app);
   const restoreScroll = () => {
-    dispatch(
-      restartScroll(
-        "premieres",
-        premieresRef.current === null ? 0 : premieresRef.current.scrollTop
-      )
-    );
+    dispatch(restartScroll("premieres", premieresRef.current === null ? 0 : premieresRef.current.scrollTop));
   };
   useEffect(() => {
-    premieresRef.current &&
-      (premieresRef.current.scrollTop = app.scroll.premieres);
+    premieresRef.current && (premieresRef.current.scrollTop = app.scroll.premieres);
   });
   const year = new Date().getFullYear();
 
@@ -88,6 +84,11 @@ const Premieres = () => {
       .catch(function (error) {
         console.log(error);
         // history.push(`/admin/login`);
+        dispatch(loginServer("", "", ""));
+        localStorage.setItem("token", "");
+        localStorage.setItem("user", "");
+        localStorage.setItem("role", "");
+        navigate(`/`);
       });
   };
   useEffect(() => {

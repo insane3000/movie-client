@@ -9,7 +9,8 @@ import { Link } from "react-router-dom";
 import HashIcon from "icons/HashIcon";
 import CloseIcon from "icons/CloseIcon";
 import { StoreInterface } from "interfaces/storeTemplate";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { loginServer } from "redux/actions/appAction";
 
 const UpdateUserSt = styled.div`
   width: 100%;
@@ -138,6 +139,8 @@ interface User {
 const UpdateUser = () => {
   const params = useParams();
   let navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const app = useSelector((store: StoreInterface) => store.app);
 
   const [state, setState] = useState<User>({
@@ -217,6 +220,11 @@ const UpdateUser = () => {
         })
         .catch(function (error) {
           console.log(error);
+          dispatch(loginServer("", "", ""));
+        localStorage.setItem("token", "");
+        localStorage.setItem("user", "");
+        localStorage.setItem("role", "");
+        navigate(`/`);
         });
     };
     fetchData();

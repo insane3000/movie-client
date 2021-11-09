@@ -6,8 +6,9 @@ import { URI } from "config/axios";
 // *Icons
 import UserIconLight from "icons/UserIconLight";
 import { StoreInterface } from "interfaces/storeTemplate";
-import { useSelector } from "react-redux";
-
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
+import { loginServer } from "redux/actions/appAction";
 const UpdateUserSt = styled.div`
   width: 100%;
   height: 100%;
@@ -79,6 +80,8 @@ interface User {
   role: string;
 }
 const UpdateUser = () => {
+  let navigate = useNavigate();
+  const dispatch = useDispatch();
   const params = useParams();
   const app = useSelector((store: StoreInterface) => store.app);
 
@@ -111,6 +114,11 @@ const UpdateUser = () => {
         })
         .catch(function (error) {
           console.log(error);
+          dispatch(loginServer("", "", ""));
+          localStorage.setItem("token", "");
+          localStorage.setItem("user", "");
+          localStorage.setItem("role", "");
+          navigate(`/`);
         });
     };
     fetchData();

@@ -8,8 +8,11 @@ import ArrowRightIcon from "icons/ArrowRightIcon";
 import MoviePoster from "../molecules/MoviePoster";
 import axios from "axios";
 import { URI } from "config/axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { StoreInterface } from "interfaces/storeTemplate";
+import { loginServer } from "redux/actions/appAction";
+import { useNavigate } from "react-router";
+
 const ClusterSt = styled.div`
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
@@ -108,6 +111,8 @@ interface MovieIT {
 type Movies = [MovieIT];
 
 const MoviesGender = (props: Props) => {
+  let navigate = useNavigate();
+  const dispatch = useDispatch();
   const moviesGenderRef = useRef<any>();
   const app = useSelector((store: StoreInterface) => store.app);
   const ScrollRight = () => {
@@ -131,7 +136,11 @@ const MoviesGender = (props: Props) => {
       })
       .catch(function (error) {
         console.log(error);
-        // history.push(`/admin/login`);
+        dispatch(loginServer("", "", ""));
+        localStorage.setItem("token", "");
+        localStorage.setItem("user", "");
+        localStorage.setItem("role", "");
+        navigate(`/`);
       });
   };
   useEffect(() => {

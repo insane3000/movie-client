@@ -6,7 +6,8 @@ import axios from "axios";
 import { URI } from "config/axios";
 import { useDispatch, useSelector } from "react-redux";
 import { StoreInterface } from "interfaces/storeTemplate";
-import { restartScroll } from "redux/actions/appAction";
+import { loginServer, restartScroll } from "redux/actions/appAction";
+import { useNavigate } from "react-router";
 const AllMoviesSt = styled.div`
   width: 100%;
   height: 100%;
@@ -59,8 +60,10 @@ interface MovieIT {
 }
 type Movies = [MovieIT];
 const AllMovies = () => {
-  const moviesRef = useRef<HTMLDivElement>(null);
+  let navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const moviesRef = useRef<HTMLDivElement>(null);
   const app = useSelector((store: StoreInterface) => store.app);
 
   const [state, setState] = useState<Movies>();
@@ -77,7 +80,11 @@ const AllMovies = () => {
       })
       .catch(function (error) {
         console.log(error);
-        // history.push(`/admin/login`);
+        dispatch(loginServer("", "", ""));
+        localStorage.setItem("token", "");
+        localStorage.setItem("user", "");
+        localStorage.setItem("role", "");
+        navigate(`/`);
       });
   };
   useEffect(() => {

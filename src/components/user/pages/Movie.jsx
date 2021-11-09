@@ -6,7 +6,9 @@ import axios from "axios";
 import { URI } from "config/axios";
 import SpinnerImg from "../atoms/SpinnerImg";
 import { useParams } from "react-router";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
+import { loginServer } from "redux/actions/appAction";
 const MovieSt = styled.div`
   width: 100%;
   height: auto;
@@ -202,7 +204,8 @@ const movieTemplate = {
 };
 const Movie = () => {
   const params = useParams();
-  // const params = useParams<Params>();
+  let navigate = useNavigate();
+  const dispatch = useDispatch();
   const app = useSelector((store) => store.app);
 
   const [state, setState] = useState(movieTemplate);
@@ -234,10 +237,16 @@ const Movie = () => {
         })
         .catch(function (error) {
           console.log(error);
+          dispatch(loginServer("", "", ""));
+          localStorage.setItem("token", "");
+          localStorage.setItem("user", "");
+          localStorage.setItem("role", "");
+          navigate(`/`);
         });
     };
     fetchData();
-  }, [params.id, app.login.token]);
+    // console.log('alalalal')
+  }, [params.id, app.login.token, dispatch, navigate]);
   //!para validar query
   let genero = state.genre.slice(0, 4).toLowerCase();
 

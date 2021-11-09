@@ -290,7 +290,11 @@ const Navigation = () => {
       })
       .catch(function (error) {
         console.log(error);
-        // history.push(`/admin/login`);
+        dispatch(loginServer("", "", ""));
+        localStorage.setItem("token", "");
+        localStorage.setItem("user", "");
+        localStorage.setItem("role", "");
+        navigate(`/`);
       });
   };
   const logout = () => {
