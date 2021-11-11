@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -91,6 +91,7 @@ const SearchSt = styled.div`
   }
 `;
 const Search = () => {
+  const fileRef = useRef<any>();
   const params = useParams();
   let navigate = useNavigate();
   const dispatch = useDispatch();
@@ -167,12 +168,14 @@ const Search = () => {
     formData.append("link", link);
     formData.append("file", file);
     console.log("put client");
-    console.log(formData)
+    console.log(formData);
 
     await axios
       .put(`${URI}/movies/${params.id}`, formData, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
+          id: `${app.login.user}`,
+          role: `${app.login.role}`,
         },
       })
       .then((response) => {
@@ -188,6 +191,8 @@ const Search = () => {
         .get(`${URI}/movies/${params.id}`, {
           headers: {
             authorization: `Bearer ${app.login.token}`,
+            id: `${app.login.user}`,
+            role: `${app.login.role}`,
           },
         })
         .then(function (response) {
@@ -200,20 +205,21 @@ const Search = () => {
           setActors(response.data.actors);
           setSynopsis(response.data.synopsis);
           setLink(response.data.link);
-          console.log(response);
+          // console.log(response);
         })
         .catch(function (error) {
           console.log(error);
           dispatch(loginServer("", "", ""));
-        localStorage.setItem("token", "");
-        localStorage.setItem("user", "");
-        localStorage.setItem("role", "");
-        navigate(`/`);
+          localStorage.setItem("token", "");
+          localStorage.setItem("user", "");
+          localStorage.setItem("role", "");
+          navigate(`/`);
         });
     };
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params.id]);
+  console.log(fileRef);
   return (
     <SearchSt>
       <h2 className="title">Actualizar peliculas</h2>
@@ -286,6 +292,7 @@ const Search = () => {
         />
         {alertImg && <span className="alert">El tamaño de la imagen es muy grande. Máximo admitido 1Mb.</span>}
         <input
+          ref={fileRef}
           name="file"
           className="input-form "
           type="file"

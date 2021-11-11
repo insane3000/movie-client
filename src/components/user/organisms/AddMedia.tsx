@@ -102,7 +102,7 @@ const Search = () => {
   const [link, setLink] = useState<any>("");
   const [alertImg, setAlertImg] = useState<any>(false);
 
-  console.log(file);
+  // console.log(file);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.currentTarget.files?.[0];
@@ -168,6 +168,8 @@ const Search = () => {
       .post(`${URI}/movies`, formData, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
+          id: `${app.login.user}`,
+          role: `${app.login.role}`,
         },
       })
       .then((response) => {

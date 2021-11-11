@@ -194,6 +194,8 @@ const UpdateUser = () => {
       .put(`${URI}/users/${params.id}`, state, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
+          id: `${app.login.user}`,
+          role: `${app.login.role}`,
         },
       })
       .then(function (response) {
@@ -208,7 +210,13 @@ const UpdateUser = () => {
   useEffect(() => {
     const fetchData = async () => {
       axios
-        .get(`${URI}/users/${params.id}`)
+        .get(`${URI}/users/${params.id}`, {
+          headers: {
+            authorization: `Bearer ${app.login.token}`,
+            id: `${app.login.user}`,
+            role: `${app.login.role}`,
+          },
+        })
         .then(function (response) {
           setState(() => ({
             ...state,
@@ -221,10 +229,10 @@ const UpdateUser = () => {
         .catch(function (error) {
           console.log(error);
           dispatch(loginServer("", "", ""));
-        localStorage.setItem("token", "");
-        localStorage.setItem("user", "");
-        localStorage.setItem("role", "");
-        navigate(`/`);
+          localStorage.setItem("token", "");
+          localStorage.setItem("user", "");
+          localStorage.setItem("role", "");
+          navigate(`/`);
         });
     };
     fetchData();

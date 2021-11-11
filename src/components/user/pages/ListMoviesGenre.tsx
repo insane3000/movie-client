@@ -75,6 +75,8 @@ const ListMoviesGenre = () => {
       .get(`${URI}/genre/${params.genre}`, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
+          id: `${app.login.user}`,
+          role: `${app.login.role}`,
         },
       })
       .then(function (response: any) {

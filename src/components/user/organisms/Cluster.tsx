@@ -126,9 +126,11 @@ const MoviesGender = (props: Props) => {
   // console.log(props.genre);
   const fetchData = () => {
     axios
-      .get(`${URI}/genre/${props.genre}`,{
+      .get(`${URI}/genre/${props.genre}`, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
+          id: `${app.login.user}`,
+          role: `${app.login.role}`,
         },
       })
       .then(function (response: any) {
@@ -159,12 +161,7 @@ const MoviesGender = (props: Props) => {
         </section>
         <div ref={moviesGenderRef} className="list-posters">
           {state?.map((i) => (
-            <MoviePoster
-              key={i._id}
-              img={i.image}
-              id={i._id}
-              rating={i.rating}
-            />
+            <MoviePoster key={i._id} img={i.image} id={i._id} rating={i.rating} />
           ))}
           <Link className="toGenre" to={`/genre/${props.genre}`}>
             <span className="text">{props.text}</span>

@@ -100,6 +100,8 @@ const UpdateUser = () => {
         .get(`${URI}/users/${app.login.user}`, {
           headers: {
             authorization: `Bearer ${app.login.token}`,
+            id: `${app.login.user}`,
+            role: `${app.login.role}`,
           },
         })
         .then(function (response) {

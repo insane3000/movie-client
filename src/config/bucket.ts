@@ -1,0 +1,1 @@
+export const BUCKET = "https://movie-media-files.s3.sa-east-1.amazonaws.com/posters/";

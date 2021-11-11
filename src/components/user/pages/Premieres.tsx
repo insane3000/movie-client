@@ -76,6 +76,8 @@ const Premieres = () => {
       .get(`${URI}/year/${year}`, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
+          id: `${app.login.user}`,
+          role: `${app.login.role}`,
         },
       })
       .then(function (response: any) {

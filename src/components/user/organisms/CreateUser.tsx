@@ -187,6 +187,8 @@ const CreateUser = () => {
       .post(`${URI}/signup`, state, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
+          id: `${app.login.user}`,
+          role: `${app.login.role}`,
         },
       })
       .then(function (response) {

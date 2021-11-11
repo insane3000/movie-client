@@ -54,7 +54,7 @@ const SearchSt = styled.div`
       position: relative;
       .tRow {
         display: grid;
-        grid-template-columns: calc(30% - 2.5rem) 30% 30% 5% 5%;
+        grid-template-columns: calc(30% - 2.5rem) 20% 20% 20% 5% 5%;
         grid-template-rows: 100%;
         column-gap: 0.2rem;
         justify-content: center;
@@ -146,6 +146,8 @@ interface MovieIT {
   _id: "";
   user: "";
   password: "";
+  name: "";
+  phone: "";
   date: "";
   role: "";
 }
@@ -159,13 +161,17 @@ const Search = () => {
   // console.log(state);
   // !Delete User
   const handleDelete = async (id: string) => {
-    await axios.delete(`${URI}/users/${id}`, {
-      headers: {
-        authorization: `Bearer ${app.login.token}`,
-      },
-    }).then(() => {
-      fetchData();
-    });
+    await axios
+      .delete(`${URI}/users/${id}`, {
+        headers: {
+          authorization: `Bearer ${app.login.token}`,
+          id: `${app.login.user}`,
+          role: `${app.login.role}`,
+        },
+      })
+      .then(() => {
+        fetchData();
+      });
   };
   // !Get all Users
   const fetchData = () => {
@@ -173,6 +179,8 @@ const Search = () => {
       .get(`${URI}/users`, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
+          id: `${app.login.user}`,
+          role: `${app.login.role}`,
         },
       })
       .then(function (response: any) {
@@ -206,8 +214,9 @@ const Search = () => {
       <div className="table">
         <div className="tRow tHead">
           <div className="cell head">Usuario</div>
-          <div className="cell head">Fecha</div>
-          <div className="cell head none">Rol</div>
+          <div className="cell head none">Nombre</div>
+          <div className="cell head none">Celular</div>
+          <div className="cell head">Fecha de vencimiento</div>
 
           <div className="cell head">Editar</div>
           <div className="cell head">Borrar</div>
@@ -217,12 +226,10 @@ const Search = () => {
             <div className="cell " style={{ textTransform: "uppercase" }}>
               {i.user}
             </div>
-            <div className="cell ">
-              {" "}
-              {new Date(i.date).toLocaleDateString("es-ES", options)}
-            </div>
-            <div className="cell  none">{i.role}</div>
 
+            <div className="cell  none">{i.name}</div>
+            <div className="cell  none">{i.phone}</div>
+            <div className="cell ">{new Date(i.date).toLocaleDateString("es-ES", options)}</div>
             <Link className="cell head" to={`/update-user/${i._id}`}>
               Editar
             </Link>

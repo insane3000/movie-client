@@ -1,7 +1,7 @@
 // import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-
+import { BUCKET } from "config/bucket";
 // *Images
 // import movie01 from "img/posters/movie01.jpg";
 import play from "img/play.png";
@@ -47,11 +47,7 @@ const MoviesPosterSt = styled.div`
       position: absolute;
       top: 0;
       background: rgb(0, 0, 0);
-      background: linear-gradient(
-        0deg,
-        rgba(0, 0, 0, 0.969625350140056) 0%,
-        rgba(253, 187, 45, 0) 100%
-      );
+      background: linear-gradient(0deg, rgba(0, 0, 0, 0.969625350140056) 0%, rgba(253, 187, 45, 0) 100%);
       display: none;
       .rating {
         position: absolute;
@@ -119,11 +115,7 @@ const MoviesPosterSt = styled.div`
         position: absolute;
         top: 0;
         background: rgb(0, 0, 0);
-        background: linear-gradient(
-          0deg,
-          rgba(0, 0, 0, 0.969625350140056) 0%,
-          rgba(253, 187, 45, 0) 100%
-        );
+        background: linear-gradient(0deg, rgba(0, 0, 0, 0.969625350140056) 0%, rgba(253, 187, 45, 0) 100%);
         display: none;
         .rating {
           position: absolute;
@@ -157,7 +149,6 @@ interface Props {
   rating: Number;
 }
 const MoviePoster = (props: Props) => {
-  
   const [imageLoad, setImageLoad] = useState(false);
   const handleLoadImg = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
     e.currentTarget.complete && setImageLoad(true);
@@ -173,7 +164,7 @@ const MoviePoster = (props: Props) => {
       >
         <img
           className="poster"
-          src={props.img}
+          src={`${BUCKET}${props.img}`}
           alt="Movie"
           loading="lazy"
           onLoad={(e) => handleLoadImg(e)}

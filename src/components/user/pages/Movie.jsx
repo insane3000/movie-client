@@ -4,11 +4,13 @@ import Cluster from "../organisms/Cluster";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { URI } from "config/axios";
+import { BUCKET } from "config/bucket";
 import SpinnerImg from "../atoms/SpinnerImg";
 import { useParams } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { loginServer } from "redux/actions/appAction";
+
 const MovieSt = styled.div`
   width: 100%;
   height: auto;
@@ -228,6 +230,8 @@ const Movie = () => {
         .get(`${URI}/movies/${params.id}`, {
           headers: {
             authorization: `Bearer ${app.login.token}`,
+            id: `${app.login.user}`,
+            role: `${app.login.role}`,
           },
         })
 
@@ -245,8 +249,7 @@ const Movie = () => {
         });
     };
     fetchData();
-    // console.log('alalalal')
-  }, [params.id, app.login.token, dispatch, navigate]);
+  }, [params.id, app.login.token, app.login.user, app.login.role, dispatch, navigate]);
   //!para validar query
   let genero = state.genre.slice(0, 4).toLowerCase();
 
@@ -255,7 +258,12 @@ const Movie = () => {
     <MovieSt ref={movieRef}>
       <div className="container-poster-data">
         <div className="container-poster">
-          <img className="img-movie" src={state.image} alt="poster movie" onLoad={(e) => handleLoadImg(e)} />
+          <img
+            className="img-movie"
+            src={`${BUCKET}${state.image}`}
+            alt="poster movie"
+            onLoad={(e) => handleLoadImg(e)}
+          />
           {!imageLoad && <SpinnerImg />}
         </div>
         <div className="container-data">
