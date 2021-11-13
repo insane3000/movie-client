@@ -254,13 +254,15 @@ const Movie = () => {
   let genero = state.genre.slice(0, 4).toLowerCase();
 
   const cleanText = state.genre?.replace("|", ".");
+  // let image = `${BUCKET}${state.image}`;
+  // console.log(image);
   return (
     <MovieSt ref={movieRef}>
       <div className="container-poster-data">
         <div className="container-poster">
           <img
             className="img-movie"
-            src={`${BUCKET}${state.image}`}
+            src={state.image && `${BUCKET}${state.image}`}
             alt="poster movie"
             onLoad={(e) => handleLoadImg(e)}
           />

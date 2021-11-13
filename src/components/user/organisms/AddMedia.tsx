@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -15,84 +15,181 @@ const SearchSt = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    font-family: "Roboto 900";
-    font-size: 8rem;
     .title {
-      text-transform: uppercase;
+      text-align: center;
+      color: white;
       font-family: "Roboto 900";
-      font-size: 2rem;
-      margin-top: 2rem;
-      margin-bottom: 1rem;
+      font-size: 3rem;
+      text-transform: capitalize;
+      /* background: red; */
+      margin-bottom: 2rem;
     }
     .upload-form {
-      width: 100%;
-      height: 100%;
-      /* background: #0d0c13; */
-      border-radius: 0.5rem;
-      display: grid;
-      grid-template-columns: 30% 30% 30%;
-      grid-auto-rows: 5rem;
-      justify-content: center;
-      align-content: flex-start;
-      margin-top: 3rem;
-
-      .input-form {
-        width: 80%;
+      width: 80%;
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: start;
+      align-items: center;
+      .container-inputs {
+        width: 100%;
         height: 3rem;
-        line-height: 3rem;
-        margin-bottom: 1rem;
-        padding: 0 0.5rem;
-        font-family: "Roboto 300";
-        font-size: 1rem;
-        border-radius: 0.3rem;
-        outline: none;
-        border-style: none;
-        background: none;
-        border: 0.0625rem solid #ff002b;
-        color: white;
-      }
-      .textArea {
-        /* background: red; */
-        /* padding: 0.5rem 0.5rem;
-        height: 8rem;
-        line-height: 1rem; */
-        resize: none;
-      }
-      .alert {
-        width: 80%;
-        color: red;
-        font-family: "Roboto 300";
-        font-size: 1rem;
-      }
-      .uploadBtn {
-        font-family: "Roboto 900";
-        font-size: 1.5rem;
-        background: #ff002b;
-        cursor: pointer;
-        &:hover {
-          background: #ffffff;
-          color: black;
-          border: 0.0625rem solid #000000;
+        display: grid;
+        grid-template-columns: 40% calc(40% - 3rem) 10% 10%;
+        grid-template-rows: 100%;
+        gap: 1rem;
+        justify-content: center;
+        align-content: center;
+        margin-bottom: 2rem;
+        .input-form-container {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: relative;
+          border: 0.0625rem solid red;
+          border-radius: 0 0.3rem 0.3rem 0.3rem;
+          .label {
+            background: #ff0033;
+            border-radius: 0.3rem 0.3rem 0 0;
+            position: absolute;
+            left: -0.0625rem;
+            top: -1.2rem;
+            font-family: "Roboto 300";
+            font-size: 1rem;
+            color: #ffffff;
+            padding: 0 0.5rem;
+          }
+          .input-form {
+            width: 100%;
+            height: 100%;
+            border-style: none;
+            outline: none;
+            padding: 0 1rem;
+            background: none;
+            color: white;
+            font-family: "Roboto 300";
+            font-size: 1rem;
+          }
         }
       }
-      .fakeBtn {
-        border: 0.0625rem solid #1b0408;
+      .input-form-container-l {
+        width: 100%;
+        height: 3rem;
+        position: relative;
+        border-radius: 0 0.3rem 0.3rem 0.3rem;
+        border: 0.0625rem solid #ff0033;
+        margin-bottom: 2rem;
+        .label {
+          background: #ff0033;
+          border-radius: 0.3rem 0.3rem 0 0;
+          position: absolute;
+          left: -0.0625rem;
+          top: -1.2rem;
+          font-family: "Roboto 300";
+          font-size: 1rem;
+          color: #ffffff;
+          padding: 0 0.5rem;
+        }
+        .inputs-l {
+          justify-self: center;
+          align-self: center;
+          width: 100%;
+          height: 100%;
+          border-style: none;
+          outline: none;
+          padding: 1rem 1rem;
+          margin-bottom: 0.5rem;
+          background: none;
+          color: white;
+          font-family: "Roboto 300";
+          font-size: 1rem;
+        }
+      }
+
+      .text-area {
+        height: 8rem;
+        .inputs-l {
+          resize: none;
+        }
+      }
+      .container-inputs02 {
+        /* background: #bdb0b0; */
+        width: 100%;
+        height: 4rem;
+        display: grid;
+        grid-template-columns: 10% 30% calc(60% - 2rem);
+        grid-template-rows: 100%;
+        gap: 1rem;
+        justify-content: center;
+        align-content: center;
+        margin-bottom: 2rem;
+        .input-form-container {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: relative;
+          border: 0.0625rem solid red;
+          border-radius: 0 0 0.3rem 0.3rem;
+          .label {
+            background: #ff0033;
+            border-radius: 0.3rem 0.3rem 0 0;
+            position: absolute;
+            left: -0.0625rem;
+            top: -1.2rem;
+            font-family: "Roboto 300";
+            font-size: 1rem;
+            color: #ffffff;
+            padding: 0 0.5rem;
+          }
+          .input-form {
+            justify-self: center;
+            align-self: center;
+            width: 100%;
+            height: 100%;
+            border-style: none;
+            outline: none;
+            padding: 0 1rem;
+            border-radius: 0.3rem;
+            background: none;
+            color: white;
+            font-family: "Roboto 300";
+            font-size: 1rem;
+            line-height: 4rem;
+          }
+        }
+      }
+      .save-btn {
+        width: 15rem;
+        height: 4rem;
+
+        border-style: none;
+        outline: none;
+        padding: 0 1rem;
+        border-radius: 0.3rem;
         font-family: "Roboto 900";
-        font-size: 1.5rem;
-        background: #1b0408;
-        cursor: not-allowed;
-        user-select: none;
-        text-align: center;
+        font-size: 2rem;
+        line-height: 4rem;
+        cursor: pointer;
+        transition: 0.1s;
+        background: #ff0033;
+        color: white;
+
+        &:hover {
+          transition: 0.1s;
+          background: #ffffff;
+          color: #000000;
+        }
       }
     }
   }
 `;
 const Search = () => {
+  const fileRef = useRef<any>();
   let navigate = useNavigate();
   const app = useSelector((store: StoreInterface) => store.app);
   const [file, setFile] = useState<any>();
   const [title, setTitle] = useState<any>("");
-  const [titleEsp, setTitleEsp] = useState<any>("");
+  const [originalTitle, setOriginalTitle] = useState<any>("");
   const [rating, setRating] = useState<any>(0);
   const [year, setYear] = useState<any>("");
   const [genre, setGenre] = useState<any>("");
@@ -100,53 +197,53 @@ const Search = () => {
   const [actors, setActors] = useState<any>("");
   const [synopsis, setSynopsis] = useState<any>("");
   const [link, setLink] = useState<any>("");
-  const [alertImg, setAlertImg] = useState<any>(false);
+  // const [alertImg, setAlertImg] = useState<any>(false);
 
-  // console.log(file);
+  // console.log(alertImg);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.currentTarget.files?.[0];
     if (value && value.size > 1048576) {
-      setAlertImg(true);
+      // setAlertImg(true);
     } else {
       setFile(value);
     }
   };
 
   const handleTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.currentTarget.value;
+    let value = e.currentTarget.value.trim();
     setTitle(value);
   };
-  const handleTitleEsp = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.currentTarget.value;
-    setTitleEsp(value);
+  const handleOriginalTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.currentTarget.value.trim();
+    setOriginalTitle(value);
   };
   const handleRating = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.currentTarget.value;
+    let value = e.currentTarget.value.trim();
     setRating(value);
   };
   const handleYear = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.currentTarget.value;
+    let value = e.currentTarget.value.trim();
     setYear(value);
   };
   const handleGenre = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.currentTarget.value;
+    let value = e.currentTarget.value.trim();
     setGenre(value);
   };
   const handleTime = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.currentTarget.value;
+    let value = e.currentTarget.value.trim();
     setTime(value);
   };
   const handleActors = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.currentTarget.value;
+    let value = e.currentTarget.value.trim();
     setActors(value);
   };
   const handleSynopsis = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    let value = e.currentTarget.value;
+    let value = e.currentTarget.value.trim();
     setSynopsis(value);
   };
   const handleLink = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.currentTarget.value;
+    let value = e.currentTarget.value.trim();
     setLink(value);
   };
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -154,7 +251,7 @@ const Search = () => {
     let formData = new FormData();
 
     formData.append("title", title);
-    formData.append("titleEsp", titleEsp);
+    formData.append("originalTitle", originalTitle);
     formData.append("rating", rating);
     formData.append("year", year);
     formData.append("genre", genre);
@@ -178,100 +275,130 @@ const Search = () => {
         }
       });
   };
+  // console.log(fileRef);
+  // console.log(file);
   return (
     <SearchSt>
       <h2 className="title">Agregar peliculas</h2>
 
       <form className="upload-form" onSubmit={handleSubmit}>
-        <input
-          name="title"
-          className="input-form"
-          type="text"
-          onChange={(e) => handleTitle(e)}
-          placeholder="Título original"
-          value={title}
-        />
-        <input
-          name="titleEsp"
-          className="input-form"
-          type="text"
-          onChange={(e) => handleTitleEsp(e)}
-          placeholder="Título español"
-          value={titleEsp}
-        />
-        <input
-          name="year"
-          className="input-form"
-          type="text"
-          onChange={(e) => handleYear(e)}
-          placeholder="Año"
-          value={year}
-        />
-        <input
-          name="time"
-          className="input-form"
-          type="text"
-          onChange={(e) => handleTime(e)}
-          placeholder="Duración"
-          value={time}
-        />
-        <input
-          name="actors"
-          className="input-form"
-          type="text"
-          onChange={(e) => handleActors(e)}
-          placeholder="Reparto"
-          value={actors}
-        />
-        <input
-          name="genre"
-          className="input-form"
-          type="text"
-          onChange={(e) => handleGenre(e)}
-          placeholder="Género"
-          value={genre}
-        />
-        <textarea
-          name="synopsis"
-          className="input-form textArea"
-          onChange={(e) => handleSynopsis(e)}
-          placeholder="Sinopsis"
-          value={synopsis}
-        ></textarea>
-        <input
-          name="rating"
-          className="input-form"
-          type="number"
-          onChange={(e) => handleRating(e)}
-          placeholder="Rating"
-          step="any"
-          value={rating}
-          onFocus={(e) => e.target.select()}
-        />
-        {alertImg && <span className="alert">El tamaño de la imagen es muy grande. Máximo admitido 1Mb.</span>}
-        <input
-          name="file"
-          className="input-form "
-          type="file"
-          onChange={(e) => handleChange(e)}
-          placeholder="File"
-          accept="image/png, image/jpeg, image/jpg, image/webp"
-          // max-size="2000"
-          // value={file}
-        />
-        <input
-          name="link"
-          className="input-form"
-          type="text"
-          onChange={(e) => handleLink(e)}
-          placeholder="Link de la película."
-          value={link}
-        />
-        {!alertImg ? (
-          <button className="input-form uploadBtn">Guardar</button>
-        ) : (
-          <span className="input-form fakeBtn">Guardar</span>
-        )}
+        <section className="container-inputs">
+          <div className="input-form-container">
+            <span className="label">Título:</span>
+            <input
+              name="title"
+              className="input-form"
+              type="text"
+              onChange={(e) => handleTitle(e)}
+              placeholder="Título"
+              value={title}
+            />
+          </div>
+          <div className="input-form-container">
+            <span className="label">Título original:</span>
+            <input
+              name="originalTitle"
+              className="input-form"
+              type="text"
+              onChange={(e) => handleOriginalTitle(e)}
+              placeholder="Título original"
+              value={originalTitle}
+            />
+          </div>
+          <div className="input-form-container">
+            <span className="label">Año:</span>
+            <input
+              name="year"
+              className="input-form"
+              type="text"
+              onChange={(e) => handleYear(e)}
+              placeholder="Año"
+              value={year}
+            />
+          </div>
+          <div className="input-form-container">
+            <span className="label">Duración:</span>
+            <input
+              name="time"
+              className="input-form"
+              type="text"
+              onChange={(e) => handleTime(e)}
+              placeholder="Duración"
+              value={time}
+            />
+          </div>
+        </section>
+        <div className="input-form-container-l">
+          <span className="label">Reparto:</span>
+          <input
+            name="actors"
+            className="inputs-l"
+            type="text"
+            onChange={(e) => handleActors(e)}
+            placeholder="Reparto"
+            value={actors}
+          />
+        </div>
+        <div className="input-form-container-l">
+          <span className="label">Género:</span>
+          <input
+            name="genre"
+            className="inputs-l"
+            type="text"
+            onChange={(e) => handleGenre(e)}
+            placeholder="Género"
+            value={genre}
+          />
+        </div>
+        <div className="input-form-container-l text-area">
+          <span className="label">Sinopsis:</span>
+          <textarea
+            name="synopsis"
+            className="inputs-l text-area"
+            onChange={(e) => handleSynopsis(e)}
+            placeholder="Sinopsis"
+            value={synopsis}
+          ></textarea>
+        </div>
+        <section className="container-inputs02">
+          <div className="input-form-container">
+            <span className="label">Rating:</span>
+            <input
+              name="rating"
+              className="input-form"
+              type="number"
+              onChange={(e) => handleRating(e)}
+              placeholder="Rating"
+              step="any"
+              value={rating}
+              onFocus={(e) => e.target.select()}
+            />
+          </div>
+          <div className="input-form-container">
+            <span className="label">Poster:</span>
+            <input
+              ref={fileRef}
+              name="file"
+              className="input-form "
+              type="file"
+              onChange={(e) => handleChange(e)}
+              placeholder="File"
+              accept="image/png, image/jpeg, image/jpg, image/webp"
+            />
+          </div>
+          <div className="input-form-container">
+            <span className="label">Link del video mp4:</span>
+            <input
+              name="link"
+              className="input-form"
+              type="text"
+              onChange={(e) => handleLink(e)}
+              placeholder="Link de la película."
+              value={link}
+            />
+          </div>
+        </section>
+        <button className="save-btn">Guardar</button>
       </form>
     </SearchSt>
   );
