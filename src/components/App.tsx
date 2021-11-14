@@ -41,15 +41,15 @@ const AppSt = styled.div`
   justify-content: center;
   align-content: center;
   color: white;
-  background: #080808;
-  background: linear-gradient(90deg, #0d0c13 0%, #120d25 100%);
+  background: #000000;
+  background: linear-gradient(90deg, #000000 0%, #0c0c0e 100%);
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
     width: 100%;
     height: 100%;
     display: grid;
     grid-template-columns: 100%;
-    grid-template-rows: 5rem calc(100% - 5rem);
+    grid-template-rows: 6rem calc(100% - 6rem);
     justify-content: center;
     align-content: center;
   }

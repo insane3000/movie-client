@@ -31,7 +31,7 @@ const UpdateUserSt = styled.div`
     }
 
     .createUserForm {
-      background: #0a0a0a;
+      background: #0c0c0c;
       width: 25rem;
       height: 35rem;
       display: flex;
@@ -66,7 +66,7 @@ const UpdateUserSt = styled.div`
         .hashIcon {
           width: 3rem;
           height: 3rem;
-          background: #3c00ff;
+          background: #5901E7;
           color: white;
           /* border-radius: 0.3rem; */
           padding: 0.5rem;
@@ -100,7 +100,7 @@ const UpdateUserSt = styled.div`
         font-size: 1rem;
         cursor: pointer;
         transition: 0.1s;
-        background: #3c00ff;
+        background: #5901E7;
         color: white;
 
         &:hover {

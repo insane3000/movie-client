@@ -13,73 +13,14 @@ import { URI } from "config/axios";
 import { StoreInterface } from "interfaces/storeTemplate";
 
 const NavigationSt = styled.nav`
-  width: 100%;
-  height: 5rem;
-  /* background: #070707; */
-  display: flex;
-  justify-content: start;
-  align-items: center;
-  padding: 0 1rem;
-  /* border-bottom: 0.0625rem solid #111010; */
+  background: #000000;
+  background: linear-gradient(90deg, #080808 0%, #121213 100%);
+  border-bottom: 0.0625rem solid #111010;
 
-  .title {
-    font-family: "Roboto 900";
-    font-size: 3rem;
-    text-decoration: none;
-    color: #ffffff;
-  }
-  .ul {
-    display: grid;
-    grid-template-columns: repeat(5, auto);
-    grid-template-rows: 3rem;
-    gap: 1rem;
-    margin-left: 3rem;
-    .li {
-      justify-self: center;
-      align-self: center;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      /* background: red; */
-      font-family: "Roboto 300";
-      font-size: 1rem;
-      text-decoration: none;
-      color: #ffffff;
-      /* background: #2b283b; */
-      border-radius: 0.3rem;
-      width: 100%;
-      height: 2rem;
-      padding: 0 0.5rem;
-      /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
-      /* &:hover {
-          color: white;
-        } */
-    }
-  }
-  .buttons-right {
-    position: absolute;
-    right: 1rem;
-    width: 7rem;
-    height: 3rem;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    .search {
-      width: 2rem;
-      height: 2rem;
-      transform: scaleX(-1);
-      cursor: pointer;
-    }
-    .user {
-      width: 2rem;
-      height: 2rem;
-      cursor: pointer;
-    }
-  }
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
-    width: 100%;
-    height: 5rem;
+    /* width: 100%;
+    height: 5rem; */
     /* background: #070707; */
     display: flex;
     justify-content: start;
@@ -121,7 +62,7 @@ const NavigationSt = styled.nav`
         } */
       }
       .active {
-        background: #ff0055;
+        background: #5901E7;
       }
     }
     .search-container {
@@ -204,7 +145,7 @@ const NavigationSt = styled.nav`
         border-radius: 100%;
         padding: 0.5rem 0.5rem;
         transition: 0.1s;
-        background: #ff0055;
+        background: #5901E7;
         color: #ffffff;
         &:hover {
           transform: scale(1.1);
@@ -215,7 +156,7 @@ const NavigationSt = styled.nav`
         width: 10rem;
         /* min-height: 10rem; */
         height: auto;
-        background: #030013;
+        background: #0d0d0e;
         position: absolute;
         top: 4rem;
         right: 0;
@@ -228,6 +169,7 @@ const NavigationSt = styled.nav`
         justify-content: start;
         align-items: center;
         padding: 0.5rem 0.5rem;
+        border: 0.0625rem solid #252525;
         .close-user {
           background: #ffffff;
           color: black;
@@ -251,18 +193,19 @@ const NavigationSt = styled.nav`
           color: #d8d8d8;
           border-radius: 0.3rem;
           &:hover {
-            background: #19142e;
+            background: #1a1919;
             color: #ffffff;
           }
         }
         .active {
-          background: #ff0055;
+          background: #5901E7;
         }
       }
     }
   }
 `;
 const Navigation = () => {
+  // const navigationRef = useRef<any>();
   let navigate = useNavigate();
   const dispatch = useDispatch();
   const app = useSelector((store: StoreInterface) => store.app);
@@ -307,8 +250,12 @@ const Navigation = () => {
     navigate(`/`);
     setUser(!user);
   };
+  // console.log(navigationRef);
   return (
-    <NavigationSt>
+    <NavigationSt
+    // ref={navigationRef}
+    // style={navigationRef.current.scrollTop !== 0 ? { background: "red" } : { background: "lime" }}
+    >
       <Link className="title" to="/" onClick={() => dispatch(restartScroll("home", 0))}>
         Movie Store Cbba
       </Link>

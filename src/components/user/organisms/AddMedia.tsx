@@ -13,8 +13,9 @@ const SearchSt = styled.div`
   @media only screen and (min-width: 568px) {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
+    overflow-y: scroll;
     .title {
       text-align: center;
       color: white;
@@ -46,10 +47,10 @@ const SearchSt = styled.div`
           justify-content: center;
           align-items: center;
           position: relative;
-          border: 0.0625rem solid red;
+          border: 0.0625rem solid #5901e7;
           border-radius: 0 0.3rem 0.3rem 0.3rem;
           .label {
-            background: #ff0033;
+            background: #5901e7;
             border-radius: 0.3rem 0.3rem 0 0;
             position: absolute;
             left: -0.0625rem;
@@ -77,10 +78,10 @@ const SearchSt = styled.div`
         height: 3rem;
         position: relative;
         border-radius: 0 0.3rem 0.3rem 0.3rem;
-        border: 0.0625rem solid #ff0033;
+        border: 0.0625rem solid #5901e7;
         margin-bottom: 2rem;
         .label {
-          background: #ff0033;
+          background: #5901e7;
           border-radius: 0.3rem 0.3rem 0 0;
           position: absolute;
           left: -0.0625rem;
@@ -112,12 +113,13 @@ const SearchSt = styled.div`
           resize: none;
         }
       }
+      // ! Estilos para la zona de rating
       .container-inputs02 {
         /* background: #bdb0b0; */
         width: 100%;
         height: 4rem;
         display: grid;
-        grid-template-columns: 10% 30% calc(60% - 2rem);
+        grid-template-columns: 7.5% 22.5% calc(45% - 4rem) 15% 10%;
         grid-template-rows: 100%;
         gap: 1rem;
         justify-content: center;
@@ -128,10 +130,10 @@ const SearchSt = styled.div`
           justify-content: center;
           align-items: center;
           position: relative;
-          border: 0.0625rem solid red;
-          border-radius: 0 0 0.3rem 0.3rem;
+          border: 0.0625rem solid #5901e7;
+          border-radius: 0 0.3rem 0.3rem 0.3rem;
           .label {
-            background: #ff0033;
+            background: #5901e7;
             border-radius: 0.3rem 0.3rem 0 0;
             position: absolute;
             left: -0.0625rem;
@@ -156,6 +158,14 @@ const SearchSt = styled.div`
             font-size: 1rem;
             line-height: 4rem;
           }
+          .select {
+            width: 90%;
+            height: 100%;
+            /* background: red; */
+            option {
+              color: #000000;
+            }
+          }
         }
       }
       .save-btn {
@@ -171,7 +181,7 @@ const SearchSt = styled.div`
         line-height: 4rem;
         cursor: pointer;
         transition: 0.1s;
-        background: #ff0033;
+        background: #5901e7;
         color: white;
 
         &:hover {
@@ -197,6 +207,8 @@ const Search = () => {
   const [actors, setActors] = useState<any>("");
   const [synopsis, setSynopsis] = useState<any>("");
   const [link, setLink] = useState<any>("");
+  const [server, setServer] = useState<any>("mediafire");
+  const [available, setAvailable] = useState<any>(true);
   // const [alertImg, setAlertImg] = useState<any>(false);
 
   // console.log(alertImg);
@@ -211,41 +223,51 @@ const Search = () => {
   };
 
   const handleTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.currentTarget.value.trim();
+    let value = e.currentTarget.value;
     setTitle(value);
   };
   const handleOriginalTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.currentTarget.value.trim();
+    let value = e.currentTarget.value;
     setOriginalTitle(value);
   };
   const handleRating = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.currentTarget.value.trim();
+    let value = e.currentTarget.value;
     setRating(value);
   };
   const handleYear = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.currentTarget.value.trim();
+    let value = e.currentTarget.value;
     setYear(value);
   };
   const handleGenre = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.currentTarget.value.trim();
+    let value = e.currentTarget.value;
     setGenre(value);
   };
   const handleTime = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.currentTarget.value.trim();
+    let value = e.currentTarget.value;
     setTime(value);
   };
   const handleActors = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.currentTarget.value.trim();
+    let value = e.currentTarget.value;
     setActors(value);
   };
   const handleSynopsis = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    let value = e.currentTarget.value.trim();
+    let value = e.currentTarget.value;
     setSynopsis(value);
   };
   const handleLink = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.currentTarget.value.trim();
+    let value = e.currentTarget.value;
     setLink(value);
   };
+  const handleServer = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    let value = e.currentTarget.value;
+    setServer(value);
+  };
+  const handleAvailable = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    let value = e.currentTarget.value === "true" ? true : false;
+    setAvailable(value);
+  };
+  // console.log(available);
+  // !Handle Submit
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     let formData = new FormData();
@@ -260,6 +282,8 @@ const Search = () => {
     formData.append("synopsis", synopsis);
     formData.append("link", link);
     formData.append("file", file);
+    formData.append("server", server);
+    formData.append("available", available);
     // console.log(formData)
     await axios
       .post(`${URI}/movies`, formData, {
@@ -387,7 +411,7 @@ const Search = () => {
             />
           </div>
           <div className="input-form-container">
-            <span className="label">Link del video mp4:</span>
+            <span className="label">Link de la película mp4:</span>
             <input
               name="link"
               className="input-form"
@@ -396,6 +420,20 @@ const Search = () => {
               placeholder="Link de la película."
               value={link}
             />
+          </div>
+          <div className="input-form-container">
+            <span className="label">Servidor:</span>
+            <select value={server} className="input-form select" name="server" onChange={(e) => handleServer(e)}>
+              <option value="mediafire">Mediafire</option>
+              <option value="backblaze">Backblaze</option>
+            </select>
+          </div>
+          <div className="input-form-container">
+            <span className="label">Disponible:</span>
+            <select value={available} className="input-form select" name="server" onChange={(e) => handleAvailable(e)}>
+              <option value="true">Si</option>
+              <option value="false">No</option>
+            </select>
           </div>
         </section>
         <button className="save-btn">Guardar</button>

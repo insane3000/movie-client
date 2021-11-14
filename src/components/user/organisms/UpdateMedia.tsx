@@ -67,10 +67,10 @@ const SearchSt = styled.div`
             justify-content: center;
             align-items: center;
             position: relative;
-            border: 0.0625rem solid red;
+            border: 0.0625rem solid #5901e7;
             border-radius: 0 0.3rem 0.3rem 0.3rem;
             .label {
-              background: #ff0033;
+              background: #5901e7;
               border-radius: 0.3rem 0.3rem 0 0;
               position: absolute;
               left: -0.0625rem;
@@ -86,7 +86,6 @@ const SearchSt = styled.div`
               border-style: none;
               outline: none;
               padding: 0 1rem;
-
               background: none;
               color: white;
               font-family: "Roboto 300";
@@ -99,10 +98,10 @@ const SearchSt = styled.div`
           height: 3rem;
           position: relative;
           border-radius: 0 0.3rem 0.3rem 0.3rem;
-          border: 0.0625rem solid #ff0033;
+          border: 0.0625rem solid #5901e7;
           margin-bottom: 2rem;
           .label {
-            background: #ff0033;
+            background: #5901e7;
             border-radius: 0.3rem 0.3rem 0 0;
             position: absolute;
             left: -0.0625rem;
@@ -139,7 +138,7 @@ const SearchSt = styled.div`
           width: 100%;
           height: 4rem;
           display: grid;
-          grid-template-columns: 10% 30% calc(60% - 2rem);
+          grid-template-columns: 7.5% 22.5% calc(45% - 4rem) 15% 10%;
           grid-template-rows: 100%;
           gap: 1rem;
           justify-content: center;
@@ -150,14 +149,14 @@ const SearchSt = styled.div`
             justify-content: center;
             align-items: center;
             position: relative;
-            border: 0.0625rem solid red;
-            border-radius: 0 0 0.3rem 0.3rem;
+            border: 0.0625rem solid #5901e7;
+            border-radius: 0 0.3rem 0.3rem 0.3rem;
             .label {
-              background: #ff0033;
+              background: #5901e7;
               border-radius: 0.3rem 0.3rem 0 0;
               position: absolute;
               left: -0.0625rem;
-              top: -1.3rem;
+              top: -1.2rem;
               font-family: "Roboto 300";
               font-size: 1rem;
               color: #ffffff;
@@ -178,6 +177,14 @@ const SearchSt = styled.div`
               font-size: 1rem;
               line-height: 4rem;
             }
+            .select {
+              width: 90%;
+              height: 100%;
+              /* background: red; */
+              option {
+                color: #000000;
+              }
+            }
           }
         }
         .save-btn {
@@ -193,7 +200,7 @@ const SearchSt = styled.div`
           line-height: 4rem;
           cursor: pointer;
           transition: 0.1s;
-          background: #ff0033;
+          background: #5901e7;
           color: white;
 
           &:hover {
@@ -224,6 +231,9 @@ const Search = () => {
   const [actors, setActors] = useState<any>("");
   const [synopsis, setSynopsis] = useState<any>("");
   const [link, setLink] = useState<any>("");
+  const [server, setServer] = useState<any>("mediafire");
+  const [available, setAvailable] = useState<any>(true);
+
   // const [alertImg, setAlertImg] = useState<any>(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -236,7 +246,7 @@ const Search = () => {
   };
 
   const handleTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.currentTarget.value.trim();
+    let value = e.currentTarget.value;
     setTitle(value);
   };
   const handleOriginalTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -271,6 +281,15 @@ const Search = () => {
     let value = e.currentTarget.value;
     setLink(value);
   };
+  const handleServer = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    let value = e.currentTarget.value;
+    setServer(value);
+  };
+  const handleAvailable = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    let value = e.currentTarget.value === "true" ? true : false;
+    setAvailable(value);
+  };
+  // !Handle Submit
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     let formData = new FormData();
@@ -287,6 +306,9 @@ const Search = () => {
     formData.append("file", file);
     formData.append("image", imageLink);
     formData.append("_id", id);
+    formData.append("server", server);
+    formData.append("available", available);
+
     // console.log("put client");
     // console.log(formData);
 
@@ -301,8 +323,8 @@ const Search = () => {
       .then((response) => {
         // console.log(response.data);
         if (response.statusText === "OK") {
-          // navigate("/media");
-          fetchData();
+          navigate("/media");
+          // fetchData();
         }
       });
   };
@@ -327,6 +349,8 @@ const Search = () => {
         setLink(response.data.link);
         setImageLink(response.data.image);
         setId(response.data._id);
+        setServer(response.data.server);
+        setAvailable(response.data.available);
         // console.log(response);
       })
       .catch(function (error) {
@@ -460,7 +484,7 @@ const Search = () => {
               />
             </div>
             <div className="input-form-container">
-              <span className="label">Link del video mp4:</span>
+              <span className="label">Link de la película mp4:</span>
               <input
                 name="link"
                 className="input-form"
@@ -469,6 +493,25 @@ const Search = () => {
                 placeholder="Link de la película."
                 value={link}
               />
+            </div>
+            <div className="input-form-container">
+              <span className="label">Servidor:</span>
+              <select value={server} className="input-form select" name="server" onChange={(e) => handleServer(e)}>
+                <option value="mediafire">Mediafire</option>
+                <option value="backblaze">Backblaze</option>
+              </select>
+            </div>
+            <div className="input-form-container">
+              <span className="label">Disponible:</span>
+              <select
+                value={available}
+                className="input-form select"
+                name="server"
+                onChange={(e) => handleAvailable(e)}
+              >
+                <option value="true">Si</option>
+                <option value="false">No</option>
+              </select>
             </div>
           </section>
           <button className="save-btn">Guardar</button>

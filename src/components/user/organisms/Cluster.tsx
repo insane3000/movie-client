@@ -72,7 +72,7 @@ const ClusterSt = styled.div`
         overflow-x: scroll;
         overflow-y: hidden;
         .toGenre {
-          background: #1d1231;
+          background: #0d0d0e;
           display: flex;
           justify-content: center;
           align-items: center;

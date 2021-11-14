@@ -21,7 +21,7 @@ const UpdateUserSt = styled.div`
     justify-content: center;
     align-items: center;
     .userContainer {
-      background: #060213;
+      background: #0c0c0c;
       width: 25rem;
       height: 33rem;
       display: flex;
@@ -30,7 +30,7 @@ const UpdateUserSt = styled.div`
       align-items: center;
       border-radius: 0.5rem;
       .sysIconUser {
-        background: #ff0040;
+        background: #5901E7;
         width: 5rem;
         height: 5rem;
         margin-bottom: 2rem;
@@ -42,7 +42,7 @@ const UpdateUserSt = styled.div`
         height: 3rem;
         position: relative;
         margin-bottom: 2rem;
-        border: 0.0625rem solid #ff0040;
+        border: 0.0625rem solid #5901E7;
         border-radius: 0.3rem;
         .label {
           height: 1rem;

@@ -254,8 +254,10 @@ const Movie = () => {
   let genero = state.genre.slice(0, 4).toLowerCase();
 
   const cleanText = state.genre?.replace("|", ".");
+  const cleanSynopsis = state.synopsis.replace("(FILMAFFINITY)", "");
+
+  // const cleanDescription = state.description.filter()
   // let image = `${BUCKET}${state.image}`;
-  // console.log(image);
   return (
     <MovieSt ref={movieRef}>
       <div className="container-poster-data">
@@ -280,7 +282,7 @@ const Movie = () => {
           <h3 className="actors">
             <span>Actores:</span> {state.actors}
           </h3>
-          <span className="synopsis">{state.synopsis}</span>
+          <span className="synopsis">{cleanSynopsis}</span>
         </div>
       </div>
 

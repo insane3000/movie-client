@@ -7,7 +7,9 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useNavigate } from "react-router";
 import { loginServer } from "redux/actions/appAction";
-
+// *Icons
+import EditIcon from "icons/EditIcon";
+import DeleteIcon from "icons/DeleteIcon";
 const SearchSt = styled.div`
   width: 100%;
   height: 100%;
@@ -23,21 +25,21 @@ const SearchSt = styled.div`
     .addMedia {
       width: 5rem;
       height: 5rem;
-      background: #00000056;
+      background: #1b1b1b55;
       position: absolute;
       /* right: 1rem; */
       bottom: 1rem;
       border-radius: 100%;
       font-family: "Roboto 100";
       font-size: 4rem;
-      color: #ffffff7f;
+      color: #ffffff8b;
       display: flex;
       justify-content: center;
       align-items: center;
       cursor: pointer;
       text-decoration: none;
       &:hover {
-        background: #ff0055;
+        background: #5901E7;
         color: #ffffff;
       }
     }
@@ -48,96 +50,72 @@ const SearchSt = styled.div`
       grid-template-columns: 100%;
       grid-auto-rows: 2rem;
       row-gap: 0.2rem;
-      /* background: #0c0c0c; */
       overflow-y: scroll;
-      /* border-right: 0.0625rem solid #333333; */
       position: relative;
       .tRow {
         display: grid;
-        grid-template-columns: calc(30% - 2.5rem) 20% 20% 20% 5% 5%;
+        grid-template-columns: calc(20% - 1.2rem) 20% 20% 20% 10% 10%;
         grid-template-rows: 100%;
         column-gap: 0.2rem;
         justify-content: center;
         align-content: center;
         &:hover {
           .cell {
-            background: #1c1a2f;
+            background: #1f1f20;
           }
           .head {
-            background: #03010a;
+            background: #000000;
+          }
+          .action-btn {
+            background: #5901E7;
           }
         }
         .cell {
-          background: #191727;
+          background: #121213;
           line-height: 2rem;
           display: block;
           border-radius: 0.3rem;
           font-family: "Roboto 300";
-          font-size: 0.8rem;
+          font-size: 1rem;
           color: white;
-          padding: 0 0.5rem;
-          text-align: center;
+          padding: 0 1rem;
           // Dots ...
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
-          .number {
-            color: red;
-            margin-right: 0.5rem;
-            font-family: "Roboto 900";
-            font-size: 1.5rem;
-          }
-          .text {
-            color: #747474;
-            font-size: 0.6rem;
-          }
         }
         .head {
-          background: #03010a;
+          background: #000000;
           font-family: "Roboto 900";
-          font-size: 0.8rem;
+          font-size: 1rem;
           text-align: center;
-          /* display: flex;
-          justify-content: center;
-          align-items: center; */
-          .sysIcon {
-            width: 100;
-            height: 100%;
-            justify-self: center;
-            align-self: center;
-            font-size: 1rem;
-          }
-          .text {
-            width: 60%;
-            height: 100%;
-            display: flex;
-            justify-content: start;
-            align-items: center;
-          }
-          .noneText {
-            display: none;
-          }
-        }
-        .none {
-          display: block;
+          color: #ffffff;
         }
 
-        .action {
-          background: #6200ff;
-          color: #ffffff;
+        .action-btn {
+          background: #5901E7;
           cursor: pointer;
-          font-family: "Roboto 900";
-          text-decoration: none;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 1.1rem;
           &:hover {
             background: #ffffff;
             color: #000000;
           }
         }
+        .center {
+          text-align: center;
+        }
+        .none {
+          display: block;
+        }
       }
-      .tHead {
+      //! Para mantener pegado los titulos
+      .sticky-top {
         position: sticky;
         top: 0;
-        background: #0c0c0c;
+        background: #0e0c16;
       }
     }
   }
@@ -212,8 +190,8 @@ const Search = () => {
   return (
     <SearchSt>
       <div className="table">
-        <div className="tRow tHead">
-          <div className="cell head">Usuario</div>
+        <div className="tRow sticky-top">
+          <div className="cell head">Clave</div>
           <div className="cell head none">Nombre</div>
           <div className="cell head none">Celular</div>
           <div className="cell head">Fecha de vencimiento</div>
@@ -223,18 +201,18 @@ const Search = () => {
         </div>
         {state?.map((i) => (
           <div className="tRow" key={i._id}>
-            <div className="cell " style={{ textTransform: "uppercase" }}>
+            <div className="cell center" style={{ textTransform: "uppercase" }}>
               {i.user}
             </div>
 
             <div className="cell  none">{i.name}</div>
             <div className="cell  none">{i.phone}</div>
-            <div className="cell ">{new Date(i.date).toLocaleDateString("es-ES", options)}</div>
-            <Link className="cell head" to={`/update-user/${i._id}`}>
-              Editar
+            <div className="cell center">{new Date(i.date).toLocaleDateString("es-ES", options)}</div>
+            <Link className="cell action-btn" to={`/update-user/${i._id}`}>
+              <EditIcon />
             </Link>
-            <div className="cell " onClick={() => handleDelete(i._id)}>
-              Borrar
+            <div className="cell action-btn" onClick={() => handleDelete(i._id)}>
+              <DeleteIcon />
             </div>
           </div>
         ))}

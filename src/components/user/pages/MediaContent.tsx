@@ -7,7 +7,9 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useNavigate } from "react-router";
 import { loginServer } from "redux/actions/appAction";
-
+// *Icons
+import EditIcon from "icons/EditIcon";
+import DeleteIcon from "icons/DeleteIcon";
 const SearchSt = styled.div`
   width: 100%;
   height: 100%;
@@ -23,9 +25,8 @@ const SearchSt = styled.div`
     .addMedia {
       width: 5rem;
       height: 5rem;
-      background: #00000056;
+      background: #22212155;
       position: absolute;
-      /* right: 1rem; */
       bottom: 1rem;
       border-radius: 100%;
       font-family: "Roboto 100";
@@ -37,7 +38,7 @@ const SearchSt = styled.div`
       cursor: pointer;
       text-decoration: none;
       &:hover {
-        background: #ff0055;
+        background: #5901E7;
         color: #ffffff;
       }
     }
@@ -48,95 +49,73 @@ const SearchSt = styled.div`
       grid-template-columns: 100%;
       grid-auto-rows: 2rem;
       row-gap: 0.2rem;
-      /* background: #0c0c0c; */
       overflow-y: scroll;
-      /* border-right: 0.0625rem solid #333333; */
       position: relative;
       .tRow {
         display: grid;
-        grid-template-columns: calc(15% - 2.5rem) 5% 5% 5% 15% 15% 5% 25% 5% 5%;
+        grid-template-columns: calc(25% - 1.5rem) 25% 10% 10% 10% 10% 10%;
         grid-template-rows: 100%;
         column-gap: 0.2rem;
         justify-content: center;
         align-content: center;
         &:hover {
           .cell {
-            background: #1c1a2f;
+            background: #1c1c1d;
           }
           .head {
-            background: #03010a;
+            background: #000000;
+          }
+          .action-btn {
+            background: #5901E7;
           }
         }
         .cell {
-          background: #191727;
+          background: #141414;
           line-height: 2rem;
           display: block;
           border-radius: 0.3rem;
           font-family: "Roboto 300";
-          font-size: 0.8rem;
+          font-size: 1rem;
           color: white;
-          padding: 0 0.5rem;
+          padding: 0 1rem;
           // Dots ...
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
-          .number {
-            color: red;
-            margin-right: 0.5rem;
-            font-family: "Roboto 900";
-            font-size: 1.5rem;
-          }
-          .text {
-            color: #747474;
-            font-size: 0.6rem;
-          }
         }
         .head {
-          background: #03010a;
+          background: #000000;
           font-family: "Roboto 900";
-          font-size: 0.8rem;
+          font-size: 1rem;
           text-align: center;
-          /* display: flex;
-          justify-content: center;
-          align-items: center; */
-          .sysIcon {
-            width: 100;
-            height: 100%;
-            justify-self: center;
-            align-self: center;
-            font-size: 1rem;
-          }
-          .text {
-            width: 60%;
-            height: 100%;
-            display: flex;
-            justify-content: start;
-            align-items: center;
-          }
-          .noneText {
-            display: none;
-          }
-        }
-        .none {
-          display: block;
+          color: #ffffff;
         }
 
-        .action {
-          background: #6200ff;
-          color: #ffffff;
+        .action-btn {
+          background: #5901E7;
           cursor: pointer;
-          font-family: "Roboto 900";
-          text-decoration: none;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 1.1rem;
           &:hover {
             background: #ffffff;
             color: #000000;
           }
         }
+        .center {
+          text-align: center;
+          text-transform: capitalize;
+        }
+        .none {
+          display: block;
+        }
       }
-      .tHead {
+      //! Para mantener pegado los titulos
+      .sticky-top {
         position: sticky;
         top: 0;
-        background: #0c0c0c;
+        background: #0d0d0e;
       }
     }
   }
@@ -144,6 +123,7 @@ const SearchSt = styled.div`
 interface MovieIT {
   _id: "";
   title: "";
+  originalTitle: "";
   rating: 0;
   year: "";
   genre: "";
@@ -152,6 +132,8 @@ interface MovieIT {
   synopsis: "";
   link: "";
   image: "";
+  server: "";
+  available: "";
 }
 type Movies = [MovieIT];
 const Search = () => {
@@ -204,35 +186,34 @@ const Search = () => {
   return (
     <SearchSt>
       <div className="table">
-        <div className="tRow tHead">
-          <div className="cell head">Nombre</div>
+        <div className="tRow sticky-top">
+          <div className="cell head">Título</div>
+          <div className="cell head">Título original</div>
           <div className="cell head">Año</div>
-          <div className="cell head">Duración</div>
-          <div className="cell head none">Actores</div>
-          <div className="cell head">Género</div>
-          <div className="cell head none">Sinposis</div>
-          <div className="cell head none">Calificación</div>
-          {/* <div className="cell head none">Imagen</div> */}
-          <div className="cell head none">Link</div>
+          <div className="cell head">Servidor</div>
+          <div className="cell head">Disponible</div>
           <div className="cell head">Editar</div>
           <div className="cell head">Borrar</div>
         </div>
         {state?.map((i) => (
           <div className="tRow" key={i._id}>
             <div className="cell ">{i.title}</div>
-            <div className="cell ">{i.year}</div>
-            <div className="cell ">{i.time}</div>
-            <div className="cell  none">{i.actors}</div>
-            <div className="cell ">{i.genre}</div>
-            <div className="cell  none">{i.synopsis}</div>
-            <div className="cell  none">{i.rating}</div>
-            {/* <div className="cell  none">{i.image}</div> */}
-            <div className="cell  none">{i.link}</div>
-            <Link className="cell " to={`/update-media/${i._id}`}>
-              Editar
+            <div className="cell ">{i.originalTitle}</div>
+            <div className="cell center">{i.year}</div>
+            <div
+              className="cell center"
+              style={`${i.server}` === "mediafire" ? { color: "#00ffbf" } : { color: "#ff0055" }}
+            >
+              {i.server}
+            </div>
+            <div className="cell center" style={i.available ? { color: "lime" } : { color: "red" }}>
+              {i.available ? "Si" : "No"}
+            </div>
+            <Link className="cell action-btn " to={`/update-media/${i._id}`}>
+              <EditIcon />
             </Link>
-            <div className="cell " onClick={() => handleDelete(i._id)}>
-              Borrar
+            <div className="cell action-btn" onClick={() => handleDelete(i._id)}>
+              <DeleteIcon />
             </div>
           </div>
         ))}
