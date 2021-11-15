@@ -202,7 +202,10 @@ const movieTemplate = {
   actors: "",
   synopsis: "",
   link: "",
-  image: "",
+  imageXL: "",
+  imageL: "",
+  imageM: "",
+  imageS: "",
 };
 const Movie = () => {
   const params = useParams();
@@ -264,17 +267,17 @@ const Movie = () => {
         <div className="container-poster">
           <img
             className="img-movie"
-            src={state.image && `${BUCKET}${state.image}`}
+            src={state.imageL && `${BUCKET}${state.imageL}`}
             alt="poster movie"
             onLoad={(e) => handleLoadImg(e)}
           />
-          {!imageLoad && <SpinnerImg />}
+          {/* {!imageLoad && <SpinnerImg />} */}
         </div>
         <div className="container-data">
           <h2 className="title-movie">{state.title}</h2>
           <h3 className="year">
-            {state.year} • {cleanText.split(" ")[0]} {cleanText.split(" ")[1]} {cleanText.split(" ")[2]}{" "}
-            {cleanText.split(" ")[3]} • {state.time}
+            {state.year} • {cleanText.split(" ")[0]} {cleanText.split(" ")[1]}{" "}
+            {cleanText.split(" ")[2]} {cleanText.split(" ")[3]} • {state.time}
           </h3>
           <h3 className="rate">
             <span>Calificación:</span> {state.rating}

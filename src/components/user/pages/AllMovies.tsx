@@ -56,7 +56,10 @@ interface MovieIT {
   actors: "";
   synopsis: "";
   link: "";
-  image: "";
+  imageXL: "";
+  imageL: "";
+  imageM: "";
+  imageS: "";
 }
 type Movies = [MovieIT];
 const AllMovies = () => {
@@ -105,7 +108,7 @@ const AllMovies = () => {
       <h2 className="title-component">Películas</h2>
       <div className="container-movies">
         {state?.map((i) => (
-          <MoviePoster key={i._id} id={i._id} img={i.image} rating={i.rating} />
+          <MoviePoster key={i._id} id={i._id} img={i.imageM} rating={i.rating} />
         ))}
       </div>
       <span>pagination</span>

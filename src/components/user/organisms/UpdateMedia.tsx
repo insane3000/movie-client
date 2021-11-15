@@ -220,7 +220,10 @@ const Search = () => {
   const dispatch = useDispatch();
   const app = useSelector((store: StoreInterface) => store.app);
   const [id, setId] = useState<any>("");
-  const [imageLink, setImageLink] = useState<any>("");
+  const [imageXL, setImageXL] = useState<any>("");
+  const [imageL, setImageL] = useState<any>("");
+  const [imageM, setImageM] = useState<any>("");
+  const [imageS, setImageS] = useState<any>("");
   const [file, setFile] = useState<any>();
   const [title, setTitle] = useState<any>("");
   const [originalTitle, setOriginalTitle] = useState<any>("");
@@ -238,11 +241,12 @@ const Search = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.currentTarget.files?.[0];
-    if (value && value.size > 1048576) {
-      // setAlertImg(true);
-    } else {
-      setFile(value);
-    }
+    // if (value && value.size > 1048576) {
+    //   // setAlertImg(true);
+    // } else {
+    //   setFile(value);
+    // }
+    setFile(value);
   };
 
   const handleTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -304,7 +308,10 @@ const Search = () => {
     formData.append("synopsis", synopsis);
     formData.append("link", link);
     formData.append("file", file);
-    formData.append("image", imageLink);
+    formData.append("imageXL", imageXL);
+    formData.append("imageL", imageL);
+    formData.append("imageM", imageM);
+    formData.append("imageS", imageS);
     formData.append("_id", id);
     formData.append("server", server);
     formData.append("available", available);
@@ -347,7 +354,10 @@ const Search = () => {
         setActors(response.data.actors);
         setSynopsis(response.data.synopsis);
         setLink(response.data.link);
-        setImageLink(response.data.image);
+        setImageXL(response.data.imageXL);
+        setImageL(response.data.imageL);
+        setImageM(response.data.imageM);
+        setImageS(response.data.imageS);
         setId(response.data._id);
         setServer(response.data.server);
         setAvailable(response.data.available);
@@ -373,7 +383,7 @@ const Search = () => {
   return (
     <SearchSt>
       <div className="poster">
-        <img src={imageLink && `${BUCKET}${imageLink}`} alt="" />
+        <img src={imageL && `${BUCKET}${imageL}`} alt="" />
       </div>
       <div className="data-right">
         <h2 className="title">Actualizar peliculas</h2>
@@ -480,7 +490,7 @@ const Search = () => {
                 type="file"
                 onChange={(e) => handleChange(e)}
                 placeholder="File"
-                accept="image/png, image/jpeg, image/jpg, image/webp"
+                accept="image/*"
               />
             </div>
             <div className="input-form-container">
@@ -496,7 +506,12 @@ const Search = () => {
             </div>
             <div className="input-form-container">
               <span className="label">Servidor:</span>
-              <select value={server} className="input-form select" name="server" onChange={(e) => handleServer(e)}>
+              <select
+                value={server}
+                className="input-form select"
+                name="server"
+                onChange={(e) => handleServer(e)}
+              >
                 <option value="mediafire">Mediafire</option>
                 <option value="backblaze">Backblaze</option>
               </select>

@@ -178,7 +178,7 @@ const MoviePoster = (props: Props) => {
         </div>
       </Link>
 
-      {imageLoad === false ? <SpinnerImg /> : null}
+      {/* {imageLoad === false ? <SpinnerImg /> : null} */}
     </MoviesPosterSt>
   );
 };

@@ -211,15 +211,16 @@ const Search = () => {
   const [available, setAvailable] = useState<any>(true);
   // const [alertImg, setAlertImg] = useState<any>(false);
 
-  // console.log(alertImg);
+  console.log(file);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.currentTarget.files?.[0];
-    if (value && value.size > 1048576) {
-      // setAlertImg(true);
-    } else {
-      setFile(value);
-    }
+    // if (value && value.size > 1048576) {
+    //   // setAlertImg(true);
+    // } else {
+    //   setFile(value);
+    // }
+    setFile(value)
   };
 
   const handleTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -407,7 +408,7 @@ const Search = () => {
               type="file"
               onChange={(e) => handleChange(e)}
               placeholder="File"
-              accept="image/png, image/jpeg, image/jpg, image/webp"
+              accept="image/*"
             />
           </div>
           <div className="input-form-container">
@@ -423,14 +424,24 @@ const Search = () => {
           </div>
           <div className="input-form-container">
             <span className="label">Servidor:</span>
-            <select value={server} className="input-form select" name="server" onChange={(e) => handleServer(e)}>
+            <select
+              value={server}
+              className="input-form select"
+              name="server"
+              onChange={(e) => handleServer(e)}
+            >
               <option value="mediafire">Mediafire</option>
               <option value="backblaze">Backblaze</option>
             </select>
           </div>
           <div className="input-form-container">
             <span className="label">Disponible:</span>
-            <select value={available} className="input-form select" name="server" onChange={(e) => handleAvailable(e)}>
+            <select
+              value={available}
+              className="input-form select"
+              name="server"
+              onChange={(e) => handleAvailable(e)}
+            >
               <option value="true">Si</option>
               <option value="false">No</option>
             </select>

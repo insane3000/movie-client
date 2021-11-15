@@ -17,13 +17,14 @@ const ClusterSt = styled.div`
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
     width: 100%;
-    height: 31rem;
+    height: 25rem;
     margin-top: 2rem;
     margin-bottom: 2rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 
     .title-cluster {
       width: 100%;
@@ -39,7 +40,7 @@ const ClusterSt = styled.div`
 
     .container-postersArrow {
       width: 100%;
-      height: 28rem;
+      height: calc(100% - 3rem);
       display: grid;
       grid-template-columns: 4rem calc(100% - 8rem) 4rem;
       .arrow {
@@ -66,7 +67,7 @@ const ClusterSt = styled.div`
         width: 100%;
         height: 100%;
         display: grid;
-        grid-template-columns: repeat(10, 18rem);
+        grid-template-columns: repeat(10, 15rem);
         grid-template-rows: 100%;
         gap: 1rem;
         overflow-x: scroll;
@@ -106,7 +107,10 @@ interface MovieIT {
   actors: "";
   synopsis: "";
   link: "";
-  image: "";
+  imageXL: "";
+  imageL: "";
+  imageM: "";
+  imageS: "";
 }
 type Movies = [MovieIT];
 
@@ -161,7 +165,7 @@ const MoviesGender = (props: Props) => {
         </section>
         <div ref={moviesGenderRef} className="list-posters">
           {state?.map((i) => (
-            <MoviePoster key={i._id} img={i.image} id={i._id} rating={i.rating} />
+            <MoviePoster key={i._id} img={i.imageM} id={i._id} rating={i.rating} />
           ))}
           <Link className="toGenre" to={`/genre/${props.genre}`}>
             <span className="text">{props.text}</span>

@@ -53,7 +53,10 @@ interface MovieIT {
   actors: "";
   synopsis: "";
   link: "";
-  image: "";
+  imageXL: "";
+  imageL: "";
+  imageM: "";
+  imageS: "";
 }
 type Movies = [MovieIT];
 const Premieres = () => {
@@ -62,7 +65,9 @@ const Premieres = () => {
   const dispatch = useDispatch();
   const app = useSelector((store: StoreInterface) => store.app);
   const restoreScroll = () => {
-    dispatch(restartScroll("premieres", premieresRef.current === null ? 0 : premieresRef.current.scrollTop));
+    dispatch(
+      restartScroll("premieres", premieresRef.current === null ? 0 : premieresRef.current.scrollTop)
+    );
   };
   useEffect(() => {
     premieresRef.current && (premieresRef.current.scrollTop = app.scroll.premieres);
@@ -102,7 +107,7 @@ const Premieres = () => {
       <h2 className="title-component">Estrenos</h2>
       <div className="container-movies">
         {state?.map((i) => (
-          <MoviePoster key={i._id} img={i.image} id={i._id} rating={i.rating} />
+          <MoviePoster key={i._id} img={i.imageM} id={i._id} rating={i.rating} />
         ))}
       </div>
     </PremieresSt>
