@@ -30,17 +30,17 @@ const AllMoviesSt = styled.div`
       text-align: center;
       margin-top: 1rem;
       margin-bottom: 1rem;
+      color: #c5c5c5;
     }
     .container-movies {
       width: 80%;
       height: auto;
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(10rem, 18rem));
-      /* grid-template-columns: 18rem 18rem 18rem 18rem; */
-      grid-auto-rows: 28rem;
+      grid-template-columns: repeat(auto-fill, minmax(10rem, 13rem));
+      grid-auto-rows: 23rem;
       justify-content: center;
       align-content: flex-start;
-      gap: 1rem;
+      gap: 2rem;
       margin-top: 1rem;
       margin-bottom: 1rem;
     }
@@ -108,7 +108,7 @@ const AllMovies = () => {
       <h2 className="title-component">Películas</h2>
       <div className="container-movies">
         {state?.map((i) => (
-          <MoviePoster key={i._id} id={i._id} img={i.imageM} rating={i.rating} />
+          <MoviePoster key={i._id} id={i._id} img={i.imageM} rating={i.rating} title={i.title} />
         ))}
       </div>
       <span>pagination</span>

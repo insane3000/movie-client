@@ -13,9 +13,9 @@ import { URI } from "config/axios";
 import { StoreInterface } from "interfaces/storeTemplate";
 
 const NavigationSt = styled.nav`
-  background: #000000;
-  background: linear-gradient(90deg, #080808 0%, #121213 100%);
-  border-bottom: 0.0625rem solid #111010;
+  /* background: #00000013; */
+  /* background: linear-gradient(90deg, #0808086a 0%, #12121352 100%); */
+  /* border-bottom: 0.0625rem solid #111010; */
 
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {

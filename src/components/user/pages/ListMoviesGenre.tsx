@@ -141,7 +141,7 @@ const ListMoviesGenre = () => {
       <h2 className="title-component">{genero}</h2>
       <div className="container-movies">
         {state?.map((i) => (
-          <MoviePoster key={i._id} img={i.imageM} id={i._id} rating={i.rating} />
+          <MoviePoster key={i._id} img={i.imageM} id={i._id} rating={i.rating} title={i.title} />
         ))}
       </div>
     </AllMoviesSt>

@@ -73,6 +73,7 @@ const Search = () => {
                   img={i.image}
                   id={i._id}
                   rating={i.rating}
+                  title={i.title} 
                 />
               )
           )

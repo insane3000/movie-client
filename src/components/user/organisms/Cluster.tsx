@@ -17,14 +17,15 @@ const ClusterSt = styled.div`
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
     width: 100%;
-    height: 25rem;
+    height: 23rem;
     margin-top: 2rem;
     margin-bottom: 2rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
+    /* overflow: hidden; */
+    background: red;
 
     .title-cluster {
       width: 100%;
@@ -67,7 +68,7 @@ const ClusterSt = styled.div`
         width: 100%;
         height: 100%;
         display: grid;
-        grid-template-columns: repeat(10, 15rem);
+        grid-template-columns: repeat(10, 13rem);
         grid-template-rows: 100%;
         gap: 1rem;
         overflow-x: scroll;
@@ -165,7 +166,7 @@ const MoviesGender = (props: Props) => {
         </section>
         <div ref={moviesGenderRef} className="list-posters">
           {state?.map((i) => (
-            <MoviePoster key={i._id} img={i.imageM} id={i._id} rating={i.rating} />
+            <MoviePoster key={i._id} img={i.imageM} id={i._id} rating={i.rating} title={i.title} />
           ))}
           <Link className="toGenre" to={`/genre/${props.genre}`}>
             <span className="text">{props.text}</span>
