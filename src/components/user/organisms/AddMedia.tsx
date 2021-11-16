@@ -32,11 +32,12 @@ const SearchSt = styled.div`
       flex-direction: column;
       justify-content: start;
       align-items: center;
+      // ! Estilos para la zona de title
       .container-inputs {
         width: 100%;
         height: 3rem;
         display: grid;
-        grid-template-columns: 40% calc(40% - 3rem) 10% 10%;
+        grid-template-columns: 15% 15% 25% calc(25% - 5rem) 10% 10%;
         grid-template-rows: 100%;
         gap: 1rem;
         justify-content: center;
@@ -70,6 +71,14 @@ const SearchSt = styled.div`
             color: white;
             font-family: "Roboto 300";
             font-size: 1rem;
+          }
+          .select {
+            width: 90%;
+            height: 100%;
+            /* background: red; */
+            option {
+              color: #000000;
+            }
           }
         }
       }
@@ -220,7 +229,7 @@ const Search = () => {
     // } else {
     //   setFile(value);
     // }
-    setFile(value)
+    setFile(value);
   };
 
   const handleTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -308,6 +317,55 @@ const Search = () => {
 
       <form className="upload-form" onSubmit={handleSubmit}>
         <section className="container-inputs">
+          <div className="input-form-container">
+            <span className="label">Idioma:</span>
+            {/* <input
+              name="title"
+              className="input-form"
+              type="text"
+              onChange={(e) => handleTitle(e)}
+              placeholder="Idioma"
+              value={title}
+            /> */}
+            <select
+              value={available}
+              className="input-form select"
+              name="server"
+              onChange={(e) => handleAvailable(e)}
+            >
+              <option value="latin">Latino</option>
+              <option value="subtitled">Subtitulado</option>
+            </select>
+          </div>
+          <div className="input-form-container">
+            <span className="label">Carpeta:</span>
+            {/* <input
+              name="title"
+              className="input-form"
+              type="text"
+              onChange={(e) => handleTitle(e)}
+              placeholder="Carpeta"
+              value={title}
+            /> */}
+            <select
+              value={available}
+              className="input-form select"
+              name="server"
+              onChange={(e) => handleAvailable(e)}
+            >
+              <option value="latin">Estrenos</option>
+              <option value="subtitled">Accion</option>
+              <option value="subtitled">Comedia</option>
+              <option value="latin">Terror</option>
+              <option value="subtitled">Animacion</option>
+              <option value="latin">Crimen</option>
+              <option value="subtitled">Documental</option>
+              <option value="latin">Drama</option>
+              <option value="subtitled">Musicales</option>
+              <option value="latin">Romance</option>
+              <option value="subtitled">Ciencia Ficcion</option>
+            </select>
+          </div>
           <div className="input-form-container">
             <span className="label">Título:</span>
             <input

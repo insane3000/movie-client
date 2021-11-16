@@ -17,7 +17,7 @@ const ClusterSt = styled.div`
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
     width: 100%;
-    height: 23rem;
+    height: 26rem;
     margin-top: 2rem;
     margin-bottom: 2rem;
     display: flex;
@@ -25,7 +25,7 @@ const ClusterSt = styled.div`
     justify-content: center;
     align-items: center;
     /* overflow: hidden; */
-    background: red;
+    /* background: red; */
 
     .title-cluster {
       width: 100%;
