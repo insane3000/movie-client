@@ -10,7 +10,7 @@ import { loginServer } from "redux/actions/appAction";
 // *Icons
 import EditIcon from "icons/EditIcon";
 import DeleteIcon from "icons/DeleteIcon";
-const SearchSt = styled.div`
+const MediaSt = styled.div`
   width: 100%;
   height: 100%;
 
@@ -38,7 +38,7 @@ const SearchSt = styled.div`
       cursor: pointer;
       text-decoration: none;
       &:hover {
-        background: #5901E7;
+        background: #5901e7;
         color: #ffffff;
       }
     }
@@ -53,7 +53,7 @@ const SearchSt = styled.div`
       position: relative;
       .tRow {
         display: grid;
-        grid-template-columns: calc(25% - 1.5rem) 25% 10% 10% 10% 10% 10%;
+        grid-template-columns: calc(25% - 1.5rem) 15% 10% 10% 10% 10% 10% 10%;
         grid-template-rows: 100%;
         column-gap: 0.2rem;
         justify-content: center;
@@ -66,7 +66,7 @@ const SearchSt = styled.div`
             background: #000000;
           }
           .action-btn {
-            background: #5901E7;
+            background: #5901e7;
           }
         }
         .cell {
@@ -92,7 +92,7 @@ const SearchSt = styled.div`
         }
 
         .action-btn {
-          background: #5901E7;
+          background: #5901e7;
           cursor: pointer;
           display: flex;
           justify-content: center;
@@ -122,6 +122,8 @@ const SearchSt = styled.div`
 `;
 interface MovieIT {
   _id: "";
+  language: "";
+  folder: "";
   title: "";
   originalTitle: "";
   rating: 0;
@@ -142,6 +144,18 @@ const Search = () => {
   const app = useSelector((store: StoreInterface) => store.app);
 
   const [state, setState] = useState<Movies>();
+  let [totalPages, setTotalPages] = useState(1);
+  let [page, setPage] = useState(1);
+
+  // !Handle Pagination
+  const handlePrevious = () => {
+    page > 1 && setPage((page -= 1));
+  };
+  const handleNext = () => {
+    page <= totalPages - 1 && setPage((page += 1));
+  };
+  // console.log(totalPages);
+  // console.log(page);
   // console.log(state);
   // !Delete Movie
   const handleDelete = async (id: string) => {
@@ -159,7 +173,7 @@ const Search = () => {
   };
   const fetchData = () => {
     axios
-      .get(`${URI}/movies`, {
+      .get(`${URI}/movies-admin?page=${page}`, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
           id: `${app.login.user}`,
@@ -167,7 +181,9 @@ const Search = () => {
         },
       })
       .then(function (response: any) {
-        setState(response.data);
+        setState(response.data.docs);
+        setTotalPages(response.data.totalPages);
+        // console.log(response.data);
       })
       .catch(function (error) {
         console.log(error);
@@ -182,13 +198,15 @@ const Search = () => {
   useEffect(() => {
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [page]);
+
   return (
-    <SearchSt>
+    <MediaSt>
       <div className="table">
         <div className="tRow sticky-top">
           <div className="cell head">Título</div>
-          <div className="cell head">Título original</div>
+          <div className="cell head">Idioma</div>
+          <div className="cell head">Carpeta</div>
           <div className="cell head">Año</div>
           <div className="cell head">Servidor</div>
           <div className="cell head">Disponible</div>
@@ -198,7 +216,8 @@ const Search = () => {
         {state?.map((i) => (
           <div className="tRow" key={i._id}>
             <div className="cell ">{i.title}</div>
-            <div className="cell ">{i.originalTitle}</div>
+            <div className="cell ">{i.language}</div>
+            <div className="cell ">{i.folder}</div>
             <div className="cell center">{i.year}</div>
             <div
               className="cell center"
@@ -221,7 +240,9 @@ const Search = () => {
       <Link className="addMedia" to="/add-media">
         +
       </Link>
-    </SearchSt>
+      <button onClick={handlePrevious}>Pagina Anterior</button>
+      <button onClick={handleNext}>Pagina Siguiente</button>
+    </MediaSt>
   );
 };
 

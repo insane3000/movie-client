@@ -206,6 +206,8 @@ const Search = () => {
   const fileRef = useRef<any>();
   let navigate = useNavigate();
   const app = useSelector((store: StoreInterface) => store.app);
+  const [language, setLanguage] = useState("latino");
+  const [folder, setFolder] = useState<any>("estrenos");
   const [file, setFile] = useState<any>();
   const [title, setTitle] = useState<any>("");
   const [originalTitle, setOriginalTitle] = useState<any>("");
@@ -220,8 +222,9 @@ const Search = () => {
   const [available, setAvailable] = useState<any>(true);
   // const [alertImg, setAlertImg] = useState<any>(false);
 
-  console.log(file);
+  console.log(language);
 
+  // !Handle Change file
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.currentTarget.files?.[0];
     // if (value && value.size > 1048576) {
@@ -231,7 +234,15 @@ const Search = () => {
     // }
     setFile(value);
   };
-
+  // !Handle Change inputs
+  const handleLatino = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    let value = e.currentTarget.value;
+    setLanguage(value);
+  };
+  const handleFolder = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    let value = e.currentTarget.value;
+    setFolder(value);
+  };
   const handleTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.currentTarget.value;
     setTitle(value);
@@ -282,6 +293,8 @@ const Search = () => {
     e.preventDefault();
     let formData = new FormData();
 
+    formData.append("language", language);
+    formData.append("folder", folder);
     formData.append("title", title);
     formData.append("originalTitle", originalTitle);
     formData.append("rating", rating);
@@ -305,7 +318,7 @@ const Search = () => {
       })
       .then((response) => {
         if (response.statusText === "OK") {
-          navigate("/media");
+          // navigate("/media");
         }
       });
   };
@@ -319,51 +332,32 @@ const Search = () => {
         <section className="container-inputs">
           <div className="input-form-container">
             <span className="label">Idioma:</span>
-            {/* <input
-              name="title"
-              className="input-form"
-              type="text"
-              onChange={(e) => handleTitle(e)}
-              placeholder="Idioma"
-              value={title}
-            /> */}
             <select
-              value={available}
+              value={language}
               className="input-form select"
               name="server"
-              onChange={(e) => handleAvailable(e)}
+              onChange={(e) => handleLatino(e)}
             >
-              <option value="latin">Latino</option>
-              <option value="subtitled">Subtitulado</option>
+              <option value="latino">Latino</option>
+              <option value="subtitulado">Subtitulado</option>
             </select>
           </div>
           <div className="input-form-container">
             <span className="label">Carpeta:</span>
-            {/* <input
-              name="title"
-              className="input-form"
-              type="text"
-              onChange={(e) => handleTitle(e)}
-              placeholder="Carpeta"
-              value={title}
-            /> */}
             <select
-              value={available}
+              value={folder}
               className="input-form select"
               name="server"
-              onChange={(e) => handleAvailable(e)}
+              onChange={(e) => handleFolder(e)}
             >
-              <option value="latin">Estrenos</option>
-              <option value="subtitled">Accion</option>
-              <option value="subtitled">Comedia</option>
-              <option value="latin">Terror</option>
-              <option value="subtitled">Animacion</option>
-              <option value="latin">Crimen</option>
-              <option value="subtitled">Documental</option>
-              <option value="latin">Drama</option>
-              <option value="subtitled">Musicales</option>
-              <option value="latin">Romance</option>
-              <option value="subtitled">Ciencia Ficcion</option>
+              <option value="estrenos">Estrenos</option>
+              <option value="accion">Acción</option>
+              <option value="comedia">Comedia</option>
+              <option value="terror">Terror</option>
+              <option value="animacion">Animación</option>
+              <option value="drama">Drama</option>
+              <option value="romance">Romance</option>
+              <option value="sci-fi">Ciencia Ficción</option>
             </select>
           </div>
           <div className="input-form-container">

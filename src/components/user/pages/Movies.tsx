@@ -44,6 +44,13 @@ const AllMoviesSt = styled.div`
       margin-top: 1rem;
       margin-bottom: 1rem;
     }
+    .pagination {
+      width: 100%;
+      height: 3rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
 `;
 interface MovieIT {
@@ -70,10 +77,22 @@ const AllMovies = () => {
   const app = useSelector((store: StoreInterface) => store.app);
 
   const [state, setState] = useState<Movies>();
-  // console.log(state);
+  let [totalPages, setTotalPages] = useState(1);
+  let [page, setPage] = useState(1);
+
+  // !Handle Pagination
+  const handlePrevious = () => {
+    page > 1 && setPage((page -= 1));
+  };
+  const handleNext = () => {
+    page <= totalPages - 1 && setPage((page += 1));
+  };
+  // console.log(totalPages);
+  // console.log(page);
+  // !Fetch data
   const fetchData = () => {
     axios
-      .get(`${URI}/movies`, {
+      .get(`${URI}/movies?page=${page}&limit=5`, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
           id: `${app.login.user}`,
@@ -81,7 +100,8 @@ const AllMovies = () => {
         },
       })
       .then(function (response: any) {
-        setState(response.data);
+        setState(response.data.docs);
+        setTotalPages(response.data.totalPages);
       })
       .catch(function (error) {
         console.log(error);
@@ -95,7 +115,7 @@ const AllMovies = () => {
   useEffect(() => {
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [page]);
   const restoreScroll = () => {
     // console.log(moviesRef);
     dispatch(restartScroll("movies", moviesRef.current === null ? 0 : moviesRef.current.scrollTop));
@@ -111,7 +131,10 @@ const AllMovies = () => {
           <MoviePoster key={i._id} id={i._id} img={i.imageM} rating={i.rating} title={i.title} />
         ))}
       </div>
-      <span>pagination</span>
+      <div className="pagination">
+        {page > 1 && <button onClick={handlePrevious}>Pagina Anterior</button>}
+        {page <= totalPages - 1 && <button onClick={handleNext}>Pagina Siguiente</button>}
+      </div>
     </AllMoviesSt>
   );
 };

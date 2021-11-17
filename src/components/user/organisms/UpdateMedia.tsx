@@ -52,11 +52,12 @@ const SearchSt = styled.div`
         flex-direction: column;
         justify-content: start;
         align-items: center;
+        // ! Estilos para la zona de title
         .container-inputs {
           width: 100%;
           height: 3rem;
           display: grid;
-          grid-template-columns: 40% calc(40% - 3rem) 10% 10%;
+          grid-template-columns: 15% 15% 25% calc(25% - 5rem) 10% 10%;
           grid-template-rows: 100%;
           gap: 1rem;
           justify-content: center;
@@ -90,6 +91,14 @@ const SearchSt = styled.div`
               color: white;
               font-family: "Roboto 300";
               font-size: 1rem;
+            }
+            .select {
+              width: 90%;
+              height: 100%;
+              /* background: red; */
+              option {
+                color: #000000;
+              }
             }
           }
         }
@@ -224,6 +233,9 @@ const Search = () => {
   const [imageL, setImageL] = useState<any>("");
   const [imageM, setImageM] = useState<any>("");
   const [imageS, setImageS] = useState<any>("");
+
+  const [language, setLanguage] = useState("latino");
+  const [folder, setFolder] = useState("estrenos");
   const [file, setFile] = useState<any>();
   const [title, setTitle] = useState<any>("");
   const [originalTitle, setOriginalTitle] = useState<any>("");
@@ -236,9 +248,10 @@ const Search = () => {
   const [link, setLink] = useState<any>("");
   const [server, setServer] = useState<any>("mediafire");
   const [available, setAvailable] = useState<any>(true);
+  console.log(language);
 
   // const [alertImg, setAlertImg] = useState<any>(false);
-
+  // !Handle Change file
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.currentTarget.files?.[0];
     // if (value && value.size > 1048576) {
@@ -248,7 +261,15 @@ const Search = () => {
     // }
     setFile(value);
   };
-
+  // !Handle Change inputs
+  const handleLatino = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    let value = e.currentTarget.value;
+    setLanguage(value);
+  };
+  const handleFolder = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    let value = e.currentTarget.value;
+    setFolder(value);
+  };
   const handleTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.currentTarget.value;
     setTitle(value);
@@ -298,6 +319,8 @@ const Search = () => {
     e.preventDefault();
     let formData = new FormData();
 
+    formData.append("language", language);
+    formData.append("folder", folder);
     formData.append("title", title);
     formData.append("originalTitle", originalTitle);
     formData.append("rating", rating);
@@ -317,7 +340,6 @@ const Search = () => {
     formData.append("available", available);
 
     // console.log("put client");
-    // console.log(formData);
 
     await axios
       .put(`${URI}/movies/${params.id}`, formData, {
@@ -345,6 +367,9 @@ const Search = () => {
         },
       })
       .then(function (response) {
+        //TODO Por cada nuevo dato seteado, se renderiza de nuevo. fixear!!!
+        setLanguage(response.data.language);
+        setFolder(response.data.Folder);
         setTitle(response.data.title);
         setOriginalTitle(response.data.originalTitle);
         setRating(response.data.rating);
@@ -390,6 +415,36 @@ const Search = () => {
 
         <form className="upload-form" onSubmit={handleSubmit}>
           <section className="container-inputs">
+            <div className="input-form-container">
+              <span className="label">Idioma:</span>
+              <select
+                value={language}
+                className="input-form select"
+                name="server"
+                onChange={(e) => handleLatino(e)}
+              >
+                <option value="latino">Latino</option>
+                <option value="subtitulado">Subtitulado</option>
+              </select>
+            </div>
+            <div className="input-form-container">
+              <span className="label">Carpeta:</span>
+              <select
+                value={folder}
+                className="input-form select"
+                name="server"
+                onChange={(e) => handleFolder(e)}
+              >
+                <option value="estrenos">Estrenos</option>
+                <option value="accion">Acción</option>
+                <option value="comedia">Comedia</option>
+                <option value="terror">Terror</option>
+                <option value="animacion">Animación</option>
+                <option value="drama">Drama</option>
+                <option value="romance">Romance</option>
+                <option value="sci-fi">Ciencia Ficción</option>
+              </select>
+            </div>
             <div className="input-form-container">
               <span className="label">Título:</span>
               <input
