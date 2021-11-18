@@ -145,7 +145,7 @@ const Welcome = () => {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("user", response.data._id);
         localStorage.setItem("role", response.data.role);
-        navigate(`/home`);
+        navigate(`/browser`);
         // console.log(response.data);
       })
       .catch(function (error) {

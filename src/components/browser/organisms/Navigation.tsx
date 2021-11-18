@@ -19,9 +19,12 @@ const NavigationSt = styled.nav`
 
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
-    /* width: 100%;
-    height: 5rem; */
-    /* background: #070707; */
+    width: 100vw;
+    height: 5rem;
+    background: #070707;
+    position: sticky;
+    top: 0;
+    z-index: 1;
     display: flex;
     justify-content: start;
     align-items: center;
@@ -62,7 +65,7 @@ const NavigationSt = styled.nav`
         } */
       }
       .active {
-        background: #5901E7;
+        background: #5901e7;
       }
     }
     .search-container {
@@ -145,7 +148,7 @@ const NavigationSt = styled.nav`
         border-radius: 100%;
         padding: 0.5rem 0.5rem;
         transition: 0.1s;
-        background: #5901E7;
+        background: #5901e7;
         color: #ffffff;
         &:hover {
           transform: scale(1.1);
@@ -198,7 +201,7 @@ const NavigationSt = styled.nav`
           }
         }
         .active {
-          background: #5901E7;
+          background: #5901e7;
         }
       }
     }
@@ -218,7 +221,7 @@ const Navigation = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     fetchData();
-    navigate("/search");
+    navigate("/home/search");
     dispatch(restartScroll("search", 0));
   };
   const fetchData = () => {
@@ -239,7 +242,7 @@ const Navigation = () => {
         localStorage.setItem("token", "");
         localStorage.setItem("user", "");
         localStorage.setItem("role", "");
-        navigate(`/`);
+        navigate(`/home`);
       });
   };
   const logout = () => {
@@ -247,7 +250,7 @@ const Navigation = () => {
     localStorage.setItem("token", "");
     localStorage.setItem("user", "");
     localStorage.setItem("role", "");
-    navigate(`/`);
+    navigate(`/home`);
     setUser(!user);
   };
   // console.log(navigationRef);
@@ -256,21 +259,33 @@ const Navigation = () => {
     // ref={navigationRef}
     // style={navigationRef.current.scrollTop !== 0 ? { background: "red" } : { background: "lime" }}
     >
-      <Link className="title" to="/" onClick={() => dispatch(restartScroll("home", 0))}>
+      <Link className="title" to="/browser/home" onClick={() => dispatch(restartScroll("home", 0))}>
         Movie Store Cbba
       </Link>
       {app.login.token === "" ? null : (
         <section className="ul">
-          <NavLink className="li" to="/home" onClick={() => dispatch(restartScroll("home", 0))}>
+          <NavLink
+            className="li"
+            to="/browser/home"
+            onClick={() => dispatch(restartScroll("home", 0))}
+          >
             Home
           </NavLink>
-          <NavLink className="li" to="/movies" onClick={() => dispatch(restartScroll("movies", 0))}>
+          <NavLink
+            className="li"
+            to="/browser/movies"
+            onClick={() => dispatch(restartScroll("movies", 0))}
+          >
             Películas
           </NavLink>
-          <NavLink className="li" to="/premieres" onClick={() => dispatch(restartScroll("premieres", 0))}>
+          <NavLink
+            className="li"
+            to="/browser/premieres"
+            onClick={() => dispatch(restartScroll("premieres", 0))}
+          >
             Estrenos
           </NavLink>
-          <NavLink className="li" to="/category">
+          <NavLink className="li" to="/browser/category">
             Categorias
           </NavLink>
         </section>
@@ -296,27 +311,27 @@ const Navigation = () => {
         {user && (
           <section className="options">
             <CloseIcon className="close-user" onClick={() => setUser(!user)} />
-            {app.login.token !== "" && (
-              <NavLink className="link" to="/profile" onClick={() => setUser(!user)}>
+            {app.login.role !== "admin" && (
+              <NavLink className="link" to="/browser/profile" onClick={() => setUser(!user)}>
                 Perfil
               </NavLink>
             )}
-            {app.login.role === "admin" && (
-              <NavLink className="link" to="/clients" onClick={() => setUser(!user)}>
+            {/* {app.login.role === "admin" && (
+              <NavLink className="link" to="/browser/clients" onClick={() => setUser(!user)}>
                 Clientes
               </NavLink>
-            )}
+            )} */}
             {app.login.role === "admin" && (
-              <NavLink className="link" to="/media" onClick={() => setUser(!user)}>
-                Contenido
+              <NavLink className="link" to="/admin/media" onClick={() => setUser(!user)}>
+                Administrar
               </NavLink>
             )}
             {app.login.token === "" ? (
-              <NavLink className="link" to="/login" onClick={() => setUser(!user)}>
+              <NavLink className="link" to="/admin/login" onClick={() => setUser(!user)}>
                 Login
               </NavLink>
             ) : (
-              <NavLink className="link" to="/" onClick={logout}>
+              <NavLink className="link" to="/browser" onClick={logout}>
                 Salir
               </NavLink>
             )}

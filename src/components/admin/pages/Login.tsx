@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 // import axios from "axios";
 // *Redux
@@ -226,8 +226,8 @@ const AddProducts = () => {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("user", response.data._id);
         localStorage.setItem("role", response.data.role);
-        navigate(`/`);
-        // console.log(response.data);
+        navigate(`/admin/media`);
+        console.log(response.data);
       })
       .catch(function (error) {
         // console.log(error);
@@ -236,15 +236,15 @@ const AddProducts = () => {
       });
     // console.log(login);
   };
-  useEffect(() => {
-    if (localStorage.getItem("token") && localStorage.getItem("token") !== "") {
-      navigate(`/`);
-      dispatch(loginServer("", "", ""));
-        localStorage.setItem("token", "");
-        localStorage.setItem("user", "");
-        localStorage.setItem("role", "");
-    }
-  });
+  // useEffect(() => {
+  //   if (localStorage.getItem("token") && localStorage.getItem("token") !== "") {
+  //     // navigate(`/admin/login`);
+  //     dispatch(loginServer("", "", ""));
+  //     localStorage.setItem("token", "");
+  //     localStorage.setItem("user", "");
+  //     localStorage.setItem("role", "");
+  //   }
+  // });
   return (
     <AddProductsSt onSubmit={handleSubmit}>
       <h2 className="titleAddProducts">Identificate</h2>

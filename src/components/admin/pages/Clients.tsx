@@ -10,7 +10,7 @@ import { loginServer } from "redux/actions/appAction";
 // *Icons
 import EditIcon from "icons/EditIcon";
 import DeleteIcon from "icons/DeleteIcon";
-const MediaSt = styled.div`
+const SearchSt = styled.div`
   width: 100%;
   height: 100%;
 
@@ -25,20 +25,21 @@ const MediaSt = styled.div`
     .addMedia {
       width: 5rem;
       height: 5rem;
-      background: #22212155;
+      background: #1b1b1b55;
       position: absolute;
+      /* right: 1rem; */
       bottom: 1rem;
       border-radius: 100%;
       font-family: "Roboto 100";
       font-size: 4rem;
-      color: #ffffff7f;
+      color: #ffffff8b;
       display: flex;
       justify-content: center;
       align-items: center;
       cursor: pointer;
       text-decoration: none;
       &:hover {
-        background: #5901e7;
+        background: #5901E7;
         color: #ffffff;
       }
     }
@@ -53,24 +54,24 @@ const MediaSt = styled.div`
       position: relative;
       .tRow {
         display: grid;
-        grid-template-columns: calc(25% - 1.5rem) 15% 10% 10% 10% 10% 10% 10%;
+        grid-template-columns: calc(20% - 1.2rem) 20% 20% 20% 10% 10%;
         grid-template-rows: 100%;
         column-gap: 0.2rem;
         justify-content: center;
         align-content: center;
         &:hover {
           .cell {
-            background: #1c1c1d;
+            background: #1f1f20;
           }
           .head {
             background: #000000;
           }
           .action-btn {
-            background: #5901e7;
+            background: #5901E7;
           }
         }
         .cell {
-          background: #141414;
+          background: #121213;
           line-height: 2rem;
           display: block;
           border-radius: 0.3rem;
@@ -92,7 +93,7 @@ const MediaSt = styled.div`
         }
 
         .action-btn {
-          background: #5901e7;
+          background: #5901E7;
           cursor: pointer;
           display: flex;
           justify-content: center;
@@ -105,7 +106,6 @@ const MediaSt = styled.div`
         }
         .center {
           text-align: center;
-          text-transform: capitalize;
         }
         .none {
           display: block;
@@ -115,27 +115,19 @@ const MediaSt = styled.div`
       .sticky-top {
         position: sticky;
         top: 0;
-        background: #0d0d0e;
+        background: #0e0c16;
       }
     }
   }
 `;
 interface MovieIT {
   _id: "";
-  language: "";
-  folder: "";
-  title: "";
-  originalTitle: "";
-  rating: 0;
-  year: "";
-  genre: "";
-  time: "";
-  actors: "";
-  synopsis: "";
-  link: "";
-  image: "";
-  server: "";
-  available: "";
+  user: "";
+  password: "";
+  name: "";
+  phone: "";
+  date: "";
+  role: "";
 }
 type Movies = [MovieIT];
 const Search = () => {
@@ -144,23 +136,11 @@ const Search = () => {
   const app = useSelector((store: StoreInterface) => store.app);
 
   const [state, setState] = useState<Movies>();
-  let [totalPages, setTotalPages] = useState(1);
-  let [page, setPage] = useState(1);
-
-  // !Handle Pagination
-  const handlePrevious = () => {
-    page > 1 && setPage((page -= 1));
-  };
-  const handleNext = () => {
-    page <= totalPages - 1 && setPage((page += 1));
-  };
-  // console.log(totalPages);
-  // console.log(page);
   // console.log(state);
-  // !Delete Movie
+  // !Delete User
   const handleDelete = async (id: string) => {
     await axios
-      .delete(`${URI}/movies/${id}`, {
+      .delete(`${URI}/users/${id}`, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
           id: `${app.login.user}`,
@@ -171,9 +151,10 @@ const Search = () => {
         fetchData();
       });
   };
+  // !Get all Users
   const fetchData = () => {
     axios
-      .get(`${URI}/movies-admin?page=${page}`, {
+      .get(`${URI}/users`, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
           id: `${app.login.user}`,
@@ -181,9 +162,7 @@ const Search = () => {
         },
       })
       .then(function (response: any) {
-        setState(response.data.docs);
-        setTotalPages(response.data.totalPages);
-        // console.log(response.data);
+        setState(response.data);
       })
       .catch(function (error) {
         console.log(error);
@@ -198,37 +177,38 @@ const Search = () => {
   useEffect(() => {
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page]);
-
+  }, []);
+  const options: Intl.DateTimeFormatOptions = {
+    weekday: "short",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  };
   return (
-    <MediaSt>
+    <SearchSt>
       <div className="table">
         <div className="tRow sticky-top">
-          <div className="cell head">Título</div>
-          <div className="cell head">Idioma</div>
-          <div className="cell head">Carpeta</div>
-          <div className="cell head">Año</div>
-          <div className="cell head">Servidor</div>
-          <div className="cell head">Disponible</div>
+          <div className="cell head">Clave</div>
+          <div className="cell head none">Nombre</div>
+          <div className="cell head none">Celular</div>
+          <div className="cell head">Fecha de vencimiento</div>
+
           <div className="cell head">Editar</div>
           <div className="cell head">Borrar</div>
         </div>
         {state?.map((i) => (
           <div className="tRow" key={i._id}>
-            <div className="cell ">{i.title}</div>
-            <div className="cell ">{i.language}</div>
-            <div className="cell ">{i.folder}</div>
-            <div className="cell center">{i.year}</div>
-            <div
-              className="cell center"
-              style={`${i.server}` === "mediafire" ? { color: "#00ffbf" } : { color: "#ff0055" }}
-            >
-              {i.server}
+            <div className="cell center" style={{ textTransform: "uppercase" }}>
+              {i.user}
             </div>
-            <div className="cell center" style={i.available ? { color: "lime" } : { color: "red" }}>
-              {i.available ? "Si" : "No"}
-            </div>
-            <Link className="cell action-btn " to={`/update-media/${i._id}`}>
+
+            <div className="cell  none">{i.name}</div>
+            <div className="cell  none">{i.phone}</div>
+            <div className="cell center">{new Date(i.date).toLocaleDateString("es-ES", options)}</div>
+            <Link className="cell action-btn" to={`/admin/update-user/${i._id}`}>
               <EditIcon />
             </Link>
             <div className="cell action-btn" onClick={() => handleDelete(i._id)}>
@@ -237,12 +217,10 @@ const Search = () => {
           </div>
         ))}
       </div>
-      <Link className="addMedia" to="/add-media">
+      <Link className="addMedia" to="/admin/create-user">
         +
       </Link>
-      <button onClick={handlePrevious}>Pagina Anterior</button>
-      <button onClick={handleNext}>Pagina Siguiente</button>
-    </MediaSt>
+    </SearchSt>
   );
 };
 

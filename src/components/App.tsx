@@ -1,37 +1,16 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { HashRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 // *Img
 import TextureBg from "img/texture-bg.png";
 // *Fonts
 import "fonts/fonts.css";
-// *Components
-import Home from "components/user/pages/Home";
-import AllMovies from "components/user/pages/Movies";
-// import AllSeries from "components/user/pages/AllSeries";
-import Premieres from "components/user/pages/Premieres";
-import ListMoviesGenre from "components/user/pages/ListMoviesGenre";
-import Navigation from "components/user/organisms/Navigation";
 import styled from "styled-components";
-import Movie from "components/user/pages/Movie";
-import Search from "components/user/pages/Search";
-import Profile from "components/user/pages/Profile";
-import Clients from "components/user/pages/Clients";
-import MediaContent from "components/user/pages/MediaContent";
-import AddMedia from "components/user/organisms/AddMedia";
-import Login from "components/user/pages//Login";
-// import Home from "./home/pages/Home";
-// import Reseller from "./user/pages/Reseller";
-
+import Admin from "components/admin/Admin";
 import Error404 from "./Error404";
 
-import Categories from "./user/pages/Categories";
-import Welcome from "./user/pages/Welcome";
-import CreateUser from "./user/organisms/CreateUser";
-import UpdateUser from "./user/organisms/UpdateUser";
-import UpdateMedia from "./user/organisms/UpdateMedia";
-import { useDispatch, useSelector } from "react-redux";
-import { StoreInterface } from "interfaces/storeTemplate";
+import { useDispatch } from "react-redux";
 import { loginServer } from "redux/actions/appAction";
+import Browser from "./browser/Browser";
 
 const AppSt = styled.div`
   width: 100%;
@@ -48,11 +27,12 @@ const AppSt = styled.div`
   @media only screen and (min-width: 568px) {
     width: 100%;
     height: 100%;
-    display: grid;
+    /* overflow-y: scroll; */
+    /* display: grid;
     grid-template-columns: 100%;
     grid-template-rows: 6rem calc(100% - 6rem);
     justify-content: center;
-    align-content: center;
+    align-content: center; */
 
     /* //! PLex backgound
     background-image: url("https://user-images.githubusercontent.com/63812189/79506691-4af78900-7feb-11ea-883e-87b8e05ceb1c.png");
@@ -65,12 +45,23 @@ const AppSt = styled.div`
     background-position: center; */
     background: rgba(0, 0, 0, 0) url(${TextureBg}) repeat scroll 0% 0%;
     background-color: #141e30; /* fallback for old browsers */
+    background: #232526; /* fallback for old browsers */
+    background: -webkit-linear-gradient(
+      to right,
+      #414345,
+      #232526
+    ); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(
+      to right,
+      #414345,
+      #232526
+    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   }
 `;
 
 function App() {
   const dispatch = useDispatch();
-  const app = useSelector((store: StoreInterface) => store.app);
+  // const app = useSelector((store: StoreInterface) => store.app);
   useEffect(() => {
     if (localStorage.getItem("token") && localStorage.getItem("user")) {
       dispatch(
@@ -86,35 +77,10 @@ function App() {
   return (
     <Router>
       <AppSt id="app">
-        <Navigation />
         <Routes>
-          <Route
-            path="/"
-            element={app.login.token === "" ? <Navigate to="/welcome" /> : <Navigate to="/home" />}
-          />
-          <Route path="/login" element={app.login.token === "" ? <Login /> : <Navigate to="/" />} />
-          <Route
-            path="/welcome"
-            element={app.login.token === "" ? <Welcome /> : <Navigate to="/" />}
-          />
-          {app.login.token !== "" && <Route path="/home" element={<Home />} />}
-          {app.login.token !== "" && <Route path="/premieres" element={<Premieres />} />}
-          {app.login.token !== "" && <Route path="/movies" element={<AllMovies />} />}
-          {app.login.token !== "" && <Route path="/movie/:id" element={<Movie />} />}
-          {app.login.token !== "" && <Route path="/genre/:genre" element={<ListMoviesGenre />} />}
-          {app.login.token !== "" && <Route path="/category" element={<Categories />} />}
-          {app.login.token !== "" && <Route path="/search" element={<Search />} />}
-          {app.login.token !== "" && <Route path="/profile" element={<Profile />} />}
-          {/* //!Admin */}
-          {app.login.role === "admin" && <Route path="/clients" element={<Clients />} />}
-          {app.login.role === "admin" && <Route path="/create-user" element={<CreateUser />} />}
-          {app.login.role === "admin" && <Route path="/update-user/:id" element={<UpdateUser />} />}
-          {app.login.role === "admin" && <Route path="/media" element={<MediaContent />} />}
-          {app.login.role === "admin" && <Route path="/add-media" element={<AddMedia />} />}
-          {app.login.role === "admin" && (
-            <Route path="/update-media/:id" element={<UpdateMedia />} />
-          )}
-
+          <Route path="/" element={<Navigate to="/browser" />} />
+          <Route path="/browser/*" element={<Browser />} />
+          <Route path="/admin/*" element={<Admin />} />
           <Route path="/*" element={<Error404 />} />
         </Routes>
       </AppSt>

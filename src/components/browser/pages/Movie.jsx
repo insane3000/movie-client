@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { URI } from "config/axios";
 import { BUCKET } from "config/bucket";
-import SpinnerImg from "../atoms/SpinnerImg";
+// import SpinnerImg from "../atoms/SpinnerImg";
 import { useParams } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
@@ -214,11 +214,11 @@ const Movie = () => {
   const app = useSelector((store) => store.app);
 
   const [state, setState] = useState(movieTemplate);
-  const [imageLoad, setImageLoad] = useState(false);
+  // const [imageLoad, setImageLoad] = useState(false);
   const modifyLink = state.link?.split(".mp4")[0];
-  const handleLoadImg = (e) => {
-    e.currentTarget.complete && setImageLoad(true);
-  };
+  // const handleLoadImg = (e) => {
+  //   e.currentTarget.complete && setImageLoad(true);
+  // };
   // ! Scroll to TOP
   const movieRef = useRef();
   const scrollToTop = () => {
@@ -269,7 +269,7 @@ const Movie = () => {
             className="img-movie"
             src={state.imageL && `${BUCKET}${state.imageL}`}
             alt="poster movie"
-            onLoad={(e) => handleLoadImg(e)}
+            // onLoad={(e) => handleLoadImg(e)}
           />
           {/* {!imageLoad && <SpinnerImg />} */}
         </div>
@@ -299,6 +299,7 @@ const Movie = () => {
           onBeforePlay={() => console.log("onBeforePlay fired!")}
           // image={state.image}
           type="mp4"
+          preload="metadata"
           customProps={{
             // playbackRateControls: [1, 1.25, 1.5],
             autostart: false,

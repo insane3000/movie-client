@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
-import { useParams } from "react-router-dom";
 import axios from "axios";
 import { URI } from "config/axios";
 import { useNavigate } from "react-router";
@@ -9,10 +8,8 @@ import { Link } from "react-router-dom";
 import HashIcon from "icons/HashIcon";
 import CloseIcon from "icons/CloseIcon";
 import { StoreInterface } from "interfaces/storeTemplate";
-import { useDispatch, useSelector } from "react-redux";
-import { loginServer } from "redux/actions/appAction";
-
-const UpdateUserSt = styled.div`
+import { useSelector } from "react-redux";
+const CreateUserSt = styled.div`
   width: 100%;
   height: 100%;
   color: white;
@@ -23,6 +20,7 @@ const UpdateUserSt = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+
     .titleCreateUser {
       font-family: "Roboto 900";
       font-size: 2rem;
@@ -31,7 +29,7 @@ const UpdateUserSt = styled.div`
     }
 
     .createUserForm {
-      background: #0c0c0c;
+      background: #0a0a0a;
       width: 25rem;
       height: 35rem;
       display: flex;
@@ -66,7 +64,7 @@ const UpdateUserSt = styled.div`
         .hashIcon {
           width: 3rem;
           height: 3rem;
-          background: #5901E7;
+          background: #3c00ff;
           color: white;
           /* border-radius: 0.3rem; */
           padding: 0.5rem;
@@ -100,7 +98,7 @@ const UpdateUserSt = styled.div`
         font-size: 1rem;
         cursor: pointer;
         transition: 0.1s;
-        background: #5901E7;
+        background: #3c00ff;
         color: white;
 
         &:hover {
@@ -136,11 +134,8 @@ interface User {
   date: string;
   role: string;
 }
-const UpdateUser = () => {
-  const params = useParams();
+const CreateUser = () => {
   let navigate = useNavigate();
-  const dispatch = useDispatch();
-
   const app = useSelector((store: StoreInterface) => store.app);
 
   const [state, setState] = useState<User>({
@@ -151,12 +146,10 @@ const UpdateUser = () => {
     date: `${formatDate(Date.now())}`,
     role: "user",
   });
-  // console.log(state.date);
   //! funcion para formatiear la fecha
   function formatDate(data: number) {
     return new Date(data - 1000 * 60 * 60 * 4).toISOString().substring(0, 16);
   }
-
   //! funcion para crear un hash o nombre aleatorio
   function makeid(length: number) {
     var result = "";
@@ -191,7 +184,7 @@ const UpdateUser = () => {
     state.date = formatToSave;
     state.name = state.name.toLowerCase();
     await axios
-      .put(`${URI}/users/${params.id}`, state, {
+      .post(`${URI}/signup`, state, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
           id: `${app.login.user}`,
@@ -200,50 +193,16 @@ const UpdateUser = () => {
       })
       .then(function (response) {
         console.log(response);
-        navigate("/clients");
+        navigate("/admin/clients");
       })
       .catch(function (error) {
         console.log(error);
       });
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      axios
-        .get(`${URI}/users/${params.id}`, {
-          headers: {
-            authorization: `Bearer ${app.login.token}`,
-            id: `${app.login.user}`,
-            role: `${app.login.role}`,
-          },
-        })
-        .then(function (response) {
-          setState(() => ({
-            ...state,
-            user: response.data.user,
-            name: response.data.name,
-            phone: response.data.phone,
-            date: formatDate(new Date(response.data.date).getTime()),
-          }));
-        })
-        .catch(function (error) {
-          console.log(error);
-          dispatch(loginServer("", "", ""));
-          localStorage.setItem("token", "");
-          localStorage.setItem("user", "");
-          localStorage.setItem("role", "");
-          navigate(`/`);
-        });
-    };
-    fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [params.id]);
-
   return (
-    <UpdateUserSt>
+    <CreateUserSt>
       <form className="createUserForm" onSubmit={handleSubmit}>
-        <h2 className="titleCreateUser">Actualizar</h2>
-
+        <h2 className="titleCreateUser">Crear Usuario</h2>
         <div className="containerUserName">
           <input
             name="user"
@@ -273,13 +232,13 @@ const UpdateUser = () => {
           placeholder="Celular"
         />
         <input name="date" className="cellInput" type="datetime-local" value={state.date} onChange={handleChange} />
-        <input className="cellInput submit" type="submit" value="ACTUALIZAR" />
-        <Link className="close" to="/clients">
+        <input className="cellInput submit" type="submit" value="CREAR" />
+        <Link className="close" to="/admin/clients">
           <CloseIcon className="sysIconClose" />
         </Link>
       </form>
-    </UpdateUserSt>
+    </CreateUserSt>
   );
 };
 
-export default UpdateUser;
+export default CreateUser;

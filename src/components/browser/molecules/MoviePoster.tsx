@@ -5,8 +5,7 @@ import { BUCKET } from "config/bucket";
 // *Images
 // import movie01 from "img/posters/movie01.jpg";
 import play from "img/play.png";
-import SpinnerImg from "../atoms/SpinnerImg";
-import { useState } from "react";
+// import SpinnerImg from "../atoms/SpinnerImg";
 const MoviesPosterSt = styled.div`
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
@@ -97,10 +96,10 @@ interface Props {
   title: string;
 }
 const MoviePoster = (props: Props) => {
-  const [imageLoad, setImageLoad] = useState(false);
-  const handleLoadImg = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-    e.currentTarget.complete && setImageLoad(true);
-  };
+  // const [imageLoad, setImageLoad] = useState(false);
+  // const handleLoadImg = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+  //   e.currentTarget.complete && setImageLoad(true);
+  // };
 
   return (
     <MoviesPosterSt>
@@ -110,9 +109,9 @@ const MoviePoster = (props: Props) => {
           src={`${BUCKET}${props.img}`}
           alt="Movie"
           loading="lazy"
-          onLoad={(e) => handleLoadImg(e)}
+          // onLoad={(e) => handleLoadImg(e)}
         />
-        <Link className="gradient" to={`/movie/${props.id}`}>
+        <Link className="gradient" to={`/browser/movie/${props.id}`}>
           <img className="play-icon" src={play} alt="play-icon" />
         </Link>
       </section>

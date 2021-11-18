@@ -76,9 +76,9 @@ const AllMovies = () => {
   const moviesRef = useRef<HTMLDivElement>(null);
   const app = useSelector((store: StoreInterface) => store.app);
 
-  const [state, setState] = useState<Movies>();
+  const [state, setState] = useState<any>([]);
   let [totalPages, setTotalPages] = useState(1);
-  let [page, setPage] = useState(1);
+  let [page, setPage] = useState(2);
 
   // !Handle Pagination
   const handlePrevious = () => {
@@ -92,7 +92,7 @@ const AllMovies = () => {
   // !Fetch data
   const fetchData = () => {
     axios
-      .get(`${URI}/movies?page=${page}&limit=5`, {
+      .get(`${URI}/movies?page=1&limit=15`, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
           id: `${app.login.user}`,
@@ -115,7 +115,7 @@ const AllMovies = () => {
   useEffect(() => {
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page]);
+  }, []);
   const restoreScroll = () => {
     // console.log(moviesRef);
     dispatch(restartScroll("movies", moviesRef.current === null ? 0 : moviesRef.current.scrollTop));
@@ -123,18 +123,63 @@ const AllMovies = () => {
   useEffect(() => {
     moviesRef.current && (moviesRef.current.scrollTop = app.scroll.movies);
   });
+
+  // !Cargar mas!
+  const LoadMore = async () => {
+    axios
+      .get(`${URI}/movies?page=${page}&limit=15`, {
+        headers: {
+          authorization: `Bearer ${app.login.token}`,
+          id: `${app.login.user}`,
+          role: `${app.login.role}`,
+        },
+      })
+      .then(function (response: any) {
+        // setItems(response.data.docs);
+        setState([...state, ...response.data.docs]);
+        // if (response.data.docs.length === 0 || response.data.docs.length < 20) {
+        //   sethasMore(false);
+        // }
+        setPage(page + 1);
+        // setTotalPages(response.data.totalPages);
+      });
+  };
+  // !Intersection Observer
+  const containerRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  const callbackFunction = (entries: any) => {
+    const [entry] = entries;
+    setIsVisible(entry.isIntersecting);
+  };
+  const options = {
+    root: null,
+    rootMargin: "0px",
+    threshold: 1,
+  };
+  useEffect(() => {
+    const observer = new IntersectionObserver(callbackFunction, options);
+    if (containerRef.current) observer.observe(containerRef.current);
+    return () => {
+      if (containerRef.current) observer.observe(containerRef.current);
+    };
+  }, [containerRef, options]);
+
   return (
     <AllMoviesSt ref={moviesRef} onClick={restoreScroll}>
       <h2 className="title-component">Películas</h2>
       <div className="container-movies">
-        {state?.map((i) => (
+        {state?.map((i: any) => (
           <MoviePoster key={i._id} id={i._id} img={i.imageM} rating={i.rating} title={i.title} />
         ))}
       </div>
       <div className="pagination">
-        {page > 1 && <button onClick={handlePrevious}>Pagina Anterior</button>}
-        {page <= totalPages - 1 && <button onClick={handleNext}>Pagina Siguiente</button>}
+        {/* {page > 1 && <button onClick={handlePrevious}>Pagina Anterior</button>}
+        {page <= totalPages - 1 && <button onClick={handleNext}>Pagina Siguiente</button>} */}
+        <button onClick={LoadMore}>Cargar mas</button>
       </div>
+      <div>{isVisible ? "IN VIEWPORT" : "NOT IN VIEWPORT"}</div>
+      <div ref={containerRef}>Observe me you filthy voyeur</div>
     </AllMoviesSt>
   );
 };

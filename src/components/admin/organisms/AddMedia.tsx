@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { URI } from "config/axios";
 import { StoreInterface } from "interfaces/storeTemplate";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 const SearchSt = styled.div`
   width: 100%;
   height: 100%;
@@ -178,20 +179,23 @@ const SearchSt = styled.div`
         }
       }
       .save-btn {
-        width: 15rem;
-        height: 4rem;
+        /* width: 15rem;
+        height: 4rem; */
 
         border-style: none;
         outline: none;
-        padding: 0 1rem;
+        padding: 0.5rem 2rem;
         border-radius: 0.3rem;
         font-family: "Roboto 900";
         font-size: 2rem;
-        line-height: 4rem;
+        /* line-height: 4rem; */
         cursor: pointer;
         transition: 0.1s;
         background: #5901e7;
         color: white;
+        text-decoration: none;
+        margin-left: 1rem;
+        margin-right: 1rem;
 
         &:hover {
           transition: 0.1s;
@@ -318,7 +322,7 @@ const Search = () => {
       })
       .then((response) => {
         if (response.statusText === "OK") {
-          // navigate("/media");
+          navigate("/admin/media");
         }
       });
   };
@@ -499,7 +503,12 @@ const Search = () => {
             </select>
           </div>
         </section>
-        <button className="save-btn">Guardar</button>
+        <div>
+          <button className="save-btn">Guardar</button>
+          <Link to="/admin/media" className="save-btn">
+            Cancelar
+          </Link>
+        </div>
       </form>
     </SearchSt>
   );
