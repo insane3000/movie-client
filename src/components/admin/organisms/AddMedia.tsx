@@ -322,7 +322,7 @@ const Search = () => {
       })
       .then((response) => {
         if (response.statusText === "OK") {
-          navigate("/admin/media");
+          // navigate("/admin/media");
         }
       });
   };

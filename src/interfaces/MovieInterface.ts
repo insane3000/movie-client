@@ -8,7 +8,10 @@ export interface MovieIT {
   actors: string;
   synopsis: string;
   link: string;
-  image: string;
+  imageXL: string;
+  imageL: string;
+  imageM: string;
+  imageS: string;
 }
 
 export const movieTemplate = {
@@ -21,5 +24,8 @@ export const movieTemplate = {
   actors: "",
   synopsis: "",
   link: "",
-  image: "",
+  imageXL: "",
+  imageL: "",
+  imageM: "",
+  imageS: "",
 };

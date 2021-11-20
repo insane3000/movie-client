@@ -5,12 +5,12 @@ const CategoriesSt = styled.div`
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
     width: 100%;
-    height: 100%;
-    overflow-y: scroll;
+    height: auto;
+    background: #0a0a0a;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(10rem, 15rem));
+    grid-template-columns: repeat(auto-fill, minmax(10rem, 20rem));
     /* grid-template-columns: 18rem 18rem 18rem 18rem; */
-    grid-auto-rows: 10rem;
+    grid-auto-rows: 12rem;
     justify-content: center;
     align-content: flex-start;
     padding: 5rem 5rem;
@@ -23,31 +23,34 @@ const CategoriesSt = styled.div`
       align-items: center;
       text-decoration: none;
       transition: 0.1s;
+      background: #181717;
+
       &:hover {
         transform: scale(1.1);
         transition: 0.1s;
+        background: #eeeaea;
+        .text {
+          color: black;
+        }
       }
       .text {
-        font-family: "Roboto 900";
+        font-family: "Roboto 100";
         font-size: 1.5rem;
         color: white;
-        text-shadow: 1px 1px 5px #47474771;
+        /* text-shadow: 1px 1px 1px #47474771; */
       }
     }
   }
 `;
 const Categories = () => {
   const color = [
-    { color: "F72585", to: "acci", name: "Accion" },
-    { color: "B5179E", to: "comedia", name: "Comedia" },
-    { color: "7209B7", to: "terror", name: "Terror" },
-    { color: "560BAD", to: "animaci", name: "Animacion" },
-    { color: "480CA8", to: "crime", name: "Crimen" },
-    { color: "3A0CA3", to: "documental", name: "Documental" },
-    { color: "3F37C9", to: "drama", name: "Drama" },
-    { color: "4361EE", to: "music", name: "Musicales" },
-    { color: "4895EF", to: "romance", name: "Romance" },
-    { color: "4CC9F0", to: "cienc", name: "Cienca Ficcion" },
+    { to: "acci", name: "Acción" },
+    { to: "comedia", name: "Comedia" },
+    { to: "terror", name: "Terror" },
+    { to: "animaci", name: "Animación" },
+    { to: "drama", name: "Drama" },
+    { to: "romance", name: "Romance" },
+    { to: "cienc", name: "Cienca Ficción" },
   ];
 
   return (
@@ -55,11 +58,11 @@ const Categories = () => {
       {color.map((i) => (
         <Link
           className="category"
-          to={`/genre/${i.to}`}
-          key={i.color}
-          style={{ background: `#${i.color}` }}
+          to={`/browser/genre/${i.to}`}
+          key={i.name}
+          // style={{ background: `#${i.color}` }}
         >
-          <h4 className="text">{i.name}</h4>
+          <span className="text">{i.name}</span>
         </Link>
       ))}
     </CategoriesSt>

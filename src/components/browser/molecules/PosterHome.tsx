@@ -2,9 +2,8 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { BUCKET } from "config/bucket";
-import Spinner04 from "../atoms/Spinner04";
 // *Images
-// import movie01 from "img/posters/movie01.jpg";
+import Spinner04 from "../atoms/Spinner04";
 import play from "img/play.png";
 import { useState } from "react";
 // import SpinnerImg from "../atoms/SpinnerImg";
@@ -12,7 +11,7 @@ const MoviesPosterSt = styled.div`
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
     width: 13rem;
-    height: 23rem;
+    height: 20rem;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -23,7 +22,7 @@ const MoviesPosterSt = styled.div`
     margin-bottom: 2rem;
     .container-poster {
       width: 100%;
-      height: calc(100% - 3rem);
+      height: 100%;
       position: relative;
       border-radius: 0.5rem;
       box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
@@ -43,6 +42,10 @@ const MoviesPosterSt = styled.div`
         width: 100%;
         height: 100%;
         object-fit: cover;
+      }
+      .sysSvg {
+        width: 100%;
+        height: 100%;
       }
       .gradient {
         position: absolute;
@@ -74,7 +77,7 @@ const MoviesPosterSt = styled.div`
         }
       }
     }
-    .title-movie {
+    /* .title-movie {
       width: 100%;
       height: 3rem;
       color: #b3b3b3;
@@ -88,10 +91,9 @@ const MoviesPosterSt = styled.div`
       text-overflow: ellipsis;
       white-space: nowrap;
       &:hover {
-        /* text-decoration: underline; */
         color: white;
       }
-    }
+    } */
   }
 `;
 interface Props {
@@ -114,7 +116,6 @@ const MoviePoster = (props: Props) => {
           src={`${BUCKET}${props.img}`}
           alt="Movie"
           // loading="lazy"
-          // onLoad={(e) => handleLoadImg(e)}
           onLoad={(e) => handleLoadImg(e)}
         />
         {!imageLoad && <Spinner04 />}
@@ -122,9 +123,9 @@ const MoviePoster = (props: Props) => {
           <img className="play-icon" src={play} alt="play-icon" />
         </Link>
       </section>
-      <Link className="title-movie" to={`/movie/${props.id}`}>
+      {/* <Link className="title-movie" to={`/movie/${props.id}`}>
         {props.title}
-      </Link>
+      </Link> */}
     </MoviesPosterSt>
   );
 };

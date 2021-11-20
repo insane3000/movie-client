@@ -1,26 +1,32 @@
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import MoviePoster from "../molecules/MoviePoster";
-
+import InfiniteScroll from "react-infinite-scroll-component";
 import axios from "axios";
 import { URI } from "config/axios";
 import { useDispatch, useSelector } from "react-redux";
 import { StoreInterface } from "interfaces/storeTemplate";
 import { loginServer, restartScroll } from "redux/actions/appAction";
 import { useNavigate } from "react-router";
+// import Navigation from "components/browser/organisms/Navigation";
+// *images
+import Loading from "img/loading.gif";
+import { loadavg } from "os";
 const AllMoviesSt = styled.div`
   width: 100%;
   height: 100%;
 
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
+    background: #1d1d1d;
     width: 100%;
-    height: 100%;
+    height: auto;
+    /* overflow-y: scroll; */
     display: flex;
     flex-direction: column;
     justify-content: start;
     align-items: center;
-    overflow-y: scroll;
+    /* overflow-y: scroll; */
     .title-component {
       width: 80%;
       height: 3rem;
@@ -53,6 +59,18 @@ const AllMoviesSt = styled.div`
     }
   }
 `;
+const ContainerSt = styled.div`
+  width: 80vw;
+  height: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(10rem, 13rem));
+  grid-auto-rows: 23rem;
+  justify-content: center;
+  align-content: flex-start;
+  gap: 2rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+`;
 interface MovieIT {
   _id: "";
   title: "";
@@ -76,23 +94,14 @@ const AllMovies = () => {
   const moviesRef = useRef<HTMLDivElement>(null);
   const app = useSelector((store: StoreInterface) => store.app);
 
-  const [state, setState] = useState<any>([]);
-  let [totalPages, setTotalPages] = useState(1);
-  let [page, setPage] = useState(2);
+  const [items, setItems] = useState<any>([]);
+  const [hasMore, setHasMore] = useState(true);
+  const [nextPage, setNextPage] = useState(2);
 
-  // !Handle Pagination
-  const handlePrevious = () => {
-    page > 1 && setPage((page -= 1));
-  };
-  const handleNext = () => {
-    page <= totalPages - 1 && setPage((page += 1));
-  };
-  // console.log(totalPages);
-  // console.log(page);
   // !Fetch data
-  const fetchData = () => {
+  const firstData = () => {
     axios
-      .get(`${URI}/movies?page=1&limit=15`, {
+      .get(`${URI}/movies`, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
           id: `${app.login.user}`,
@@ -100,8 +109,9 @@ const AllMovies = () => {
         },
       })
       .then(function (response: any) {
-        setState(response.data.docs);
-        setTotalPages(response.data.totalPages);
+        setItems(response.data.docs);
+        setHasMore(response.data.hasNextPage);
+        setNextPage(response.data.nextPage);
       })
       .catch(function (error) {
         console.log(error);
@@ -113,21 +123,18 @@ const AllMovies = () => {
       });
   };
   useEffect(() => {
-    fetchData();
+    firstData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const restoreScroll = () => {
-    // console.log(moviesRef);
-    dispatch(restartScroll("movies", moviesRef.current === null ? 0 : moviesRef.current.scrollTop));
-  };
+
   useEffect(() => {
     moviesRef.current && (moviesRef.current.scrollTop = app.scroll.movies);
   });
 
-  // !Cargar mas!
-  const LoadMore = async () => {
+  // !Funciones para infinity scroll
+  const fetchData = async () => {
     axios
-      .get(`${URI}/movies?page=${page}&limit=15`, {
+      .get(`${URI}/movies?page=${nextPage}&limit=10`, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
           id: `${app.login.user}`,
@@ -135,51 +142,38 @@ const AllMovies = () => {
         },
       })
       .then(function (response: any) {
-        // setItems(response.data.docs);
-        setState([...state, ...response.data.docs]);
-        // if (response.data.docs.length === 0 || response.data.docs.length < 20) {
-        //   sethasMore(false);
-        // }
-        setPage(page + 1);
-        // setTotalPages(response.data.totalPages);
+        setItems((prev: any) => [...prev, ...response.data.docs]);
+        setHasMore(response.data.hasNextPage);
+        setNextPage(response.data.nextPage);
       });
   };
-  // !Intersection Observer
-  const containerRef = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  const callbackFunction = (entries: any) => {
-    const [entry] = entries;
-    setIsVisible(entry.isIntersecting);
-  };
-  const options = {
-    root: null,
-    rootMargin: "0px",
-    threshold: 1,
-  };
-  useEffect(() => {
-    const observer = new IntersectionObserver(callbackFunction, options);
-    if (containerRef.current) observer.observe(containerRef.current);
-    return () => {
-      if (containerRef.current) observer.observe(containerRef.current);
-    };
-  }, [containerRef, options]);
 
   return (
-    <AllMoviesSt ref={moviesRef} onClick={restoreScroll}>
+    <AllMoviesSt ref={moviesRef}>
+      {/* <Navigation /> */}
       <h2 className="title-component">Películas</h2>
-      <div className="container-movies">
-        {state?.map((i: any) => (
-          <MoviePoster key={i._id} id={i._id} img={i.imageM} rating={i.rating} title={i.title} />
-        ))}
-      </div>
-      <div className="pagination">
-        {/* {page > 1 && <button onClick={handlePrevious}>Pagina Anterior</button>}
+
+      {/* <div className="pagination"> */}
+      {/* {page > 1 && <button onClick={handlePrevious}>Pagina Anterior</button>}
         {page <= totalPages - 1 && <button onClick={handleNext}>Pagina Siguiente</button>} */}
-        <button onClick={LoadMore}>Cargar mas</button>
-      </div>
-      <div>{isVisible ? "IN VIEWPORT" : "NOT IN VIEWPORT"}</div>
-      <div ref={containerRef}>Observe me you filthy voyeur</div>
+      <InfiniteScroll
+        dataLength={items.length} //This is important field to render the next data
+        next={fetchData}
+        hasMore={hasMore}
+        loader={<img src={Loading} alt="spinner" />}
+        endMessage={
+          <button style={{ textAlign: "center" }}>
+            <b>Nada mas que mostrar</b>
+          </button>
+        }
+      >
+        <ContainerSt>
+          {items?.map((i: any) => (
+            <MoviePoster key={i._id} id={i._id} img={i.imageM} rating={i.rating} title={i.title} />
+          ))}
+        </ContainerSt>
+      </InfiniteScroll>
+      <img src="" alt="" />
     </AllMoviesSt>
   );
 };

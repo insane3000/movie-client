@@ -1,50 +1,77 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import MoviePoster from "../molecules/MoviePoster";
-
+import InfiniteScroll from "react-infinite-scroll-component";
 import axios from "axios";
-import { useParams } from "react-router-dom";
 import { URI } from "config/axios";
-import { StoreInterface } from "interfaces/storeTemplate";
 import { useDispatch, useSelector } from "react-redux";
-import { loginServer } from "redux/actions/appAction";
-import { useNavigate } from "react-router";
-
+import { StoreInterface } from "interfaces/storeTemplate";
+import { loginServer, restartScroll } from "redux/actions/appAction";
+import { useNavigate, useParams } from "react-router";
+// import Navigation from "components/browser/organisms/Navigation";
+// *images
+import Loading from "img/loading.gif";
+import { loadavg } from "os";
+import Spinner03 from "../atoms/Spinner03";
 const AllMoviesSt = styled.div`
+  width: 100%;
+  height: 100%;
+
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
+    background: #0a0a0a;
     width: 100%;
-    height: 100%;
+    height: auto;
+    /* overflow-y: scroll; */
     display: flex;
     flex-direction: column;
     justify-content: start;
     align-items: center;
-    overflow-y: scroll;
+    /* overflow-y: scroll; */
     .title-component {
       width: 80%;
       height: 3rem;
       line-height: 3rem;
-      font-family: "Roboto 900";
-      font-size: 4rem;
-      text-align: center;
+      font-family: "Roboto 700";
+      font-size: 1.5rem;
+      text-align: start;
       margin-top: 1rem;
-      margin-bottom: 1rem;
-      text-transform: capitalize;
+      /* margin-bottom: 1rem; */
+      color: #d3d3d3;
+      /* background: red; */
     }
     .container-movies {
       width: 80%;
       height: auto;
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(10rem, 18rem));
-      /* grid-template-columns: 18rem 18rem 18rem 18rem; */
-      grid-auto-rows: 28rem;
+      grid-template-columns: repeat(auto-fill, minmax(10rem, 13rem));
+      grid-auto-rows: 23rem;
       justify-content: center;
       align-content: flex-start;
-      gap: 1rem;
+      gap: 2rem;
       margin-top: 1rem;
       margin-bottom: 1rem;
     }
+    .pagination {
+      width: 100%;
+      height: 3rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
+`;
+const ContainerSt = styled.div`
+  width: 80vw;
+  height: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(10rem, 13rem));
+  grid-auto-rows: 23rem;
+  justify-content: center;
+  align-content: flex-start;
+  gap: 2rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 `;
 interface MovieIT {
   _id: "";
@@ -62,20 +89,22 @@ interface MovieIT {
   imageS: "";
 }
 type Movies = [MovieIT];
-// interface Params {
-//   genre: string;
-// }
-const ListMoviesGenre = () => {
+const Genre = () => {
+  const params = useParams();
   let navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const params = useParams();
+  const moviesRef = useRef<HTMLDivElement>(null);
   const app = useSelector((store: StoreInterface) => store.app);
-  const [state, setState] = useState<Movies>();
-  // console.log(params.genre);
-  const fetchData = () => {
+
+  const [items, setItems] = useState<any>([]);
+  const [hasMore, setHasMore] = useState(true);
+  const [nextPage, setNextPage] = useState(2);
+
+  // !Fetch data
+  const firstData = () => {
     axios
-      .get(`${URI}/genre/${params.genre}`, {
+      .get(`${URI}/genre?genre=${params.genre}&page=1&limit=10`, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
           id: `${app.login.user}`,
@@ -83,11 +112,12 @@ const ListMoviesGenre = () => {
         },
       })
       .then(function (response: any) {
-        setState(response.data);
+        setItems(response.data.docs);
+        setHasMore(response.data.hasNextPage);
+        setNextPage(response.data.nextPage);
       })
       .catch(function (error) {
         console.log(error);
-        // history.push(`/admin/login`);
         dispatch(loginServer("", "", ""));
         localStorage.setItem("token", "");
         localStorage.setItem("user", "");
@@ -96,10 +126,30 @@ const ListMoviesGenre = () => {
       });
   };
   useEffect(() => {
-    fetchData();
+    firstData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    moviesRef.current && (moviesRef.current.scrollTop = app.scroll.movies);
+  });
+
+  // !Funciones para infinity scroll
+  const fetchData = async () => {
+    axios
+      .get(`${URI}/genre?genre=${params.genre}&page=${nextPage}&limit=10`, {
+        headers: {
+          authorization: `Bearer ${app.login.token}`,
+          id: `${app.login.user}`,
+          role: `${app.login.role}`,
+        },
+      })
+      .then(function (response: any) {
+        setItems((prev: any) => [...prev, ...response.data.docs]);
+        setHasMore(response.data.hasNextPage);
+        setNextPage(response.data.nextPage);
+      });
+  };
   let genero = "";
   switch (params?.genre) {
     case "acci":
@@ -114,17 +164,8 @@ const ListMoviesGenre = () => {
     case "animaci":
       genero = "Animacion";
       break;
-    case "crime":
-      genero = "Crimen";
-      break;
-    case "documental":
-      genero = "Documental";
-      break;
     case "drama":
       genero = "Drama";
-      break;
-    case "music":
-      genero = "Musicales";
       break;
     case "romance":
       genero = "Romance";
@@ -135,17 +176,33 @@ const ListMoviesGenre = () => {
     default:
       break;
   }
-  // console.log(genero);
   return (
-    <AllMoviesSt>
+    <AllMoviesSt ref={moviesRef}>
+      {/* <Navigation /> */}
       <h2 className="title-component">{genero}</h2>
-      <div className="container-movies">
-        {state?.map((i) => (
-          <MoviePoster key={i._id} img={i.imageM} id={i._id} rating={i.rating} title={i.title} />
-        ))}
-      </div>
+
+      {/* <div className="pagination"> */}
+      {/* {page > 1 && <button onClick={handlePrevious}>Pagina Anterior</button>}
+        {page <= totalPages - 1 && <button onClick={handleNext}>Pagina Siguiente</button>} */}
+      <InfiniteScroll
+        dataLength={items.length} //This is important field to render the next data
+        next={fetchData}
+        hasMore={hasMore}
+        loader={<Spinner03 />}
+        // endMessage={
+        //   <button style={{ textAlign: "center" }}>
+        //     <b>Nada mas que mostrar</b>
+        //   </button>
+        // }
+      >
+        <ContainerSt>
+          {items?.map((i: any) => (
+            <MoviePoster key={i._id} id={i._id} img={i.imageM} rating={i.rating} title={i.title} />
+          ))}
+        </ContainerSt>
+      </InfiniteScroll>
     </AllMoviesSt>
   );
 };
 
-export default ListMoviesGenre;
+export default Genre;

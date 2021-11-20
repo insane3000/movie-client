@@ -3,7 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 // *Icons
-import UserIconLight from "icons/UserIconLight";
+import UserIconLight from "icons/LoginIcon";
 import SearchIcon from "icons/SearchIcon";
 import CloseIcon from "icons/CloseIcon";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,11 +19,12 @@ const NavigationSt = styled.nav`
 
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
-    width: 100vw;
+    width: 100%;
     height: 5rem;
     background: #070707;
     position: sticky;
     top: 0;
+    left: 0;
     z-index: 1;
     display: flex;
     justify-content: start;
@@ -65,7 +66,8 @@ const NavigationSt = styled.nav`
         } */
       }
       .active {
-        background: #5901e7;
+        background: #ffffff;
+        color: black;
       }
     }
     .search-container {
@@ -80,34 +82,35 @@ const NavigationSt = styled.nav`
       box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
       border-radius: 0.3rem;
       overflow: hidden;
-      background: #f6f6f6;
+      background: #1f1d1d;
       .search-input {
         height: 100%;
         width: calc(100% - 3rem);
         padding: 0 1rem;
-        font-family: "Roboto regular";
+        font-family: "Roboto 300";
         color: black;
         font-size: 1rem;
         outline: none;
         border-style: none;
         background: none;
-        background: #f6f6f6;
+        background: none;
+        color: white;
       }
       .btn-submit {
         width: 3rem;
         height: 100%;
         cursor: pointer;
         border-style: none;
-        background: #f6f6f6;
-
+        /* background: red; */
+        background: none;
         .icon-submit {
           width: 100%;
           height: 100%;
           padding: 0.5rem;
           background: none;
           transition: 0.1s;
-          color: #333333;
-          background: #f6f6f6;
+          color: #ffffff;
+          background: none;
           &:hover {
             transform: scale(1.1);
             transition: 0.1s;
@@ -148,7 +151,7 @@ const NavigationSt = styled.nav`
         border-radius: 100%;
         padding: 0.5rem 0.5rem;
         transition: 0.1s;
-        background: #5901e7;
+        /* background: #5901e7; */
         color: #ffffff;
         &:hover {
           transform: scale(1.1);
@@ -201,7 +204,8 @@ const NavigationSt = styled.nav`
           }
         }
         .active {
-          background: #5901e7;
+          background: #ffffff;
+          color: black;
         }
       }
     }
@@ -221,7 +225,7 @@ const Navigation = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     fetchData();
-    navigate("/home/search");
+    navigate("/browser/search");
     dispatch(restartScroll("search", 0));
   };
   const fetchData = () => {
@@ -242,7 +246,7 @@ const Navigation = () => {
         localStorage.setItem("token", "");
         localStorage.setItem("user", "");
         localStorage.setItem("role", "");
-        navigate(`/home`);
+        // navigate(`/browser/home`);
       });
   };
   const logout = () => {
@@ -269,15 +273,15 @@ const Navigation = () => {
             to="/browser/home"
             onClick={() => dispatch(restartScroll("home", 0))}
           >
-            Home
+            Inicio
           </NavLink>
-          <NavLink
+          {/* <NavLink
             className="li"
             to="/browser/movies"
             onClick={() => dispatch(restartScroll("movies", 0))}
           >
             Películas
-          </NavLink>
+          </NavLink> */}
           <NavLink
             className="li"
             to="/browser/premieres"
@@ -286,7 +290,7 @@ const Navigation = () => {
             Estrenos
           </NavLink>
           <NavLink className="li" to="/browser/category">
-            Categorias
+            Géneros
           </NavLink>
         </section>
       )}

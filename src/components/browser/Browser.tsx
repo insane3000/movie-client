@@ -22,17 +22,18 @@ import { loginServer } from "redux/actions/appAction";
 
 const UserSt = styled.div`
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
 
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
     width: 100%;
-    height: 100%;
-    display: grid;
+    height: auto;
+    background: #0a0a0a;
+    /* display: grid;
     grid-template-columns: 100%;
     grid-template-rows: 6rem calc(100% - 6rem);
     justify-content: center;
-    align-content: center;
+    align-content: center; */
   }
 `;
 

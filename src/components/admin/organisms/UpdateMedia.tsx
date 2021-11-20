@@ -416,7 +416,7 @@ const Search = () => {
       </div>
       <div className="data-right">
         <h2 className="title">Actualizar peliculas</h2>
-
+        {/* {  // TODO: no se actualiza la carpeta} */}
         <form className="upload-form" onSubmit={handleSubmit}>
           <section className="container-inputs">
             <div className="input-form-container">

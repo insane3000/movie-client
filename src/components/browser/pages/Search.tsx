@@ -70,7 +70,7 @@ const Search = () => {
               i && (
                 <MoviePoster
                   key={i.title}
-                  img={i.image}
+                  img={i.imageM}
                   id={i._id}
                   rating={i.rating}
                   title={i.title} 

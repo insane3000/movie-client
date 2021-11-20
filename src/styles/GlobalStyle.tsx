@@ -18,7 +18,7 @@ const GlobalStyle = createGlobalStyle`
 
 }
 body{
-  background: rgb(0, 0, 0);
+  background: #0a0a0a
  
 }
 #root{
@@ -27,7 +27,7 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #070707;
+    background: #0a0a0a;
    
 }
 // !Media query a partir de 568px  

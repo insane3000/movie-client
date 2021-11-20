@@ -14,7 +14,7 @@ import { loginServer } from "redux/actions/appAction";
 import { useNavigate } from "react-router";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useIntersectionObserver } from "hooks/useIntersectionObserver";
-
+import Spinner05 from "../atoms/Spinner05";
 const ClusterSt = styled.div`
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
@@ -27,7 +27,6 @@ const ClusterSt = styled.div`
     justify-content: center;
     align-items: center;
     /* overflow: hidden; */
-    /* background: red; */
 
     .title-cluster {
       width: 100%;
@@ -47,6 +46,7 @@ const ClusterSt = styled.div`
       display: grid;
       grid-template-columns: 4rem calc(100% - 8rem) 4rem;
       .arrow {
+        /* height: 23rem; */
         background: #00000092;
         display: flex;
         justify-content: center;
@@ -75,6 +75,8 @@ const ClusterSt = styled.div`
         gap: 0.2rem;
         overflow-x: scroll;
         overflow-y: hidden;
+        position: relative;
+
         .loadMore {
           width: 1rem;
           background: transparent;
@@ -85,8 +87,6 @@ const ClusterSt = styled.div`
 `;
 interface Props {
   subtitle: string;
-  text: string;
-  genre: string;
 }
 interface MovieIT {
   _id: "";
@@ -121,11 +121,11 @@ const MoviesGender = (props: Props) => {
   const [state, setState] = useState<any>([]);
   const [hasMore, setHasMore] = useState(true);
   const [nextPage, setNextPage] = useState(1);
-  // console.log(props);
+  //   console.log(props);
   // console.log(props.genre);
   const InitialFetch = () => {
     axios
-      .get(`${URI}/genre?genre=${props.genre}&page=${nextPage}&limit=15`, {
+      .get(`${URI}/movies?page=${nextPage}&limit=15`, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
           id: `${app.login.user}`,
@@ -148,12 +148,13 @@ const MoviesGender = (props: Props) => {
         navigate(`/`);
       });
   };
-  // useEffect(() => {
-  //   InitialFetch();
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [nextPage]);
+  //   useEffect(() => {
+  //     InitialFetch();
+  //     // eslint-disable-next-line react-hooks/exhaustive-deps
+  //   }, [nextPage]);
 
   // !Logica para infinite scroll
+
   const ref = useRef(null);
   const isBottomVisible = useIntersectionObserver(
     ref,
@@ -168,10 +169,10 @@ const MoviesGender = (props: Props) => {
     //load next page when bottom is visible
     // isBottomVisible && setNextPage(nextPage + 1);
     if (isBottomVisible) {
-      // hasMore && setNextPage(nextPage + 1);
+      //   hasMore && setNextPage(nextPage + 1);
       hasMore && InitialFetch();
     }
-    // console.log(" fetch");
+    // console.log("unico fetch");
   }, [isBottomVisible]);
   return (
     <ClusterSt>
@@ -188,6 +189,7 @@ const MoviesGender = (props: Props) => {
           ))}
 
           <section ref={ref} className="loadMore"></section>
+          {state.length === 0 && <Spinner05 />}
         </div>
 
         <section className="arrow arrow-none" onClick={ScrollRight}>
