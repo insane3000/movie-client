@@ -152,10 +152,12 @@ const NavigationSt = styled.nav`
         padding: 0.5rem 0.5rem;
         transition: 0.1s;
         /* background: #5901e7; */
-        color: #ffffff;
+        color: #838282;
         &:hover {
           transform: scale(1.1);
           transition: 0.1s;
+          color: #ffffff;
+
         }
       }
       .options {

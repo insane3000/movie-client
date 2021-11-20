@@ -20,7 +20,7 @@ const ClusterSt = styled.div`
   @media only screen and (min-width: 568px) {
     width: 100%;
     height: 23rem;
-    margin-top: 2rem;
+    margin-top: 4rem;
     margin-bottom: 2rem;
     display: flex;
     flex-direction: column;
@@ -72,7 +72,7 @@ const ClusterSt = styled.div`
         display: grid;
         grid-auto-flow: column dense;
         grid-template-rows: 100%;
-        gap: 0.2rem;
+        gap: 1rem;
         overflow-x: scroll;
         overflow-y: hidden;
         position: relative;

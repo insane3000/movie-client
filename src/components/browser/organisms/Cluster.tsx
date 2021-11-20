@@ -14,13 +14,13 @@ import { loginServer } from "redux/actions/appAction";
 import { useNavigate } from "react-router";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useIntersectionObserver } from "hooks/useIntersectionObserver";
-
+import Spinner05 from "../atoms/Spinner05";
 const ClusterSt = styled.div`
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
     width: 100%;
     height: 23rem;
-    margin-top: 2rem;
+    margin-top: 4rem;
     margin-bottom: 2rem;
     display: flex;
     flex-direction: column;
@@ -72,9 +72,10 @@ const ClusterSt = styled.div`
         display: grid;
         grid-auto-flow: column dense;
         grid-template-rows: 100%;
-        gap: 0.2rem;
+        gap: 1rem;
         overflow-x: scroll;
         overflow-y: hidden;
+        position: relative;
         .loadMore {
           width: 1rem;
           background: transparent;
@@ -188,6 +189,7 @@ const MoviesGender = (props: Props) => {
           ))}
 
           <section ref={ref} className="loadMore"></section>
+          {state.length === 0 && <Spinner05 />}
         </div>
 
         <section className="arrow arrow-none" onClick={ScrollRight}>

@@ -19,6 +19,7 @@ const MovieSt = styled.div`
   flex-direction: column;
   justify-content: start;
   align-items: center;
+  /* background: #111010; */
   .container-poster-data {
     width: 100%;
     height: auto;
