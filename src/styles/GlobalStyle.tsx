@@ -18,16 +18,13 @@ const GlobalStyle = createGlobalStyle`
 
 }
 body{
-  background: #0a0a0a
+  background: #0a0a0a;
  
 }
 #root{
     width: 100vw;
     height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #0a0a0a;
+   
    
 }
 // !Media query a partir de 568px  
@@ -39,7 +36,7 @@ body{
   *{
     
     // !Firefox
-    scrollbar-color: #acacac none; 
+    scrollbar-color: #fdfdfd #05010E;
   scrollbar-width: thin;
     // !Chrome
     &::-webkit-scrollbar {
@@ -47,15 +44,12 @@ body{
       height: 0rem;
     }
     &::-webkit-scrollbar-track {
-      background: rgb(19, 18, 18);
-      background: rgb(14, 13, 13);
       background: none;
 
     }
     &::-webkit-scrollbar-thumb {
-      background: rgb(124, 124, 124);
-      background: rgb(211, 211, 211);
       border-radius: 0.1rem;
+      background: #fdfdfd;
     }
     &::-webkit-scrollbar-thumb:hover {
       background: #3b3b3b;

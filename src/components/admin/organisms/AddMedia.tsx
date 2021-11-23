@@ -222,7 +222,7 @@ const Search = () => {
   const [actors, setActors] = useState<any>("");
   const [synopsis, setSynopsis] = useState<any>("");
   const [link, setLink] = useState<any>("");
-  const [server, setServer] = useState<any>("mediafire");
+  const [server, setServer] = useState<any>("backblaze");
   const [available, setAvailable] = useState<any>(true);
   // const [alertImg, setAlertImg] = useState<any>(false);
 
@@ -322,12 +322,11 @@ const Search = () => {
       })
       .then((response) => {
         if (response.statusText === "OK") {
-          // navigate("/admin/media");
+          navigate("/admin/media");
         }
       });
   };
-  // console.log(fileRef);
-  // console.log(file);
+
   return (
     <SearchSt>
       <h2 className="title">Agregar peliculas</h2>
@@ -486,8 +485,8 @@ const Search = () => {
               name="server"
               onChange={(e) => handleServer(e)}
             >
-              <option value="mediafire">Mediafire</option>
               <option value="backblaze">Backblaze</option>
+              <option value="mediafire">Mediafire</option>
             </select>
           </div>
           <div className="input-form-container">

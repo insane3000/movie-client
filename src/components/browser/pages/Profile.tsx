@@ -9,18 +9,21 @@ import { StoreInterface } from "interfaces/storeTemplate";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { loginServer } from "redux/actions/appAction";
+import Navigation from "components/browser/organisms/Navigation";
 const UpdateUserSt = styled.div`
   width: 100%;
   height: 100%;
   color: white;
-  overflow-y: scroll;
-  overflow-x: hidden;
+  /* overflow-y: scroll;
+  overflow-x: hidden; */
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: start;
     align-items: center;
     .userContainer {
+      
       background: #0c0c0c;
       width: 25rem;
       height: 33rem;
@@ -29,6 +32,7 @@ const UpdateUserSt = styled.div`
       justify-content: center;
       align-items: center;
       border-radius: 0.5rem;
+      margin-top: 8rem;
       .sysIconUser {
         background: #5901E7;
         width: 5rem;
@@ -158,6 +162,8 @@ const UpdateUser = () => {
           </span>
         </section>
       </div>
+      <Navigation />
+
     </UpdateUserSt>
   );
 };

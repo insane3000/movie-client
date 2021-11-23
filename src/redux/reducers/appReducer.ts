@@ -36,6 +36,11 @@ const appReducer = (state = initialState, action: ActionsInterface) => {
           [action.page.toString()]: action.payload,
         },
       };
+    case ActionType.MODAL:
+      return {
+        ...state,
+        modal: { ...state.modal, id: action.id, show: action.payload },
+      };
     default:
       return state;
   }

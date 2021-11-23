@@ -3,9 +3,8 @@ import { Link, NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 // *Icons
-import UserIconLight from "icons/LoginIcon";
 import SearchIcon from "icons/SearchIcon";
-import CloseIcon from "icons/CloseIcon";
+import ExitIcon from "icons/ExitIcon";
 import { useDispatch, useSelector } from "react-redux";
 import { loginServer, restartScroll, search } from "redux/actions/appAction";
 import axios from "axios";
@@ -21,11 +20,9 @@ const NavigationSt = styled.nav`
   @media only screen and (min-width: 568px) {
     width: 100%;
     height: 5rem;
-    background: #070707;
-    position: sticky;
+    background: #140c27ed;
+    position: fixed;
     top: 0;
-    left: 0;
-    z-index: 1;
     display: flex;
     justify-content: start;
     align-items: center;
@@ -66,8 +63,9 @@ const NavigationSt = styled.nav`
         } */
       }
       .active {
-        background: #ffffff;
-        color: black;
+        background: #9dff00;
+        color: #000000;
+        font-family: "Roboto 900";
       }
     }
     .search-container {
@@ -83,6 +81,8 @@ const NavigationSt = styled.nav`
       border-radius: 0.3rem;
       overflow: hidden;
       background: #1f1d1d;
+      background: #ebebeb;
+
       .search-input {
         height: 100%;
         width: calc(100% - 3rem);
@@ -94,7 +94,7 @@ const NavigationSt = styled.nav`
         border-style: none;
         background: none;
         background: none;
-        color: white;
+        color: #000000;
       }
       .btn-submit {
         width: 3rem;
@@ -109,7 +109,7 @@ const NavigationSt = styled.nav`
           padding: 0.5rem;
           background: none;
           transition: 0.1s;
-          color: #ffffff;
+          color: #161616;
           background: none;
           &:hover {
             transform: scale(1.1);
@@ -120,7 +120,7 @@ const NavigationSt = styled.nav`
       }
     }
 
-    .buttons-right {
+    .exit {
       position: absolute;
       right: 2rem;
       width: 3rem;
@@ -128,93 +128,26 @@ const NavigationSt = styled.nav`
       display: flex;
       justify-content: space-evenly;
       align-items: center;
-      /* .search {
-        width: 3rem;
-        height: 3rem;
-        display: none;
-        transform: scaleX(-1);
-        cursor: pointer;
-        padding: 0.5rem 0.5rem;
-        border-radius: 100%;
-
-        &:hover {
-          background: white;
-          color: black;
-          transition: 0.1s;
-        }
-      } */
-      .user {
+      border-radius: 0.3rem;
+      /* background: #ffffff; */
+      .sysIconExit {
         width: 3rem;
         height: 3rem;
         cursor: pointer;
         transition: 0.1s;
-        border-radius: 100%;
         padding: 0.5rem 0.5rem;
         transition: 0.1s;
-        /* background: #5901e7; */
-        color: #838282;
+        color: #b9b9b9;
         &:hover {
           transform: scale(1.1);
           transition: 0.1s;
           color: #ffffff;
-
-        }
-      }
-      .options {
-        width: 10rem;
-        /* min-height: 10rem; */
-        height: auto;
-        background: #0d0d0e;
-        position: absolute;
-        top: 4rem;
-        right: 0;
-        z-index: 1;
-        border-radius: 0.3rem;
-        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-        display: flex;
-        transition: 0.1s;
-        flex-direction: column;
-        justify-content: start;
-        align-items: center;
-        padding: 0.5rem 0.5rem;
-        border: 0.0625rem solid #252525;
-        .close-user {
-          background: #ffffff;
-          color: black;
-          position: absolute;
-          right: -1rem;
-          top: -1rem;
-          border-radius: 100%;
-          width: 2rem;
-          height: 2rem;
-          cursor: pointer;
-          box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-        }
-        .link {
-          width: 100%;
-          height: 2rem;
-          line-height: 2rem;
-          font-family: "Roboto regular";
-          font-size: 1rem;
-          text-decoration: none;
-          padding: 0 0.5rem;
-          color: #d8d8d8;
-          border-radius: 0.3rem;
-          &:hover {
-            background: #1a1919;
-            color: #ffffff;
-          }
-        }
-        .active {
-          background: #ffffff;
-          color: black;
         }
       }
     }
   }
 `;
 const Navigation = () => {
-  // const navigationRef = useRef<any>();
   let navigate = useNavigate();
   const dispatch = useDispatch();
   const app = useSelector((store: StoreInterface) => store.app);
@@ -259,12 +192,8 @@ const Navigation = () => {
     navigate(`/home`);
     setUser(!user);
   };
-  // console.log(navigationRef);
   return (
-    <NavigationSt
-    // ref={navigationRef}
-    // style={navigationRef.current.scrollTop !== 0 ? { background: "red" } : { background: "lime" }}
-    >
+    <NavigationSt>
       <Link className="title" to="/browser/home" onClick={() => dispatch(restartScroll("home", 0))}>
         Movie Store Cbba
       </Link>
@@ -277,13 +206,7 @@ const Navigation = () => {
           >
             Inicio
           </NavLink>
-          {/* <NavLink
-            className="li"
-            to="/browser/movies"
-            onClick={() => dispatch(restartScroll("movies", 0))}
-          >
-            Películas
-          </NavLink> */}
+
           <NavLink
             className="li"
             to="/browser/premieres"
@@ -292,7 +215,10 @@ const Navigation = () => {
             Estrenos
           </NavLink>
           <NavLink className="li" to="/browser/category">
-            Géneros
+            Categorías
+          </NavLink>
+          <NavLink className="li" to="/browser/profile" onClick={() => setUser(!user)}>
+            Perfil
           </NavLink>
         </section>
       )}
@@ -310,40 +236,11 @@ const Navigation = () => {
           </button>
         </form>
       )}
-
-      <div className="buttons-right">
-        {/* <SearchIcon className="search" onClick={(e) => searchBtn(e)} /> */}
-        <UserIconLight className="user" onClick={() => setUser(!user)} />
-        {user && (
-          <section className="options">
-            <CloseIcon className="close-user" onClick={() => setUser(!user)} />
-            {app.login.role !== "admin" && (
-              <NavLink className="link" to="/browser/profile" onClick={() => setUser(!user)}>
-                Perfil
-              </NavLink>
-            )}
-            {/* {app.login.role === "admin" && (
-              <NavLink className="link" to="/browser/clients" onClick={() => setUser(!user)}>
-                Clientes
-              </NavLink>
-            )} */}
-            {app.login.role === "admin" && (
-              <NavLink className="link" to="/admin/media" onClick={() => setUser(!user)}>
-                Administrar
-              </NavLink>
-            )}
-            {app.login.token === "" ? (
-              <NavLink className="link" to="/admin/login" onClick={() => setUser(!user)}>
-                Login
-              </NavLink>
-            ) : (
-              <NavLink className="link" to="/browser" onClick={logout}>
-                Salir
-              </NavLink>
-            )}
-          </section>
-        )}
-      </div>
+      {app.login.user !== "" && (
+        <NavLink className="exit" to="/browser" onClick={logout} title="salir">
+          <ExitIcon className="sysIconExit" onClick={() => setUser(!user)} />
+        </NavLink>
+      )}
     </NavigationSt>
   );
 };

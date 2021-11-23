@@ -3,4 +3,5 @@ export enum ActionType {
   LOGIN = "LOGIN ",
   SEARCH = "SEARCH ",
   SCROLL = "SCROLL ",
+  MODAL = "MODAL ",
 }

@@ -8,7 +8,7 @@ interface loginServer {
   type: ActionType.LOGIN;
   user: string;
   token: string;
-  role: string
+  role: string;
 }
 interface search {
   type: ActionType.SEARCH;
@@ -19,5 +19,10 @@ interface scroll {
   page: String;
   payload: Number;
 }
+interface modal {
+  type: ActionType.MODAL;
+  id: string;
+  payload: Boolean;
+}
 
-export type ActionsInterface = showMenu | loginServer | search | scroll;
+export type ActionsInterface = showMenu | loginServer | search | scroll | modal;

@@ -9,6 +9,10 @@ export type AppInterface = {
     premieres: number;
     search: number;
   };
+  modal: {
+    show: boolean;
+    id: string;
+  };
   login: {
     user: string;
     token: string;
@@ -24,6 +28,10 @@ export const appTemplate: AppInterface = {
     movies: 0,
     premieres: 0,
     search: 0,
+  },
+  modal: {
+    show: false,
+    id: "",
   },
   login: {
     user: "",

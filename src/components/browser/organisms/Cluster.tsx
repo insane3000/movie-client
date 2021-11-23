@@ -1,39 +1,33 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 //*Icons
 import ArrowLeftIcon from "icons/ArrowLeftIcon";
 import ArrowRightIcon from "icons/ArrowRightIcon";
 
-import PosterHome from "../molecules/PosterHome";
 import axios from "axios";
 import { URI } from "config/axios";
 import { useDispatch, useSelector } from "react-redux";
 import { StoreInterface } from "interfaces/storeTemplate";
 import { loginServer } from "redux/actions/appAction";
 import { useNavigate } from "react-router";
-import InfiniteScroll from "react-infinite-scroll-component";
 import { useIntersectionObserver } from "hooks/useIntersectionObserver";
 import Spinner05 from "../atoms/Spinner05";
+import MoviePoster from "../molecules/MoviePoster";
 const ClusterSt = styled.div`
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
     width: 100%;
-    height: 23rem;
-    margin-top: 4rem;
+    height: 26rem;
+    margin-top: 2rem;
     margin-bottom: 2rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* overflow: hidden; */
-    /* background: red; */
-
     .title-cluster {
       width: 100%;
       height: 3rem;
       line-height: 3rem;
-      /* background: red; */
       padding-left: 4rem;
       font-family: "Roboto 700";
       font-size: 1.5rem;
@@ -43,11 +37,12 @@ const ClusterSt = styled.div`
 
     .container-postersArrow {
       width: 100%;
-      height: calc(100% - 3rem);
+      height: 23rem;
       display: grid;
       grid-template-columns: 4rem calc(100% - 8rem) 4rem;
+      grid-template-rows: 23rem;
       .arrow {
-        background: #00000092;
+        background: #000000;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -75,10 +70,24 @@ const ClusterSt = styled.div`
         gap: 1rem;
         overflow-x: scroll;
         overflow-y: hidden;
-        position: relative;
+        /* position: relative; */
+        // !Ocultando scroll
+        -ms-overflow-style: none; /** IE11 */
+        overflow-y: hidden;
+        overflow-x: hidden;
+        margin-right: -20px;
         .loadMore {
-          width: 1rem;
+          width: 13rem;
           background: transparent;
+          background: #2c2c2c;
+          background: #2c2c2c24;
+
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-family: "Roboto 300";
+          font-size: 1rem;
+          color: #b3b3b3;
         }
       }
     }
@@ -89,22 +98,21 @@ interface Props {
   text: string;
   genre: string;
 }
-interface MovieIT {
-  _id: "";
-  title: "";
-  rating: 0;
-  year: "";
-  genre: "";
-  time: "";
-  actors: "";
-  synopsis: "";
-  link: "";
-  imageXL: "";
-  imageL: "";
-  imageM: "";
-  imageS: "";
-}
-type Movies = [MovieIT];
+// interface MovieIT {
+//   _id: "";
+//   title: "";
+//   rating: 0;
+//   year: "";
+//   genre: "";
+//   time: "";
+//   actors: "";
+//   synopsis: "";
+//   link: "";
+//   imageXL: "";
+//   imageL: "";
+//   imageM: "";
+//   imageS: "";
+// }
 
 const MoviesGender = (props: Props) => {
   let navigate = useNavigate();
@@ -114,7 +122,6 @@ const MoviesGender = (props: Props) => {
 
   const ScrollRight = () => {
     moviesGenderRef.current.scrollLeft += 1000;
-    // console.log(moviesGenderRef);
   };
   const ScrollLeft = () => {
     moviesGenderRef.current.scrollLeft -= 1000;
@@ -122,8 +129,8 @@ const MoviesGender = (props: Props) => {
   const [state, setState] = useState<any>([]);
   const [hasMore, setHasMore] = useState(true);
   const [nextPage, setNextPage] = useState(1);
-  // console.log(props);
-  // console.log(props.genre);
+  const [spinner, setSpinner] = useState(false);
+
   const InitialFetch = () => {
     axios
       .get(`${URI}/genre?genre=${props.genre}&page=${nextPage}&limit=15`, {
@@ -134,11 +141,10 @@ const MoviesGender = (props: Props) => {
         },
       })
       .then(function (response: any) {
-        // setState(response.data.docs);
         setState((prev: any) => [...prev, ...response.data.docs]);
         setNextPage(response.data.nextPage);
         setHasMore(response.data.hasNextPage);
-        // console.log(response.data);
+        setSpinner(false);
       })
       .catch(function (error) {
         console.log(error);
@@ -149,10 +155,6 @@ const MoviesGender = (props: Props) => {
         navigate(`/`);
       });
   };
-  // useEffect(() => {
-  //   InitialFetch();
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [nextPage]);
 
   // !Logica para infinite scroll
   const ref = useRef(null);
@@ -166,36 +168,49 @@ const MoviesGender = (props: Props) => {
   );
 
   useEffect(() => {
-    //load next page when bottom is visible
-    // isBottomVisible && setNextPage(nextPage + 1);
     if (isBottomVisible) {
-      // hasMore && setNextPage(nextPage + 1);
-      hasMore && InitialFetch();
+      if (hasMore) {
+        InitialFetch();
+        setSpinner(true);
+      }
     }
-    // console.log(" fetch");
-  }, [isBottomVisible]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isBottomVisible, hasMore]);
+  console.log(state);
   return (
     <ClusterSt>
       <h2 className="title-cluster">{props.subtitle}</h2>
 
-      <div className="container-postersArrow">
-        <section className="arrow arrow-none" onClick={ScrollLeft}>
-          <ArrowLeftIcon className="sysIconArrow" />
-        </section>
+      {spinner ? (
+        <Spinner05 />
+      ) : (
+        <div className="container-postersArrow">
+          <section className="arrow arrow-none" onClick={ScrollLeft}>
+            <ArrowLeftIcon className="sysIconArrow" />
+          </section>
 
-        <div ref={moviesGenderRef} className="list-posters">
-          {state?.map((i: any) => (
-            <PosterHome key={i._id} img={i.imageM} id={i._id} rating={i.rating} title={i.title} />
-          ))}
+          <div ref={moviesGenderRef} className="list-posters">
+            {state?.map((i: any) => (
+              <MoviePoster
+                key={i._id}
+                img={i.imageM}
+                id={i._id}
+                rating={i.rating}
+                title={i.title}
+                year={i.year}
+              />
+            ))}
 
-          <section ref={ref} className="loadMore"></section>
-          {state.length === 0 && <Spinner05 />}
+            <section ref={ref} className="loadMore">
+              {hasMore ? "Cargando..." : "Llegaste al final."}
+            </section>
+          </div>
+
+          <section className="arrow arrow-none" onClick={ScrollRight}>
+            <ArrowRightIcon className="sysIconArrow" />
+          </section>
         </div>
-
-        <section className="arrow arrow-none" onClick={ScrollRight}>
-          <ArrowRightIcon className="sysIconArrow" />
-        </section>
-      </div>
+      )}
     </ClusterSt>
   );
 };

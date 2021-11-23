@@ -74,6 +74,7 @@ const Search = () => {
                   id={i._id}
                   rating={i.rating}
                   title={i.title} 
+                  year={i.year}
                 />
               )
           )

@@ -6,6 +6,7 @@
 // import Cluster from "../organisms/Cluster";
 
 import axios from "axios";
+import Navigation from "components/browser/organisms/Navigation";
 import { URI } from "config/axios";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -13,31 +14,36 @@ import { useNavigate } from "react-router";
 import { loginServer } from "redux/actions/appAction";
 import styled from "styled-components";
 const WelcomeSt = styled.div`
-  width: 100%;
+  /* width: 100%;
   height: 100%;
-  color: white;
-  overflow-y: scroll;
-  overflow-x: hidden;
+  color: white; */
+  /* overflow-y: scroll;
+  overflow-x: hidden; */
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
     /* margin-top: 3rem; */
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
-    justify-content: start;
+    justify-content: center;
     align-items: center;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    padding-top: 2rem;
+    /* overflow: hidden; */
+    /* overflow-y: scroll;
+    overflow-x: hidden; */
+    /* padding-top: 2rem; */
     .titleWelcome {
       font-family: "Roboto 900";
       font-size: 4rem;
-      margin-bottom: 0rem;
+      margin-top: 2rem;
       color: #5900ff;
     }
     .titleCode {
       font-family: "Roboto 100";
       font-size: 3rem;
       margin-bottom: 1rem;
+      color: white;
     }
     .containerActivationCode {
       width: 100%;
@@ -132,8 +138,7 @@ const Welcome = () => {
       [name]: value,
     });
   };
-  let user =
-    state.word0 + state.word1 + state.word2 + state.word3 + state.word4;
+  let user = state.word0 + state.word1 + state.word2 + state.word3 + state.word4;
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // setSpinner(true);
@@ -157,12 +162,10 @@ const Welcome = () => {
 
   return (
     <WelcomeSt>
+      {/* <Navigation /> */}
       <h2 className="titleWelcome">Bienvenido a Movie Store Cbba</h2>
       <span className="titleCode">Inserta tu codigo de activación.</span>
-      <form
-        className="containerActivationCode"
-        onSubmit={(e) => handleSubmit(e)}
-      >
+      <form className="containerActivationCode" onSubmit={(e) => handleSubmit(e)}>
         <div className="activationCode">
           <input
             name="word0"

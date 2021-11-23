@@ -1,7 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { HashRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-// *Img
-import TextureBg from "img/texture-bg.png";
+
 // *Fonts
 import "fonts/fonts.css";
 import styled from "styled-components";
@@ -11,16 +10,24 @@ import Error404 from "./Error404";
 import { useDispatch } from "react-redux";
 import { loginServer } from "redux/actions/appAction";
 import Browser from "./browser/Browser";
-
+// import { StoreInterface } from "interfaces/storeTemplate";
+// import Modal from "./Modal";
 const AppSt = styled.div`
-  width: 100%;
-  height: 100%;
-  background: #0a0a0a;
+  width: 100vw;
+  height: 100vh;
+  
+
+  background: #05010eee;
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
 `;
+
 
 function App() {
   const dispatch = useDispatch();
   // const app = useSelector((store: StoreInterface) => store.app);
+
   useEffect(() => {
     if (localStorage.getItem("token") && localStorage.getItem("user")) {
       dispatch(
@@ -32,7 +39,9 @@ function App() {
       );
     }
   }, [dispatch]);
-
+  // const handleModal = () => {
+  //   dispatch(setModal(false));
+  // };
   return (
     <Router>
       <AppSt id="app">
@@ -42,6 +51,11 @@ function App() {
           <Route path="/admin/*" element={<Admin />} />
           <Route path="/*" element={<Error404 />} />
         </Routes>
+        {/* {app.modal && (
+          <ModalSt>
+            <h1 onClick={handleModal}>modal</h1>
+          </ModalSt>
+        )} */}
       </AppSt>
     </Router>
   );

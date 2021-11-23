@@ -2,18 +2,21 @@ import React from "react";
 import styled from "styled-components";
 
 const Spinner03St = styled.div`
-  width: 80%;
+  width: 100%;
   height: 3rem;
   display: flex;
   justify-content: center;
   align-items: center;
   background: #0a0a0a;
-  position: absolute;
+  background: #2c2c2c24;
+  background: none;
+
+  /* position: absolute; */
   .html-spinner {
-    width: 40px;
-    height: 40px;
-    border: 4px solid #817f7c;
-    border-top: 4px solid white;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: .25rem solid #817f7c;
+    border-top: .25rem solid white;
     border-radius: 50%;
   }
 

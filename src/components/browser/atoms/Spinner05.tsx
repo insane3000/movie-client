@@ -3,12 +3,11 @@ import styled from "styled-components";
 
 const Spinner03St = styled.div`
   width: 100%;
-  height: 100%;
+  height: 23rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #141414;
-  position: absolute;
+  background: none;
   .html-spinner {
     width: 40px;
     height: 40px;

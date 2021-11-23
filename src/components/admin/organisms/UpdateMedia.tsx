@@ -250,7 +250,7 @@ const Search = () => {
   const [actors, setActors] = useState<any>("");
   const [synopsis, setSynopsis] = useState<any>("");
   const [link, setLink] = useState<any>("");
-  const [server, setServer] = useState<any>("mediafire");
+  const [server, setServer] = useState<any>("backblaze");
   const [available, setAvailable] = useState<any>(true);
   console.log(language);
 
@@ -373,7 +373,7 @@ const Search = () => {
       .then(function (response) {
         //TODO Por cada nuevo dato seteado, se renderiza de nuevo. fixear!!!
         setLanguage(response.data.language);
-        setFolder(response.data.Folder);
+        setFolder(response.data.folder);
         setTitle(response.data.title);
         setOriginalTitle(response.data.originalTitle);
         setRating(response.data.rating);
@@ -416,7 +416,6 @@ const Search = () => {
       </div>
       <div className="data-right">
         <h2 className="title">Actualizar peliculas</h2>
-        {/* {  // TODO: no se actualiza la carpeta} */}
         <form className="upload-form" onSubmit={handleSubmit}>
           <section className="container-inputs">
             <div className="input-form-container">
@@ -571,8 +570,9 @@ const Search = () => {
                 name="server"
                 onChange={(e) => handleServer(e)}
               >
-                <option value="mediafire">Mediafire</option>
                 <option value="backblaze">Backblaze</option>
+                <option value="mediafire">Mediafire</option>
+
               </select>
             </div>
             <div className="input-form-container">
