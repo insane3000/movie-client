@@ -38,26 +38,32 @@ const ClusterSt = styled.div`
 
     .container-postersArrow {
       width: 100%;
-      height: calc(100% - 3rem);
+      height: 23rem;
       display: grid;
-      grid-template-columns: 4rem calc(100% - 8rem) 4rem;
+      grid-template-columns: 100%;
+      grid-template-rows: 23rem;
+      position: relative;
+      padding: 0 4rem;
       .arrow {
+        width: 4rem;
+        height: 100%;
+        position: absolute;
         background: #000000;
         display: flex;
         justify-content: center;
         align-items: center;
         cursor: pointer;
-
-        &:hover {
-          .sysIconArrow {
-            color: white;
-          }
-        }
         .sysIconArrow {
-          color: #ffffff2f;
+          color: #ffffff;
           width: 100%;
           height: 3rem;
         }
+      }
+      .left {
+        left: 0;
+      }
+      .right {
+        right: 0;
       }
       .arrow-none {
         display: flex;
@@ -71,18 +77,12 @@ const ClusterSt = styled.div`
         gap: 1rem;
         overflow-x: scroll;
         overflow-y: hidden;
-        /* position: relative; */
-        // !Ocultando scroll
-        -ms-overflow-style: none; /** IE11 */
-        // TODO borrar espacio exite problema en overflow-y
-        overflow-y: hidden;
-        overflow-x: hidden;
-        margin-right: -20px;
+        
         .loadMore {
           width: 13rem;
           background: transparent;
-          background: #141414;
-          background: #2c2c2c24;
+          background: #1d1d1d;
+          /* background: #2c2c2c24; */
 
           display: flex;
           justify-content: center;
@@ -179,10 +179,6 @@ const MoviesGender = (props: Props) => {
       <h2 className="title-cluster">{props.subtitle}</h2>
 
       <div className="container-postersArrow">
-        <section className="arrow arrow-none" onClick={ScrollLeft}>
-          <ArrowLeftIcon className="sysIconArrow" />
-        </section>
-
         <div ref={moviesGenderRef} className="list-posters">
           {state?.map((i: any) => (
             <MoviePoster
@@ -200,8 +196,10 @@ const MoviesGender = (props: Props) => {
           </section>
           {state.length === 0 && <Spinner05 />}
         </div>
-
-        <section className="arrow arrow-none" onClick={ScrollRight}>
+        <section className="arrow left arrow-none" onClick={ScrollLeft}>
+          <ArrowLeftIcon className="sysIconArrow" />
+        </section>
+        <section className="arrow right arrow-none" onClick={ScrollRight}>
           <ArrowRightIcon className="sysIconArrow" />
         </section>
       </div>

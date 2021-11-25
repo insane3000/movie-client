@@ -20,9 +20,11 @@ const NavigationSt = styled.nav`
   @media only screen and (min-width: 568px) {
     width: 100%;
     height: 5rem;
-    background: #140c27ed;
-    position: fixed;
+    background: rgb(255, 0, 0);
+    background: linear-gradient(0deg, rgba(255, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8) 100%);
+    position: sticky;
     top: 0;
+    z-index: 1;
     display: flex;
     justify-content: start;
     align-items: center;
@@ -63,8 +65,9 @@ const NavigationSt = styled.nav`
         } */
       }
       .active {
-        background: #9dff00;
-        color: #000000;
+        /* background: #9dff00;
+        background: #5900ff; */
+        color: #ffffff;
         font-family: "Roboto 900";
       }
     }
@@ -137,17 +140,19 @@ const NavigationSt = styled.nav`
         transition: 0.1s;
         padding: 0.5rem 0.5rem;
         transition: 0.1s;
-        color: #b9b9b9;
+        color: #ffffff;
         &:hover {
           transform: scale(1.1);
           transition: 0.1s;
-          color: #ffffff;
         }
       }
     }
   }
 `;
-const Navigation = () => {
+// interface PropsIT {
+//   bg: string;
+// }
+const Navigation = (props: any) => {
   let navigate = useNavigate();
   const dispatch = useDispatch();
   const app = useSelector((store: StoreInterface) => store.app);
@@ -189,11 +194,12 @@ const Navigation = () => {
     localStorage.setItem("token", "");
     localStorage.setItem("user", "");
     localStorage.setItem("role", "");
-    navigate(`/home`);
+    localStorage.setItem("fails", "0");
+    //     navigate(`/`);
     setUser(!user);
   };
   return (
-    <NavigationSt>
+    <NavigationSt style={{ background: props.bg }}>
       <Link className="title" to="/browser/home" onClick={() => dispatch(restartScroll("home", 0))}>
         Movie Store Cbba
       </Link>
@@ -237,7 +243,7 @@ const Navigation = () => {
         </form>
       )}
       {app.login.user !== "" && (
-        <NavLink className="exit" to="/browser" onClick={logout} title="salir">
+        <NavLink className="exit" to="/" onClick={logout} title="salir">
           <ExitIcon className="sysIconExit" onClick={() => setUser(!user)} />
         </NavLink>
       )}

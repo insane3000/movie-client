@@ -8,6 +8,7 @@ const Spinner03St = styled.div`
   justify-content: center;
   align-items: center;
   background: #0e0a18;
+  background: #060606;
 
   position: absolute;
   .html-spinner {

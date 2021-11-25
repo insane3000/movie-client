@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import MoviePoster from "../molecules/MoviePoster";
 import axios from "axios";
@@ -17,7 +17,8 @@ const AllMoviesSt = styled.div`
   @media only screen and (min-width: 568px) {
     width: 100%;
     height: 100%;
-    overflow-y: scroll;
+    /* overflow-y: scroll;
+    position: relative; */
     .title-component {
       width: 100%;
       height: 3rem;
@@ -25,7 +26,7 @@ const AllMoviesSt = styled.div`
       font-family: "Roboto 700";
       font-size: 1.5rem;
       text-align: start;
-      margin-top: 6rem;
+      /* margin-top: 6rem; */
       color: #d3d3d3;
       padding: 0 10rem;
     }
@@ -75,7 +76,7 @@ const AllMovies = () => {
   let navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const moviesRef = useRef<HTMLDivElement>(null);
+  const moviesRef = useRef<any>(null);
   const app = useSelector((store: StoreInterface) => store.app);
   const [state, setState] = useState<any>([]);
   const [hasMore, setHasMore] = useState(true);
@@ -131,7 +132,7 @@ const AllMovies = () => {
   const year = new Date().getFullYear();
 
   return (
-    <AllMoviesSt ref={moviesRef}>
+    <AllMoviesSt>
       <h2 className="title-component">Estrenos</h2>
       <div className="container-movies">
         {state?.map((i: any) => (
@@ -149,7 +150,6 @@ const AllMovies = () => {
         {!hasMore && "Llegaste al final."}
         {spinner && <Spinner03 />}
       </section>
-      <Navigation />
     </AllMoviesSt>
   );
 };

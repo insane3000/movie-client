@@ -18,7 +18,7 @@ const ClusterSt = styled.div`
   @media only screen and (min-width: 568px) {
     width: 100%;
     height: 26rem;
-    margin-top: 2rem;
+    /* margin-top: 2rem; */
     margin-bottom: 2rem;
     display: flex;
     flex-direction: column;
@@ -39,24 +39,30 @@ const ClusterSt = styled.div`
       width: 100%;
       height: 23rem;
       display: grid;
-      grid-template-columns: 4rem calc(100% - 8rem) 4rem;
+      grid-template-columns: 100%;
       grid-template-rows: 23rem;
+      position: relative;
+      padding: 0 4rem;
       .arrow {
+        width: 4rem;
+        height: 100%;
+        position: absolute;
         background: #000000;
         display: flex;
         justify-content: center;
         align-items: center;
         cursor: pointer;
-        &:hover {
-          .sysIconArrow {
-            color: white;
-          }
-        }
         .sysIconArrow {
-          color: #ffffff2f;
+          color: #ffffff;
           width: 100%;
           height: 3rem;
         }
+      }
+      .left {
+        left: 0;
+      }
+      .right {
+        right: 0;
       }
       .arrow-none {
         display: flex;
@@ -70,17 +76,11 @@ const ClusterSt = styled.div`
         gap: 1rem;
         overflow-x: scroll;
         overflow-y: hidden;
-        /* position: relative; */
-        // !Ocultando scroll
-        -ms-overflow-style: none; /** IE11 */
-        overflow-y: hidden;
-        overflow-x: hidden;
-        margin-right: -20px;
+        
         .loadMore {
           width: 13rem;
           background: transparent;
-          background: #2c2c2c;
-          background: #2c2c2c24;
+          background: #1d1d1d;
 
           display: flex;
           justify-content: center;
@@ -176,7 +176,7 @@ const MoviesGender = (props: Props) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isBottomVisible, hasMore]);
-  console.log(state);
+  // console.log(state);
   return (
     <ClusterSt>
       <h2 className="title-cluster">{props.subtitle}</h2>
@@ -185,10 +185,6 @@ const MoviesGender = (props: Props) => {
         <Spinner05 />
       ) : (
         <div className="container-postersArrow">
-          <section className="arrow arrow-none" onClick={ScrollLeft}>
-            <ArrowLeftIcon className="sysIconArrow" />
-          </section>
-
           <div ref={moviesGenderRef} className="list-posters">
             {state?.map((i: any) => (
               <MoviePoster
@@ -206,7 +202,10 @@ const MoviesGender = (props: Props) => {
             </section>
           </div>
 
-          <section className="arrow arrow-none" onClick={ScrollRight}>
+          <section className="arrow  left arrow-none" onClick={ScrollLeft}>
+            <ArrowLeftIcon className="sysIconArrow" />
+          </section>
+          <section className="arrow right arrow-none" onClick={ScrollRight}>
             <ArrowRightIcon className="sysIconArrow" />
           </section>
         </div>

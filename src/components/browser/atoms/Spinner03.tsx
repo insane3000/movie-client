@@ -9,14 +9,15 @@ const Spinner03St = styled.div`
   align-items: center;
   background: #0a0a0a;
   background: #2c2c2c24;
+  background: #060606;
   background: none;
 
   /* position: absolute; */
   .html-spinner {
     width: 2.5rem;
     height: 2.5rem;
-    border: .25rem solid #817f7c;
-    border-top: .25rem solid white;
+    border: 0.25rem solid #817f7c;
+    border-top: 0.25rem solid white;
     border-radius: 50%;
   }
 

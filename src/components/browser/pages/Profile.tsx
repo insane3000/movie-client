@@ -11,19 +11,19 @@ import { useNavigate } from "react-router";
 import { loginServer } from "redux/actions/appAction";
 import Navigation from "components/browser/organisms/Navigation";
 const UpdateUserSt = styled.div`
-  width: 100%;
-  height: 100%;
-  color: white;
+  
   /* overflow-y: scroll;
   overflow-x: hidden; */
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
+        width: 100%;
+  height: 100%;
+  color: white;
     display: flex;
     flex-direction: column;
     justify-content: start;
     align-items: center;
     .userContainer {
-      
       background: #0c0c0c;
       width: 25rem;
       height: 33rem;
@@ -32,9 +32,9 @@ const UpdateUserSt = styled.div`
       justify-content: center;
       align-items: center;
       border-radius: 0.5rem;
-      margin-top: 8rem;
+      margin-top: 3rem;
       .sysIconUser {
-        background: #5901E7;
+        background: #5901e7;
         width: 5rem;
         height: 5rem;
         margin-bottom: 2rem;
@@ -46,7 +46,7 @@ const UpdateUserSt = styled.div`
         height: 3rem;
         position: relative;
         margin-bottom: 2rem;
-        border: 0.0625rem solid #5901E7;
+        border: 0.0625rem solid #5901e7;
         border-radius: 0.3rem;
         .label {
           height: 1rem;
@@ -145,7 +145,9 @@ const UpdateUser = () => {
         <UserIconLight className="sysIconUser" />
         <section className="section">
           <span className="label">Clave:</span>
-          <span className="data">{app.login.role === "admin" ? "**********" : state.user.toUpperCase()}</span>
+          <span className="data">
+            {app.login.role === "admin" ? "**********" : state.user.toUpperCase()}
+          </span>
         </section>
         <section className="section">
           <span className="label">Nombre:</span>
@@ -158,12 +160,12 @@ const UpdateUser = () => {
         <section className="section">
           <span className="label">Fecha de vencimiento:</span>
           <span className="data date">
-            {state.date === "" ? "**********" : new Date(state.date).toLocaleDateString("es-ES", options)}
+            {state.date === ""
+              ? "**********"
+              : new Date(state.date).toLocaleDateString("es-ES", options)}
           </span>
         </section>
       </div>
-      <Navigation />
-
     </UpdateUserSt>
   );
 };

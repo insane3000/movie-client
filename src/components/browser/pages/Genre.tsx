@@ -18,7 +18,7 @@ const GenreSt = styled.div`
   @media only screen and (min-width: 568px) {
     width: 100%;
     height: 100%;
-    overflow-y: scroll;
+    /* overflow-y: scroll; */
     .title-component {
       width: 100%;
       height: 3rem;
@@ -26,7 +26,7 @@ const GenreSt = styled.div`
       font-family: "Roboto 700";
       font-size: 1.5rem;
       text-align: start;
-      margin-top: 6rem;
+      /* margin-top: 6rem; */
       color: #d3d3d3;
       padding: 0 10rem;
     }
@@ -158,7 +158,6 @@ const Genre = () => {
   return (
     <GenreSt>
       <h2 className="title-component">{genero}</h2>
-
       <div className="container-movies">
         {state?.map((i: any) => (
           <MoviePoster
@@ -175,7 +174,6 @@ const Genre = () => {
         {!hasMore && "Llegaste al final."}
         {spinner && <Spinner03 />}
       </section>
-      <Navigation />
     </GenreSt>
   );
 };

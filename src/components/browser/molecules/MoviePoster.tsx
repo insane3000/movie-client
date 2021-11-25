@@ -1,5 +1,3 @@
-// import React from "react";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { BUCKET } from "config/bucket";
 import Spinner04 from "../atoms/Spinner04";
@@ -12,8 +10,7 @@ import { useState } from "react";
 // import SpinnerImg from "../atoms/SpinnerImg";
 // *Redux
 import { setModal } from "redux/actions/appAction";
-import { useDispatch, useSelector } from "react-redux";
-import { StoreInterface } from "interfaces/storeTemplate";
+import { useDispatch } from "react-redux";
 
 const MoviesPosterSt = styled.div`
   // !Estilos para Desktop
@@ -30,7 +27,6 @@ const MoviesPosterSt = styled.div`
     .container-poster {
       width: 100%;
       height: calc(100% - 3rem);
-      /* position: relative; */
       border-radius: 0.5rem;
       box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
       border: 0.125rem solid transparent;
@@ -75,25 +71,10 @@ const MoviesPosterSt = styled.div`
           width: 2rem;
           position: absolute;
           font-size: 5rem;
-          color: white;
           -webkit-filter: invert(100%);
           filter: invert(100%);
         }
       }
-      /* .year {
-        height: 1.2rem;
-        line-height: 1.2rem;
-        position: absolute;
-        top: 0.3rem;
-        right: 0.3rem;
-        padding: 0rem 0.4rem;
-        font-family: "Roboto 900";
-        font-size: 1rem;
-        color: #000000;
-        border-radius: 0.2rem;
-        color: white;
-        text-shadow: 2px 2px 5px #141414;
-      } */
     }
     .name-rating {
       width: 100%;
@@ -133,8 +114,8 @@ const MoviesPosterSt = styled.div`
         .star-icon {
           width: 1rem;
           height: 1rem;
-          -webkit-filter: invert(100%);
-          filter: invert(100%);
+          /* -webkit-filter: invert(100%);
+          filter: invert(100%); */
           margin-right: 0.2rem;
           margin-top: -0.2rem;
         }
@@ -157,12 +138,10 @@ interface Props {
 }
 const MoviePoster = (props: Props) => {
   const dispatch = useDispatch();
-  // const app = useSelector((store: StoreInterface) => store.app);
   const [imageLoad, setImageLoad] = useState(false);
   const handleLoadImg = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
     e.currentTarget.complete && setImageLoad(true);
   };
-  // console.log(props);
   const handleModal = (id: string) => {
     console.log(id);
     dispatch(setModal(id, true));
@@ -180,18 +159,10 @@ const MoviePoster = (props: Props) => {
           onLoad={(e) => handleLoadImg(e)}
         />
         {!imageLoad && <Spinner04 />}
-        <section
-          className="gradient"
-          // to={`/browser/movie/${props.id}`}
-          onClick={() => handleModal(props.id)}
-        >
+        <section className="gradient" onClick={() => handleModal(props.id)}>
           <img className="play-icon" src={play} alt="play-icon" />
         </section>
-        {/* <h2 className="year">{props.year}</h2> */}
       </section>
-      {/* <Link title-movie to={`/movie/${props.id}`}>
-        {props.title}$ 7.5
-      </Link> */}
       <div className="name-rating">
         <span className="title">{props.title}</span>
         <span className="rating">

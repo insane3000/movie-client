@@ -9,6 +9,7 @@ const SpinnerSt = styled.div`
   position: absolute;
   top: 0;
   background:#090711;
+  background: #060606;
   .sk-chase {
     width: 40px;
     height: 40px;

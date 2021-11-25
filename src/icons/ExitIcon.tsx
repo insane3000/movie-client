@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 
 function SvgComponent(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -9,17 +9,15 @@ function SvgComponent(props: React.SVGProps<SVGSVGElement>) {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth={2}
+      strokeWidth={1}
       strokeLinecap="round"
       strokeLinejoin="round"
-      className="prefix__feather prefix__feather-user-x"
+      className="prefix__feather prefix__feather-log-out"
       {...props}
     >
-      <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
-      <circle cx={8.5} cy={7} r={4} />
-      <path d="M18 8l5 5M23 8l-5 5" />
+      <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9" />
     </svg>
-  );
+  )
 }
 
-export default SvgComponent;
+export default SvgComponent

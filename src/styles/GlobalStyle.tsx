@@ -36,7 +36,7 @@ body{
   *{
     
     // !Firefox
-    scrollbar-color: #fdfdfd #05010E;
+    scrollbar-color: #fdfdfd #1A1720;
   scrollbar-width: thin;
     // !Chrome
     &::-webkit-scrollbar {
@@ -44,7 +44,7 @@ body{
       height: 0rem;
     }
     &::-webkit-scrollbar-track {
-      background: none;
+      background: #1A1720;
 
     }
     &::-webkit-scrollbar-thumb {

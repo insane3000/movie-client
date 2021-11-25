@@ -11,70 +11,73 @@ import { loginServer, setModal } from "redux/actions/appAction";
 // *Icons
 import CloseIcon from "icons/CloseIcon";
 import Spinner05 from "../atoms/Spinner05";
+import star from "img/star2.png";
 const MovieSt = styled.div`
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
-    .gradient-movie {
-      width: 100%;
-      height: 100%;
-      background: #00000086;
-      position: absolute;
-    }
-
     .sysClose {
       position: absolute;
       top: 1.5rem;
-      right: 6rem;
+      right: 5.5rem;
       font-size: 2.5rem;
       background: white;
       border-radius: 100%;
       color: black;
       cursor: pointer;
     }
+    .gradient-movie {
+      width: 100%;
+      height: 100%;
+      background: #00000026;
+      position: absolute;
+      backdrop-filter: blur(10px);
+    }
+
+    .loader {
+      width: 80vw;
+      height: 90vh;
+      background: #1a1720;
+      background: #0f0f0f;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding-bottom: 2rem;
+      position: absolute;
+      z-index: 2;
+    }
     .movie-container {
       width: 80vw;
       height: 90vh;
       background: #1a1720;
+      background: #0f0f0f;
       display: flex;
       flex-direction: column;
       justify-content: start;
       align-items: center;
       padding-bottom: 2rem;
       overflow-y: scroll;
-      position: relative;
-      .loader {
-        width: 100%;
-        height: 100%;
-        background: #0a090c;
-        position: fixed;
-        top: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
+      z-index: 1;
+
       .container-poster-data {
-        width: 75%;
-        min-height: 32rem;
+        width: 65rem;
         height: auto;
         display: flex;
-        flex-direction: row;
-        justify-content: start;
-        align-items: center;
-        margin-top: 5rem;
-        margin-bottom: 2rem;
+        margin-top: 4rem;
+
         .container-poster {
-          width: 20rem;
-          height: 32em;
+          width: 13rem;
+          height: 23rem;
           position: relative;
           border-radius: 0.5rem;
           overflow: hidden;
-          /* background: red; */
           .img-movie {
             width: 100%;
             height: 100%;
@@ -82,67 +85,76 @@ const MovieSt = styled.div`
           }
         }
         .container-data {
-          width: calc(100% - 20rem);
-          height: 100%;
-          padding: 1rem 2rem;
-
+          width: calc(100% - 13rem);
+          height: auto;
+          padding: 1rem 1rem;
           .title-movie {
             font-family: "Roboto 900";
-            font-size: 4rem;
-            line-height: 4rem;
+            font-size: 3rem;
+            line-height: 3rem;
             margin-bottom: 0.5rem;
             text-align: left;
             color: #5900ff;
           }
-          .year {
+          .year-genre-time {
             font-family: "Roboto 100";
             font-size: 1.2rem;
-            margin-bottom: 0.5rem;
             text-align: left;
             color: white;
+            margin-bottom: 0.5rem;
           }
 
           .rate {
             font-family: "Roboto 900";
             font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-            text-align: left;
             color: white;
-            span {
+            margin-bottom: 0.5rem;
+            /* background: #772121; */
+            display: flex;
+            justify-content: start;
+            align-items: center;
+
+            .span {
               color: #6200ff;
               font-family: "Roboto 900";
               font-size: 1.5rem;
+              margin-right: 0.5rem;
             }
           }
           .actors {
             width: 100%;
             height: 2rem;
-            line-height: 2rem;
-            font-family: "Roboto 900";
+            font-family: "Roboto 100";
             font-size: 1.5rem;
-            margin-bottom: 0.5rem;
             color: white;
-            // Dots ...
+            margin-bottom: 0.5rem;
+
+            // !Dots ...
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-            span {
+            .span {
               color: #6200ff;
               font-family: "Roboto 900";
               font-size: 1.5rem;
+              margin-right: 0.5rem;
             }
           }
           .synopsis {
+            width: 100%;
+            height: auto;
             font-family: "Roboto 300";
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             color: white;
+            /* background: red; */
+            margin-top: 1rem;
           }
         }
       }
 
       .player-container {
-        width: 70%;
-        min-height: 30rem;
+        width: 85%;
+        min-height: 35rem;
         height: auto;
         margin-top: 2rem;
         display: flex;
@@ -193,6 +205,7 @@ const Movie = () => {
   };
   const fetchData = () => {
     setSpinner(true);
+
     axios
       .get(`${URI}/movies/${app.modal.id}`, {
         headers: {
@@ -205,7 +218,6 @@ const Movie = () => {
       .then(function (response) {
         setSpinner(false);
         setState(response.data);
-        scrollToTop();
       })
       .catch(function (error) {
         console.log(error);
@@ -218,6 +230,8 @@ const Movie = () => {
   };
   useEffect(() => {
     fetchData();
+    scrollToTop();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [app.modal.id]);
   //!para validar query
   let genero = state.genre.slice(0, 4).toLowerCase();
@@ -230,21 +244,22 @@ const Movie = () => {
       <div className="movie-container" ref={movieRef}>
         <div className="container-poster-data">
           <div className="container-poster">
-            <img className="img-movie" src={state.imageL && `${BUCKET}${state.imageL}`} alt="" />
+            <img className="img-movie" src={state.imageM && `${BUCKET}${state.imageM}`} alt="" />
           </div>
           <div className="container-data">
             <h2 className="title-movie">{state.title}</h2>
-            <h3 className="year">
+            <h3 className="year-genre-time">
               {state.year} • {cleanText.split(" ")[0]} {cleanText.split(" ")[1]}{" "}
               {cleanText.split(" ")[2]} {cleanText.split(" ")[3]} • {state.time}
             </h3>
             <h3 className="rate">
-              <span>Calificación:</span> {state.rating}
+              <span className="span">Calificación: </span> {state.rating}
+              {/* <img className="span" src={star} alt="" /> {state.rating} */}
             </h3>
-            <h3 className="actors">
-              <span>Actores:</span> {state.actors}
-            </h3>
-            <span className="synopsis">{cleanSynopsis}</span>
+            <p className="actors">
+              <span className="span">Actores:</span> {state.actors}
+            </p>
+            <p className="synopsis">{cleanSynopsis}</p>
           </div>
         </div>
         <div className="player-container">
@@ -265,13 +280,13 @@ const Movie = () => {
             }}
           />
         </div>
-        <Cluster genre={genero} subtitle="Relacionados" text="asd" />
-        {spinner === true && (
-          <div className="loader">
-            <Spinner05 />
-          </div>
-        )}
+        <Cluster genre={genero} subtitle="Relacionados" text="" />
       </div>
+      {spinner === true && (
+        <div className="loader">
+          <Spinner05 />
+        </div>
+      )}
 
       <CloseIcon className="sysClose" onClick={handleModal} />
     </MovieSt>

@@ -1,26 +1,24 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Navigation from "components/browser/organisms/Navigation";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Genre from "./Genre";
 const CategoriesSt = styled.div`
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
     width: 100%;
-    height: 100%;
-    overflow-y: scroll;
+    height: auto;
 
     .list-categories {
       width: 100%;
-      height: 100%;
+      height: auto;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(10rem, 20rem));
       /* grid-template-columns: 18rem 18rem 18rem 18rem; */
       grid-auto-rows: 12rem;
       justify-content: center;
       align-content: flex-start;
-      padding: 10rem 5rem;
+      padding: 5rem 5rem;
       gap: 1rem;
 
       .category {
@@ -84,7 +82,6 @@ const Categories = () => {
         />
         <Route path="/:genre" element={<Genre />} />
       </Routes>
-      <Navigation />
     </CategoriesSt>
   );
 };
