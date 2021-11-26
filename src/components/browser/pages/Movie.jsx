@@ -11,7 +11,6 @@ import { loginServer, setModal } from "redux/actions/appAction";
 // *Icons
 import CloseIcon from "icons/CloseIcon";
 import Spinner05 from "../atoms/Spinner05";
-import star from "img/star2.png";
 const MovieSt = styled.div`
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
@@ -21,16 +20,7 @@ const MovieSt = styled.div`
     justify-content: center;
     align-items: center;
     position: relative;
-    .sysClose {
-      position: absolute;
-      top: 1.5rem;
-      right: 5.5rem;
-      font-size: 2.5rem;
-      background: white;
-      border-radius: 100%;
-      color: black;
-      cursor: pointer;
-    }
+
     .gradient-movie {
       width: 100%;
       height: 100%;
@@ -44,7 +34,6 @@ const MovieSt = styled.div`
       height: 90vh;
       background: #1a1720;
       background: #0f0f0f;
-
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -58,34 +47,51 @@ const MovieSt = styled.div`
       height: 90vh;
       background: #1a1720;
       background: #0f0f0f;
-      display: flex;
-      flex-direction: column;
-      justify-content: start;
-      align-items: center;
-      padding-bottom: 2rem;
+      /* padding-top: 4rem; */
       overflow-y: scroll;
       z-index: 1;
+      position: relative;
+      .close-div {
+        /* background: red; */
+        width: 100%;
+        height: 5rem;
+        position: sticky;
+        top: 0;
+        z-index: 1;
 
+        .sysClose {
+          position: absolute;
+          top: 1rem;
+          right: 1rem;
+          font-size: 4rem;
+          background: white;
+          border-radius: 100%;
+          color: black;
+          cursor: pointer;
+          &:hover {
+            background: #d6d6d6;
+          }
+        }
+      }
       .container-poster-data {
-        width: 65rem;
+        width: 90%;
         height: auto;
         display: flex;
-        margin-top: 4rem;
+        margin: auto auto 2rem auto;
 
         .container-poster {
-          width: 13rem;
-          height: 23rem;
+          width: 18rem;
+          height: auto;
           position: relative;
-          border-radius: 0.5rem;
-          overflow: hidden;
           .img-movie {
             width: 100%;
-            height: 100%;
+            height: auto;
             object-fit: cover;
+            border-radius: 0.3rem;
           }
         }
         .container-data {
-          width: calc(100% - 13rem);
+          width: calc(100% - 18rem);
           height: auto;
           padding: 1rem 1rem;
           .title-movie {
@@ -98,7 +104,7 @@ const MovieSt = styled.div`
           }
           .year-genre-time {
             font-family: "Roboto 100";
-            font-size: 1.2rem;
+            font-size: 1.5rem;
             text-align: left;
             color: white;
             margin-bottom: 0.5rem;
@@ -153,14 +159,13 @@ const MovieSt = styled.div`
       }
 
       .player-container {
-        width: 85%;
-        min-height: 35rem;
-        height: auto;
-        margin-top: 2rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        /* background: #161515; */
+        width: 90%;
+        min-height: 30rem;
+        height: fit-content;
+        margin: auto;
+        margin-bottom: 2rem;
+        /* overflow: hidden; */
+        background: black;
         .player {
           width: 100%;
           height: 100%;
@@ -203,10 +208,10 @@ const Movie = () => {
   const handleModal = () => {
     dispatch(setModal("", false));
   };
-  const fetchData = () => {
+  const fetchData = async () => {
     setSpinner(true);
 
-    axios
+    await axios
       .get(`${URI}/movies/${app.modal.id}`, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
@@ -242,9 +247,13 @@ const Movie = () => {
     <MovieSt>
       <div className="gradient-movie" onClick={handleModal}></div>
       <div className="movie-container" ref={movieRef}>
+        <div className="close-div">
+          <CloseIcon className="sysClose" onClick={handleModal} />
+        </div>
+
         <div className="container-poster-data">
           <div className="container-poster">
-            <img className="img-movie" src={state.imageM && `${BUCKET}${state.imageM}`} alt="" />
+            <img className="img-movie" src={state.imageL && `${BUCKET}${state.imageL}`} alt="" />
           </div>
           <div className="container-data">
             <h2 className="title-movie">{state.title}</h2>
@@ -287,8 +296,6 @@ const Movie = () => {
           <Spinner05 />
         </div>
       )}
-
-      <CloseIcon className="sysClose" onClick={handleModal} />
     </MovieSt>
   );
 };

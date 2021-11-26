@@ -14,7 +14,7 @@ import Categories from "./pages/Categories";
 // import Welcome from "./pages/Welcome";
 import { useDispatch, useSelector } from "react-redux";
 import { StoreInterface } from "interfaces/storeTemplate";
-import { loginServer, setModal } from "redux/actions/appAction";
+import { setModal } from "redux/actions/appAction";
 import Navigation from "./organisms/Navigation";
 import { useLocation } from "react-router";
 const BrowserSt = styled.div`
@@ -53,7 +53,7 @@ const User = () => {
 
   const [bg, setBg] = useState("");
   const handleScroll = useCallback((e) => {
-    console.log(e.target.scrollTop);
+    //     console.log(e.target.scrollTop);
     e.target.scrollTop > 0 ? setBg("#0e0d0d") : setBg("");
   }, []);
   // ! Scroll to TOP
@@ -64,11 +64,15 @@ const User = () => {
   useEffect(() => {
     const div = refScroll.current;
     div.addEventListener("scroll", handleScroll);
-  }, [handleScroll, scrollToTop]);
+  }, [handleScroll]);
+
+  const scrollToTopCallback = useCallback(() => {
+    scrollToTop();
+  }, []);
 
   useEffect(() => {
-    scrollToTop();
-  }, [pathname]);
+    scrollToTopCallback();
+  }, [pathname, scrollToTopCallback]);
   return (
     <BrowserSt id="app" ref={refScroll}>
       <Navigation bg={bg} />

@@ -11,7 +11,7 @@
 // });
 
 // !Development
-// export const URI = "http://192.168.0.148:4000";
+export const URI = "http://192.168.0.148:4000";
 
 // !Production
-export const URI = "https://api.moviestorecbba.com";
+// export const URI = "https://api.moviestorecbba.com";

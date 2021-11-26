@@ -8,39 +8,55 @@ const SearchSt = styled.div`
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
     width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: center;
-    overflow-y: scroll;
+    height: auto;
+    /* overflow-y: scroll;
+    position: relative; */
+    padding-bottom: 2rem;
     .title-component {
-      width: 80%;
+      width: 100%;
       height: 3rem;
       line-height: 3rem;
-      font-family: "Roboto 900";
-      font-size: 4rem;
-      text-align: center;
-      margin-top: 1rem;
-      margin-bottom: 1rem;
-      text-transform: capitalize;
+      font-family: "Roboto 700";
+      font-size: 1.5rem;
+      text-align: start;
+      /* margin-top: 6rem; */
+      color: #d3d3d3;
+      padding: 0 10rem;
     }
     .container-movies {
-      width: 80%;
+      width: 100%;
       height: auto;
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(10rem, 18rem));
-      /* grid-template-columns: 18rem 18rem 18rem 18rem; */
-      grid-auto-rows: 28rem;
+      grid-template-columns: repeat(auto-fill, minmax(10rem, 13rem));
+      grid-auto-rows: 23rem;
       justify-content: center;
       align-content: flex-start;
-      gap: 1rem;
+      gap: 2rem;
       margin-top: 1rem;
       margin-bottom: 1rem;
+      padding: 0 10rem;
     }
-    .alertEmptyMovies {
-      font-family: "Roboto 900";
-      font-size: 2rem;
+    .no-data {
+      width: 100%;
+      height: 3rem;
+      line-height: 3rem;
+      font-family: "Roboto 100";
+      font-size: 1rem;
+      text-align: center;
+      /* text-transform: uppercase; */
+      /* margin-top: 6rem; */
+      color: #d3d3d3;
+      padding: 10rem 10rem;
+    }
+    .loadMore {
+      width: 100%;
+      height: 3rem;
+      /* background: red; */
+      color: white;
+      text-align: center;
+      line-height: 3rem;
+      font-family: "Roboto 300";
+      font-size: 1rem;
     }
   }
 `;
@@ -50,38 +66,30 @@ const Search = () => {
   const dispatch = useDispatch();
   const app = useSelector((store: StoreInterface) => store.app);
   const restoreScroll = () => {
-    dispatch(
-      restartScroll(
-        "search",
-        searchRef.current === null ? 0 : searchRef.current.scrollTop
-      )
-    );
+    dispatch(restartScroll("search", searchRef.current === null ? 0 : searchRef.current.scrollTop));
   };
   useEffect(() => {
     searchRef.current && (searchRef.current.scrollTop = app.scroll.search);
   });
   return (
     <SearchSt ref={searchRef} onClick={restoreScroll}>
-      <h2 className="title-component"> </h2>
+      {app.search.length !== 0 && <h2 className="title-component">Resultados de busqueda:</h2>}
       <div className="container-movies">
-        {app.search.length !== 0 ? (
-          app.search.map(
-            (i) =>
-              i && (
-                <MoviePoster
-                  key={i.title}
-                  img={i.imageM}
-                  id={i._id}
-                  rating={i.rating}
-                  title={i.title} 
-                  year={i.year}
-                />
-              )
-          )
-        ) : (
-          <h1 className="alertEmptyMovies">Ningun resultado.</h1>
+        {app.search.map(
+          (i) =>
+            i && (
+              <MoviePoster
+                key={i.title}
+                img={i.imageM}
+                id={i._id}
+                rating={i.rating}
+                title={i.title}
+                year={i.year}
+              />
+            )
         )}
       </div>
+      {app.search.length === 0 && <h2 className="no-data">"No se encontraron resultados."</h2>}
     </SearchSt>
   );
 };

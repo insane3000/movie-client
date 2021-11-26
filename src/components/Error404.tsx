@@ -1,8 +1,9 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 const ErrorSt = styled.div`
   width: 100%;
-  height: 100%;
+  height: 100vh;
   color: white;
   display: flex;
   flex-direction: column;
@@ -14,6 +15,7 @@ const ErrorSt = styled.div`
     font-weight: 900;
     font-size: 4rem;
     text-align: center;
+    /* margin-top: 6rem; */
   }
   h2 {
     font-family: "Roboto 500", sans-serif;
@@ -28,6 +30,29 @@ const ErrorSt = styled.div`
     margin-top: 0.5rem;
     color: white;
     text-align: center;
+  }
+
+  .btnSubmit {
+    width: 15rem;
+    height: 4rem;
+    line-height: 4rem;
+    text-align: center;
+    text-decoration: none;
+    font-family: "Roboto 900";
+    font-size: 2rem;
+    outline: none;
+    border-style: none;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    background: #5100ff;
+    color: white;
+    transition: 0.1s;
+margin-top: 2rem;
+    &:hover {
+      background: white;
+      color: #000000;
+      transition: 0.1s;
+    }
   }
   // !Estilos para DESKTOP
   @media only screen and (min-width: 568px) {
@@ -48,6 +73,9 @@ const Error404 = () => {
       <h1>404</h1>
       <h2>Página no encontrada</h2>
       <span>La pagina que quieres buscar, no esta disponible.</span>
+      <Link className="btnSubmit" to="/">
+        Ir a inicio
+      </Link>
     </ErrorSt>
   );
 };

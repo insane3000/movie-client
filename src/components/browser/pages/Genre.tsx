@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { StoreInterface } from "interfaces/storeTemplate";
 import { loginServer } from "redux/actions/appAction";
 import { useNavigate, useParams } from "react-router";
-import Navigation from "components/browser/organisms/Navigation";
 import { useIntersectionObserver } from "hooks/useIntersectionObserver";
 
 // *images
@@ -17,8 +16,7 @@ const GenreSt = styled.div`
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
     width: 100%;
-    height: 100%;
-    /* overflow-y: scroll; */
+    height: auto;
     .title-component {
       width: 100%;
       height: 3rem;
@@ -83,8 +81,8 @@ const Genre = () => {
   const [nextPage, setNextPage] = useState(1);
   const [spinner, setSpinner] = useState(false);
 
-  const InitialFetch = () => {
-    axios
+  const InitialFetch = async () => {
+    await axios
       .get(`${URI}/genre?genre=${params.genre}&page=${nextPage}&limit=10`, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
@@ -124,7 +122,7 @@ const Genre = () => {
       if (hasMore) {
         setSpinner(true);
         InitialFetch();
-        console.log("fething");
+        // console.log("fething");
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -28,7 +28,7 @@ const BannerSt = styled.div`
       background: radial-gradient(
         circle,
         rgba(63, 94, 251, 0) 0%,
-        rgba(0, 0, 0, 0.6827001064097514) 100%
+        rgba(0, 0, 0, 0.9827001064097514) 100%
       );
       display: flex;
       flex-direction: column;
@@ -43,18 +43,17 @@ const BannerSt = styled.div`
         left: 4rem;
         bottom: 15rem;
         /* padding: 0 2rem; */
-        /* background: red; */
         .banner-title {
           font-family: "Roboto 900";
           font-size: 5rem;
           color: white;
-          text-shadow: 2px 2px 5px black;
+          text-shadow: 1px 1px 3px black;
         }
         .rating {
           font-family: "Roboto 700";
           font-size: 2rem;
           color: white;
-          text-shadow: 2px 2px 5px black;
+          text-shadow: 1px 1px 3px black;
           margin-bottom: 1rem;
         }
         .btn-container {

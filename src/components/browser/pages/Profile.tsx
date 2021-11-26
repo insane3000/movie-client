@@ -9,16 +9,14 @@ import { StoreInterface } from "interfaces/storeTemplate";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { loginServer } from "redux/actions/appAction";
-import Navigation from "components/browser/organisms/Navigation";
 const UpdateUserSt = styled.div`
-  
   /* overflow-y: scroll;
   overflow-x: hidden; */
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
-        width: 100%;
-  height: 100%;
-  color: white;
+    width: 100%;
+    height: 100%;
+    color: white;
     display: flex;
     flex-direction: column;
     justify-content: start;
@@ -100,7 +98,7 @@ const UpdateUser = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      axios
+        await axios
         .get(`${URI}/users/${app.login.user}`, {
           headers: {
             authorization: `Bearer ${app.login.token}`,

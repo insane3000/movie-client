@@ -77,7 +77,7 @@ const ClusterSt = styled.div`
         gap: 1rem;
         overflow-x: scroll;
         overflow-y: hidden;
-        
+
         .loadMore {
           width: 13rem;
           background: transparent;
@@ -129,8 +129,8 @@ const MoviesGender = (props: Props) => {
   const [state, setState] = useState<any>([]);
   const [hasMore, setHasMore] = useState(true);
   const [nextPage, setNextPage] = useState(1);
-  const InitialFetch = () => {
-    axios
+  const InitialFetch = async () => {
+    await axios
       .get(`${URI}/movies?page=${nextPage}&limit=15`, {
         headers: {
           authorization: `Bearer ${app.login.token}`,

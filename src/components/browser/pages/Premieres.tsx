@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import MoviePoster from "../molecules/MoviePoster";
 import axios from "axios";
@@ -10,13 +10,12 @@ import { useNavigate } from "react-router";
 // import Navigation from "components/browser/organisms/Navigation";
 // *images
 import Spinner03 from "../atoms/Spinner03";
-import Navigation from "components/browser/organisms/Navigation";
 import { useIntersectionObserver } from "hooks/useIntersectionObserver";
 const AllMoviesSt = styled.div`
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
     width: 100%;
-    height: 100%;
+    height: auto;
     /* overflow-y: scroll;
     position: relative; */
     .title-component {
@@ -76,15 +75,14 @@ const AllMovies = () => {
   let navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const moviesRef = useRef<any>(null);
   const app = useSelector((store: StoreInterface) => store.app);
   const [state, setState] = useState<any>([]);
   const [hasMore, setHasMore] = useState(true);
   const [nextPage, setNextPage] = useState(1);
   const [spinner, setSpinner] = useState(false);
 
-  const InitialFetch = () => {
-    axios
+  const InitialFetch = async () => {
+        await axios
       .get(`${URI}/year?year=${year}&page=${nextPage}&limit=10`, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
@@ -124,7 +122,7 @@ const AllMovies = () => {
       if (hasMore) {
         setSpinner(true);
         InitialFetch();
-        console.log("fething");
+        // console.log("fething");
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -131,8 +131,8 @@ const MoviesGender = (props: Props) => {
   const [nextPage, setNextPage] = useState(1);
   const [spinner, setSpinner] = useState(false);
 
-  const InitialFetch = () => {
-    axios
+  const InitialFetch = async () => {
+    await axios
       .get(`${URI}/genre?genre=${props.genre}&page=${nextPage}&limit=15`, {
         headers: {
           authorization: `Bearer ${app.login.token}`,

@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import Navigation from "components/browser/organisms/Navigation";
 import { Routes, Route } from "react-router-dom";
 import Genre from "./Genre";
 const CategoriesSt = styled.div`

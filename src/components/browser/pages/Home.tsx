@@ -1,23 +1,17 @@
 import styled from "styled-components";
 import Cluster from "../organisms/Cluster";
 import JustAdded from "../organisms/JustAdded";
-import Navigation from "components/browser/organisms/Navigation";
 
 import Banner from "../organisms/Banner";
-import { useCallback, useEffect, useRef, useState } from "react";
 const HomeSt = styled.div`
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
     width: 100%;
-    height: 100%;
-    padding-bottom: 2rem;
-    /* overflow-y: scroll;
-    position: relative; */
+    height: auto;
   }
 `;
 
 const Home = () => {
- 
   return (
     <HomeSt>
       <Banner />

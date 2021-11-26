@@ -143,7 +143,7 @@ const MoviePoster = (props: Props) => {
     e.currentTarget.complete && setImageLoad(true);
   };
   const handleModal = (id: string) => {
-    console.log(id);
+//     console.log(id);
     dispatch(setModal(id, true));
   };
 
