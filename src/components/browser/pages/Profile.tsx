@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { URI } from "config/axios";
 // *Icons
 import UserIconLight from "icons/UserIconLight";
 import { StoreInterface } from "interfaces/storeTemplate";
@@ -98,8 +97,8 @@ const UpdateUser = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-        await axios
-        .get(`${URI}/users/${app.login.user}`, {
+      await axios
+        .get(`${process.env.REACT_APP_BACKEND_URL}/users/${app.login.user}`, {
           headers: {
             authorization: `Bearer ${app.login.token}`,
             id: `${app.login.user}`,
@@ -143,9 +142,7 @@ const UpdateUser = () => {
         <UserIconLight className="sysIconUser" />
         <section className="section">
           <span className="label">Clave:</span>
-          <span className="data">
-            {app.login.role === "admin" ? "**********" : state.user.toUpperCase()}
-          </span>
+          <span className="data">{state.user.toUpperCase().slice(0, 2)}••••••</span>
         </section>
         <section className="section">
           <span className="label">Nombre:</span>
@@ -158,9 +155,7 @@ const UpdateUser = () => {
         <section className="section">
           <span className="label">Fecha de vencimiento:</span>
           <span className="data date">
-            {state.date === ""
-              ? "**********"
-              : new Date(state.date).toLocaleDateString("es-ES", options)}
+            {new Date(state.date).toLocaleDateString("es-ES", options)}
           </span>
         </section>
       </div>

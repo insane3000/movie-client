@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import MoviePoster from "../molecules/MoviePoster";
 import axios from "axios";
-import { URI } from "config/axios";
 import { useDispatch, useSelector } from "react-redux";
 import { StoreInterface } from "interfaces/storeTemplate";
 import { loginServer } from "redux/actions/appAction";
@@ -81,9 +80,11 @@ const AllMovies = () => {
   const [nextPage, setNextPage] = useState(1);
   const [spinner, setSpinner] = useState(false);
 
+//   console.log(process.env.REACT_APP_BACKEND_URL);
+  
   const InitialFetch = async () => {
-        await axios
-      .get(`${URI}/year?year=${year}&page=${nextPage}&limit=10`, {
+    await axios
+      .get(`${process.env.REACT_APP_BACKEND_URL}/year?year=${year}&page=${nextPage}&limit=10`, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
           id: `${app.login.user}`,

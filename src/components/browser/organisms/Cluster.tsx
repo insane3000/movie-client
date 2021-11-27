@@ -5,7 +5,6 @@ import ArrowLeftIcon from "icons/ArrowLeftIcon";
 import ArrowRightIcon from "icons/ArrowRightIcon";
 
 import axios from "axios";
-import { URI } from "config/axios";
 import { useDispatch, useSelector } from "react-redux";
 import { StoreInterface } from "interfaces/storeTemplate";
 import { loginServer } from "redux/actions/appAction";
@@ -133,7 +132,7 @@ const MoviesGender = (props: Props) => {
 
   const InitialFetch = async () => {
     await axios
-      .get(`${URI}/genre?genre=${props.genre}&page=${nextPage}&limit=15`, {
+      .get(`${process.env.REACT_APP_BACKEND_URL}/genre?genre=${props.genre}&page=${nextPage}&limit=15`, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
           id: `${app.login.user}`,

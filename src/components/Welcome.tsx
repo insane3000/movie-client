@@ -1,5 +1,4 @@
 import axios from "axios";
-import { URI } from "config/axios";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
@@ -187,7 +186,7 @@ const Welcome = () => {
     setSpinner(true);
     e.preventDefault();
     await axios
-      .post(`${URI}/login-user`, { user: state })
+      .post(`${process.env.REACT_APP_BACKEND_URL}/login-user`, { user: state })
       .then(function (response) {
         dispatch(loginServer(response.data._id, response.data.token, response.data.role));
         localStorage.setItem("token", response.data.token);

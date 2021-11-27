@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { HashRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import toast, { Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 // *Fonts
 import "fonts/fonts.css";
 import styled from "styled-components";

@@ -3,8 +3,6 @@ import ReactJWPlayer from "react-jw-player";
 import Cluster from "../organisms/Cluster";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import { URI } from "config/axios";
-import { BUCKET } from "config/bucket";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { loginServer, setModal } from "redux/actions/appAction";
@@ -88,6 +86,13 @@ const MovieSt = styled.div`
             height: auto;
             object-fit: cover;
             border-radius: 0.3rem;
+          }
+          .spinnerPoster {
+            width: 100%;
+            height: 100%;
+            top: 0;
+            position: absolute;
+            background: #0f0f0f;
           }
         }
         .container-data {
@@ -199,6 +204,8 @@ const Movie = () => {
 
   const [state, setState] = useState(movieTemplate);
   const [spinner, setSpinner] = useState(false);
+  const [spinnerPoster, setSpinnerPoster] = useState(true);
+
   const modifyLink = state.link?.split(".mp4")[0];
   // ! Scroll to TOP
   const movieRef = useRef();
@@ -212,7 +219,7 @@ const Movie = () => {
     setSpinner(true);
 
     await axios
-      .get(`${URI}/movies/${app.modal.id}`, {
+      .get(`${process.env.REACT_APP_BACKEND_URL}/movies/${app.modal.id}`, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
           id: `${app.login.user}`,
@@ -234,6 +241,7 @@ const Movie = () => {
       });
   };
   useEffect(() => {
+    setSpinnerPoster(true);
     fetchData();
     scrollToTop();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -243,6 +251,10 @@ const Movie = () => {
 
   const cleanText = state.genre?.replace("|", ".");
   const cleanSynopsis = state.synopsis.replace("(FILMAFFINITY)", "");
+  // !Spinner Poster
+  const handleLoadImg = (e) => {
+    e.currentTarget.complete && setSpinnerPoster(false);
+  };
   return (
     <MovieSt>
       <div className="gradient-movie" onClick={handleModal}></div>
@@ -253,7 +265,17 @@ const Movie = () => {
 
         <div className="container-poster-data">
           <div className="container-poster">
-            <img className="img-movie" src={state.imageL && `${BUCKET}${state.imageL}`} alt="" />
+            <img
+              className="img-movie"
+              src={state.imageL && `${process.env.REACT_APP_BUCKET}${state.imageL}`}
+              alt=""
+              onLoad={(e) => handleLoadImg(e)}
+            />
+            {spinnerPoster && (
+              <section className="spinnerPoster">
+                <Spinner05 />
+              </section>
+            )}
           </div>
           <div className="container-data">
             <h2 className="title-movie">{state.title}</h2>
@@ -272,24 +294,27 @@ const Movie = () => {
           </div>
         </div>
         <div className="player-container">
-          <ReactJWPlayer
-            className="player"
-            playerId="jw-player"
-            playerScript="https://content.jwplatform.com/libraries/KB5zFt7A.js"
-            // playlist={playlist}
-            file={`${modifyLink}.mp4`}
-            onBeforePlay={() => console.log("onBeforePlay fired!")}
-            // image={state.image}
-            type="mp4"
-            preload="metadata"
-            customProps={{
-              // playbackRateControls: [1, 1.25, 1.5],
-              autostart: false,
-              cast: {},
-            }}
-          />
+          {state.link !== "" && (
+            <ReactJWPlayer
+              className="player"
+              playerId="jw-player"
+              playerScript="https://content.jwplatform.com/libraries/KB5zFt7A.js"
+              file={`${modifyLink}.mp4`}
+              //     file={modifyLink && `${modifyLink}.mp4`}
+              //       file={state.link}
+              onBeforePlay={() => console.log("onBeforePlay fired!")}
+              // image={state.image}
+              type="mp4"
+              preload="auto"
+              customProps={{
+                // playbackRateControls: [1, 1.25, 1.5],
+                autostart: false,
+                cast: {},
+              }}
+            />
+          )}
         </div>
-        <Cluster genre={genero} subtitle="Relacionados" text="" />
+        {state.genre !== "" && <Cluster genre={genero} subtitle="Relacionados" text="" />}
       </div>
       {spinner === true && (
         <div className="loader">

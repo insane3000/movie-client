@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, {  useRef, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -8,10 +8,8 @@ import ExitIcon from "icons/ExitIcon";
 import { useDispatch, useSelector } from "react-redux";
 import { loginServer, restartScroll, search } from "redux/actions/appAction";
 import axios from "axios";
-import { URI } from "config/axios";
 import { StoreInterface } from "interfaces/storeTemplate";
 import toast from "react-hot-toast";
-import { useLocation } from "react-router";
 
 const NavigationSt = styled.nav`
   // !Estilos para Desktop
@@ -138,47 +136,33 @@ const SearchSt = styled.form`
 `;
 const Navigation = (props: any) => {
   const searchRef = useRef<any>();
-  const { pathname } = useLocation();
   let navigate = useNavigate();
   const dispatch = useDispatch();
   const app = useSelector((store: StoreInterface) => store.app);
   const [state, setState] = useState("");
-  //   console.log(state);
   const notify = () => toast.error("El buscador esta vacio!");
   const timerRef = useRef<any>(null);
 
   // !Handle change con busqueda automarica cada .5seg
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.currentTarget.value;
+    const value = e.currentTarget.value.trim();
+    console.log(value.length);
     clearTimeout(timerRef.current);
     if (value.length >= 1) {
       navigate("/browser/search");
       timerRef.current = setTimeout(() => fetchData(value), 500);
     }
-//     if (value.length === 0) {
-//       navigate("/");
-//       searchRef.current.focus();
-//       console.log(searchRef);
-//     }
-    setState(e.target.value);
+    setState(value);
   };
-
-  useEffect(() => {
-    console.log("mostrabndo use effect");
-  }, []);
   // ! handle Submit
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    //     const value = e.currentTarget.value;
-    if (state.trim() === "") notify();
-    if (state.trim() !== "") {
-      fetchData(state);
-      navigate("/browser/search");
-    }
+    if (state.trim() === "") return notify();
+    navigate("/browser/search");
   };
   const fetchData = async (value: string) => {
     await axios
-      .get(`${URI}/movie-search?title=${value}`, {
+      .get(`${process.env.REACT_APP_BACKEND_URL}/movie-search?title=${value}&page=1&limit=10`, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
           id: `${app.login.user}`,
@@ -205,8 +189,7 @@ const Navigation = (props: any) => {
     localStorage.setItem("user", "");
     localStorage.setItem("role", "");
     localStorage.setItem("fails", "0");
-    //     navigate(`/`);
-    //     setUser(!user);
+    navigate(`/`);
   };
 
   return (
@@ -247,16 +230,16 @@ const Navigation = (props: any) => {
           name="search"
           placeholder="Buscar..."
           onChange={(e) => handleSearch(e)}
-          //   minLength={2}
+          //     minLength={1}
         />
         <button className="btn-submit" type="submit">
           <SearchIcon className="icon-submit" />
         </button>
       </SearchSt>
 
-      <NavLink className="exit" to="/" onClick={logout} title="salir">
+      <span className="exit" onClick={logout} title="salir">
         <ExitIcon className="sysIconExit" />
-      </NavLink>
+      </span>
     </NavigationSt>
   );
 };

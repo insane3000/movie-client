@@ -5,7 +5,6 @@ import ArrowLeftIcon from "icons/ArrowLeftIcon";
 import ArrowRightIcon from "icons/ArrowRightIcon";
 
 import axios from "axios";
-import { URI } from "config/axios";
 import { useDispatch, useSelector } from "react-redux";
 import { StoreInterface } from "interfaces/storeTemplate";
 import { loginServer } from "redux/actions/appAction";
@@ -77,12 +76,11 @@ const ClusterSt = styled.div`
         gap: 1rem;
         overflow-x: scroll;
         overflow-y: hidden;
-
+        
         .loadMore {
           width: 13rem;
           background: transparent;
           background: #1d1d1d;
-          /* background: #2c2c2c24; */
 
           display: flex;
           justify-content: center;
@@ -131,7 +129,7 @@ const MoviesGender = (props: Props) => {
   const [nextPage, setNextPage] = useState(1);
   const InitialFetch = async () => {
     await axios
-      .get(`${URI}/movies?page=${nextPage}&limit=15`, {
+      .get(`${process.env.REACT_APP_BACKEND_URL}/movies?page=${nextPage}&limit=15`, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
           id: `${app.login.user}`,

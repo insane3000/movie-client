@@ -1,16 +1,12 @@
 import styled from "styled-components";
 import MoviePoster from "../molecules/MoviePoster";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { StoreInterface } from "interfaces/storeTemplate";
-import { useEffect, useRef } from "react";
-import { restartScroll } from "redux/actions/appAction";
 const SearchSt = styled.div`
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
     width: 100%;
     height: auto;
-    /* overflow-y: scroll;
-    position: relative; */
     padding-bottom: 2rem;
     .title-component {
       width: 100%;
@@ -19,7 +15,6 @@ const SearchSt = styled.div`
       font-family: "Roboto 700";
       font-size: 1.5rem;
       text-align: start;
-      /* margin-top: 6rem; */
       color: #d3d3d3;
       padding: 0 10rem;
     }
@@ -35,6 +30,8 @@ const SearchSt = styled.div`
       margin-top: 1rem;
       margin-bottom: 1rem;
       padding: 0 10rem;
+      overflow: hidden;
+      // TODO  A veces se congela el cursor
     }
     .no-data {
       width: 100%;
@@ -62,32 +59,22 @@ const SearchSt = styled.div`
 `;
 
 const Search = () => {
-  const searchRef = useRef<HTMLDivElement>(null);
-  const dispatch = useDispatch();
   const app = useSelector((store: StoreInterface) => store.app);
-  const restoreScroll = () => {
-    dispatch(restartScroll("search", searchRef.current === null ? 0 : searchRef.current.scrollTop));
-  };
-  useEffect(() => {
-    searchRef.current && (searchRef.current.scrollTop = app.scroll.search);
-  });
+
   return (
-    <SearchSt ref={searchRef} onClick={restoreScroll}>
+    <SearchSt>
       {app.search.length !== 0 && <h2 className="title-component">Resultados de busqueda:</h2>}
       <div className="container-movies">
-        {app.search.map(
-          (i) =>
-            i && (
-              <MoviePoster
-                key={i.title}
-                img={i.imageM}
-                id={i._id}
-                rating={i.rating}
-                title={i.title}
-                year={i.year}
-              />
-            )
-        )}
+        {app.search?.map((i: any) => (
+          <MoviePoster
+            key={i._id}
+            id={i._id}
+            img={i.imageM}
+            rating={i.rating}
+            title={i.title}
+            year={i.year}
+          />
+        ))}
       </div>
       {app.search.length === 0 && <h2 className="no-data">"No se encontraron resultados."</h2>}
     </SearchSt>

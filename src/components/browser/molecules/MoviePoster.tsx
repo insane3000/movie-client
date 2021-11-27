@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { BUCKET } from "config/bucket";
 import Spinner04 from "../atoms/Spinner04";
 // *Images
 // import movie01 from "img/posters/movie01.jpg";
@@ -75,6 +74,26 @@ const MoviesPosterSt = styled.div`
           filter: invert(100%);
         }
       }
+      /* .new {
+        position: absolute;
+        top: -1rem;
+        right: 0;
+        width: 30%;
+        height: 20%;
+        text-decoration: none;
+        overflow: hidden;
+        background-image: linear-gradient(45deg, #e70000, #ff0000);
+        transform: skewY(8deg);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .text {
+          transform: skewY(-8deg);
+          margin-top: 1rem;
+          font-family: "Roboto 900";
+          color: white;
+        }
+      } */
     }
     .name-rating {
       width: 100%;
@@ -143,7 +162,7 @@ const MoviePoster = (props: Props) => {
     e.currentTarget.complete && setImageLoad(true);
   };
   const handleModal = (id: string) => {
-//     console.log(id);
+    //     console.log(id);
     dispatch(setModal(id, true));
   };
 
@@ -152,7 +171,7 @@ const MoviePoster = (props: Props) => {
       <section className="container-poster">
         <img
           className="poster"
-          src={`${BUCKET}${props.img}`}
+          src={`${process.env.REACT_APP_BUCKET}${props.img}`}
           alt=""
           // loading="lazy"
           // onLoad={(e) => handleLoadImg(e)}
@@ -162,6 +181,9 @@ const MoviePoster = (props: Props) => {
         <section className="gradient" onClick={() => handleModal(props.id)}>
           <img className="play-icon" src={play} alt="play-icon" />
         </section>
+        {/* <section className="new">
+          <span className="text">Nuevo!</span>
+        </section> */}
       </section>
       <div className="name-rating">
         <span className="title">{props.title}</span>

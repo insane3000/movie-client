@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 // *Images
 import BannerImg from "img/banner.jpg";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setModal } from "redux/actions/appAction";
+import axios from "axios";
+import { StoreInterface } from "interfaces/storeTemplate";
 const BannerSt = styled.div`
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
@@ -88,19 +90,56 @@ const BannerSt = styled.div`
 `;
 const Banner = () => {
   const dispatch = useDispatch();
+  const app = useSelector((store: StoreInterface) => store.app);
+
+  // ! States
+  const [movieId, setMovieId] = useState<string>("");
+  const [title, setTitle] = useState<string>("");
+  const [rating, setRating] = useState<any>(0);
+  const [banner, setBanner] = useState<string>("");
+  const [genre, setGenre] = useState<string>("");
+  const [synopsis, setSynopsis] = useState<string>("");
+
   const handleModal = (id: string) => {
     console.log(id);
     dispatch(setModal(id, true));
   };
+  const fetchData = async () => {
+    axios
+      .get(`${process.env.REACT_APP_BACKEND_URL}/banner/61a183f2695ffb8404d0d73a`, {
+        headers: {
+          authorization: `Bearer ${app.login.token}`,
+          id: `${app.login.user}`,
+          role: `${app.login.role}`,
+        },
+      })
+      .then(function (response) {
+        //TODO Por cada nuevo dato seteado, se renderiza de nuevo. fixear!!!
+        setTitle(response.data.title);
+        setRating(response.data.rating);
+        setGenre(response.data.genre);
+        setMovieId(response.data.movieId);
+        setSynopsis(response.data.synopsis);
+        setBanner(response.data.banner);
+        // console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+  useEffect(() => {
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <BannerSt>
-      <img src={BannerImg} alt="" />
+      <img src={banner && `${process.env.REACT_APP_BUCKET}${banner}`} alt="" />
       <div className="gradient-banner">
         <div className="data-container">
-          <h1 className="banner-title">Escuadron Suicida 2</h1>
-          <h1 className="rating">Calificación: 7</h1>
+          <h1 className="banner-title">{title}</h1>
+          <h1 className="rating">Calificación: {rating}</h1>
           <section className="btn-container">
-            <button className="button-play" onClick={() => handleModal("618ae6ebf409c95b2329dc44")}>
+            <button className="button-play" onClick={() => handleModal(`${movieId}`)}>
               Ver Ahora
             </button>
           </section>
