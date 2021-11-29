@@ -4,106 +4,75 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 // *Icons
 import SearchIcon from "icons/SearchIcon";
-import ExitIcon from "icons/ExitIcon";
+import MenuIcon from "icons/MenuIcon";
 import { useDispatch } from "react-redux";
-import { loginServer, restartScroll, search } from "redux/actions/appAction";
+import { loginServer, restartScroll, search, showMenu } from "redux/actions/appAction";
 import toast from "react-hot-toast";
 
 const NavigationSt = styled.nav`
-  display: none;
-  // !Estilos para Desktop
-  @media only screen and (min-width: 568px) {
-    width: 100%;
-    height: 5rem;
-    background: rgb(255, 0, 0);
-    background: linear-gradient(0deg, rgba(255, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8) 100%);
-    position: sticky;
-    top: 0;
-    z-index: 1;
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    padding: 0 4rem;
-
-    .title {
-      font-family: "Roboto 900";
+  width: 100%;
+  height: 3.125rem;
+  /* background: rgb(255, 0, 0);
+  background: linear-gradient(0deg, rgba(255, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8) 100%); */
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  /* padding: 0 4rem; */
+  /* background: #0c0c0c; */
+  .hamburgerBtn {
+    width: 2rem;
+    height: 2rem;
+    /* background: red; */
+    margin-left: 1rem;
+    border-style: none;
+    outline: none;
+    background: none;
+    .sysIconMenu {
       font-size: 2rem;
-      text-decoration: none;
+      color: white;
+    }
+  }
+  .title {
+    /* position: absolute; */
+    margin-left: 0.5rem;
+    font-family: "Roboto 700";
+    font-size: 1.2rem;
+    text-decoration: none;
+    color: #ffffff;
+    /* background: lime; */
+  }
+
+  .showSearchBtn {
+    position: absolute;
+    right: 1rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    cursor: pointer;
+    border-style: none;
+    background: none;
+
+    .icon-submit {
+      width: 100%;
+      height: 100%;
+      padding: 0.5rem;
+      background: none;
+      transition: 0.1s;
       color: #ffffff;
     }
-    .ul {
-      display: grid;
-      grid-template-columns: repeat(5, auto);
-      grid-template-rows: 3rem;
-      gap: 1rem;
-      margin-left: 3rem;
-      .li {
-        justify-self: center;
-        align-self: center;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-family: "Roboto 300";
-        font-size: 1rem;
-        text-decoration: none;
-        color: #ffffff;
-        border-radius: 0.3rem;
-        width: 100%;
-        height: 2rem;
-        padding: 0 0.5rem;
-      }
-      .active {
-        color: #ffffff;
-        font-family: "Roboto 900";
-      }
-    }
-    .showSearchBtn {
-      position: absolute;
-      right: 7.2rem;
-      width: 2.5rem;
-      height: 2.5rem;
-      cursor: pointer;
-      border-style: none;
-      background: none;
+  }
 
-      .icon-submit {
-        width: 100%;
-        height: 100%;
-        padding: 0.5rem;
-        background: none;
-        transition: 0.1s;
-        color: #ffffff;
-      }
-    }
-    .exit {
-      position: absolute;
-      right: 2rem;
-      width: 3rem;
-      height: 3rem;
-      display: flex;
-      justify-content: space-evenly;
-      align-items: center;
-      border-radius: 0.3rem;
-      .sysIconExit {
-        width: 3rem;
-        height: 3rem;
-        cursor: pointer;
-        transition: 0.1s;
-        padding: 0.5rem 0.5rem;
-        transition: 0.1s;
-        color: #ffffff;
-        &:hover {
-          transform: scale(1.1);
-          transition: 0.1s;
-        }
-      }
-    }
+  // !Estilos para Desktop
+  @media only screen and (min-width: 568px) {
+    display: none;
   }
 `;
 const SearchSt = styled.form`
   position: absolute;
-  right: 7rem;
-  width: 20rem;
+  right: 0.8rem;
+  width: 18rem;
   height: 2.5rem;
   display: flex;
   justify-content: space-evenly;
@@ -150,13 +119,13 @@ const SearchSt = styled.form`
     }
   }
   animation-name: example;
-  animation-duration: 0.4s;
+  animation-duration: 0.3s;
   @keyframes example {
     from {
       width: 2.5rem;
     }
     to {
-      width: 20rem;
+      width: 18rem;
     }
   }
 `;
@@ -214,37 +183,24 @@ const Navigation = (props: any) => {
       document.removeEventListener("click", handleClickOutside, true);
     };
   });
+  // !Open Menu
+  const closeMenu = () => {
+    dispatch(showMenu(true));
+  };
   return (
     <NavigationSt style={{ background: props.bg }}>
-      <Link
-        className="title"
-        to="/browser/home"
-        // style={showSearch ? { display: "none" } : { display: "flex" }}
-      >
-        Movie Store Cbba
-      </Link>
-
-      <section className="ul">
-        <NavLink
-          className="li"
+      <button className="hamburgerBtn" onClick={closeMenu}>
+        <MenuIcon className="sysIconMenu" />
+      </button>
+      {!showSearch && (
+        <Link
+          className="title"
           to="/browser/home"
+          onClick={() => dispatch(restartScroll("home", 0))}
         >
-          Inicio
-        </NavLink>
-
-        <NavLink
-          className="li"
-          to="/browser/premieres"
-        >
-          Estrenos
-        </NavLink>
-        <NavLink className="li" to="/browser/category">
-          Categorías
-        </NavLink>
-        <NavLink className="li" to="/browser/profile">
-          Perfil
-        </NavLink>
-      </section>
+          Movie Store Cbba
+        </Link>
+      )}
 
       <button
         className="showSearchBtn"
@@ -264,7 +220,6 @@ const Navigation = (props: any) => {
             name="search"
             placeholder="Buscar..."
             onChange={(e) => handleChangeSearch(e)}
-            //     minLength={1}
           />
           <button className="btn-submit" type="submit">
             <SearchIcon className="icon-submit" />
@@ -272,9 +227,9 @@ const Navigation = (props: any) => {
         </SearchSt>
       )}
 
-      <span className="exit" onClick={logout} title="salir">
+      {/* <span className="exit" onClick={logout} title="salir">
         <ExitIcon className="sysIconExit" />
-      </span>
+      </span> */}
     </NavigationSt>
   );
 };

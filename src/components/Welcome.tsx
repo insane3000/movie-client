@@ -8,6 +8,12 @@ import Spinner05 from "components/browser/atoms/Spinner05";
 import Countdown from "react-countdown";
 
 const WelcomeSt = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
     width: 100%;
@@ -20,22 +26,25 @@ const WelcomeSt = styled.div`
 `;
 const LoginSt = styled.div`
   width: 100%;
-  height: 100%;
+  height: auto;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   position: relative;
+  /* background: red; */
   .titleWelcome {
     font-family: "Roboto 900";
-    font-size: 4rem;
+    font-size: 2rem;
     margin-top: 2rem;
     color: #5900ff;
+    text-align: center;
+    padding: 0rem 2rem;
   }
   .titleCode {
     font-family: "Roboto 100";
-    font-size: 3rem;
+    font-size: 1.5rem;
     margin-bottom: 1rem;
     color: white;
   }
@@ -48,18 +57,18 @@ const LoginSt = styled.div`
     align-items: center;
 
     .cell-input {
-      width: 65rem;
-      height: 15rem;
+      width: 20rem;
+      height: 5rem;
       font-family: "Roboto 900";
-      font-size: 10rem;
+      font-size: 3rem;
       text-align: center;
       text-transform: uppercase;
       background: none;
       border-radius: 0.5rem;
       border: 0.125rem solid #ff0040;
       outline: none;
-      letter-spacing: 2rem;
-      padding: 0 4rem;
+      /* letter-spacing: 2rem; */
+      padding: 0 1rem;
       margin-bottom: 2rem;
     }
     .word0 {
@@ -79,10 +88,10 @@ const LoginSt = styled.div`
     }
 
     .btnSubmit {
-      width: 15rem;
-      height: 4rem;
+      width: 10rem;
+      height: 3rem;
       font-family: "Roboto 900";
-      font-size: 2rem;
+      font-size: 1.5rem;
       outline: none;
       border-style: none;
       border-radius: 0.3rem;
@@ -98,11 +107,92 @@ const LoginSt = styled.div`
       }
     }
   }
+  @media only screen and (min-width: 568px) {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    .titleWelcome {
+      font-family: "Roboto 900";
+      font-size: 4rem;
+      margin-top: 2rem;
+      color: #5900ff;
+    }
+    .titleCode {
+      font-family: "Roboto 100";
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: white;
+    }
+    .formActivationCode {
+      width: 100%;
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      .cell-input {
+        width: 65rem;
+        height: 15rem;
+        font-family: "Roboto 900";
+        font-size: 10rem;
+        text-align: center;
+        text-transform: uppercase;
+        background: none;
+        border-radius: 0.5rem;
+        border: 0.125rem solid #ff0040;
+        outline: none;
+        letter-spacing: 2rem;
+        padding: 0 4rem;
+        margin-bottom: 2rem;
+      }
+      .word0 {
+        color: #00a2ff;
+      }
+      .word1 {
+        color: #5100ff;
+      }
+      .word2 {
+        color: #c300ff;
+      }
+      .word3 {
+        color: #ff0062;
+      }
+      .word4 {
+        color: #ff9d00;
+      }
+
+      .btnSubmit {
+        width: 15rem;
+        height: 4rem;
+        font-family: "Roboto 900";
+        font-size: 2rem;
+        outline: none;
+        border-style: none;
+        border-radius: 0.3rem;
+        cursor: pointer;
+        background: #5100ff;
+        color: white;
+        transition: 0.1s;
+
+        &:hover {
+          background: white;
+          color: #000000;
+          transition: 0.1s;
+        }
+      }
+    }
+  }
 `;
 const LoaderSt = styled.div`
   width: 100%;
   height: 100%;
-  background: #05010e;
+  background: #070707;
   position: absolute;
   top: 0;
   display: flex;
@@ -112,7 +202,7 @@ const LoaderSt = styled.div`
 const BlockUserSt = styled.div`
   width: 100%;
   height: 100%;
-  background: #05010e;
+  background: #070707;
 
   display: flex;
   flex-direction: column;
@@ -124,15 +214,15 @@ const BlockUserSt = styled.div`
   .title-block {
     color: #5100ff;
     font-family: "Roboto 900";
-    font-size: 5rem;
-    margin-bottom: 2rem;
+    font-size: 2rem;
+    margin-bottom: 1rem;
   }
   .counter {
-    width: 50rem;
-    height: 10rem;
+    width: 80%;
+    height: 5rem;
     color: #ffffff;
     font-family: "Roboto 900";
-    font-size: 10rem;
+    font-size: 3rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -140,10 +230,10 @@ const BlockUserSt = styled.div`
     border: 0.125rem solid #ff0040;
   }
   .try-again {
-    width: 20rem;
+    width: 80%;
     height: 5rem;
     font-family: "Roboto 900";
-    font-size: 2rem;
+    font-size: 1.5rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -154,6 +244,54 @@ const BlockUserSt = styled.div`
     :hover {
       color: #000000;
       background: #ffffff;
+    }
+  }
+  @media only screen and (min-width: 568px) {
+    width: 100%;
+    height: 100%;
+    background: #070707;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    color: white;
+    position: absolute;
+    .title-block {
+      color: #5100ff;
+      font-family: "Roboto 900";
+      font-size: 5rem;
+      margin-bottom: 2rem;
+    }
+    .counter {
+      width: 50rem;
+      height: 10rem;
+      color: #ffffff;
+      font-family: "Roboto 900";
+      font-size: 10rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 0.5rem;
+      border: 0.125rem solid #ff0040;
+    }
+    .try-again {
+      width: 20rem;
+      height: 5rem;
+      font-family: "Roboto 900";
+      font-size: 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 0.5rem;
+      color: #ffffff;
+      background: #ff0040;
+      cursor: pointer;
+      :hover {
+        color: #000000;
+        background: #ffffff;
+      }
     }
   }
 `;
@@ -206,7 +344,7 @@ const Welcome = () => {
         numberFails >= 2 && setblockUser(true);
       });
   };
-//   console.log(numberFails);
+  //   console.log(numberFails);
   useEffect(() => {
     codeInput.current.focus();
 
@@ -285,9 +423,9 @@ const Welcome = () => {
               ref={codeInput}
               name="word0"
               className="cell-input word4"
-              type="text"
+              type="password"
               value={state}
-              maxLength={6}
+              //       maxLength={6}
               onChange={handleChange}
               //     onFocus={(e) => e.target.select()}
               required

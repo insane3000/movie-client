@@ -1,5 +1,7 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { setModal } from "redux/actions/appAction";
 import styled from "styled-components";
 const ErrorSt = styled.div`
   width: 100%;
@@ -47,7 +49,7 @@ const ErrorSt = styled.div`
     background: #5100ff;
     color: white;
     transition: 0.1s;
-margin-top: 2rem;
+    margin-top: 2rem;
     &:hover {
       background: white;
       color: #000000;
@@ -68,12 +70,17 @@ margin-top: 2rem;
   }
 `;
 const Error404 = () => {
+  const dispatch = useDispatch();
+
+  const handleModal = () => {
+    dispatch(setModal("", false));
+  };
   return (
     <ErrorSt>
       <h1>404</h1>
       <h2>Página no encontrada</h2>
       <span>La pagina que quieres buscar, no esta disponible.</span>
-      <Link className="btnSubmit" to="/">
+      <Link className="btnSubmit" to="/" onClick={handleModal}>
         Ir a inicio
       </Link>
     </ErrorSt>

@@ -1,7 +1,6 @@
 import { ActionType } from "redux/types";
 import { Dispatch } from "redux";
 import { ActionsInterface } from "interfaces/ActionsInterface";
-import { MovieIT } from "interfaces/MovieInterface";
 
 // !Seteando SHOW MENU
 export const showMenu = (data: boolean) => (dispatch: Dispatch<ActionsInterface>) => {
@@ -23,7 +22,7 @@ export const loginServer =
     });
   };
 // !Seteando SEARCH
-export const search = (data: MovieIT) => (dispatch: Dispatch<ActionsInterface>) => {
+export const search = (data: string) => (dispatch: Dispatch<ActionsInterface>) => {
   // console.log(data);
   dispatch({
     type: ActionType.SEARCH,

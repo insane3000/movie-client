@@ -1,8 +1,7 @@
-import { MovieIT } from "interfaces/MovieInterface";
 
 export type AppInterface = {
   showMenu: boolean;
-  search: [MovieIT?];
+  search: string;
   scroll: {
     home: number;
     movies: number;
@@ -22,7 +21,7 @@ export type AppInterface = {
 };
 export const appTemplate: AppInterface = {
   showMenu: false,
-  search: [],
+  search: "",
   scroll: {
     home: 0,
     movies: 0,

@@ -10,14 +10,91 @@ import { StoreInterface } from "interfaces/storeTemplate";
 import { loginServer } from "redux/actions/appAction";
 import { useNavigate } from "react-router";
 import { useIntersectionObserver } from "hooks/useIntersectionObserver";
-import Spinner05 from "../atoms/Spinner05";
+// import Spinner05 from "../atoms/Spinner05";
 import MoviePoster from "../molecules/MoviePoster";
 const ClusterSt = styled.div`
+  width: 100%;
+  height: 18rem;
+  margin-top: 35rem;
+  /* margin-bottom: 2rem; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  .title-cluster {
+    width: 100%;
+    height: 2rem;
+    line-height: 2rem;
+    padding-left: 1rem;
+    font-family: "Roboto 700";
+    font-size: 1rem;
+    text-decoration: none;
+    color: #d3d3d3;
+  }
+
+  .container-postersArrow {
+    width: 100%;
+    height: 16rem;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 23rem;
+    position: relative;
+    /* padding: 0 4rem; */
+    .arrow {
+      width: 4rem;
+      height: 100%;
+      position: absolute;
+      background: #000000;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      .sysIconArrow {
+        color: #ffffff;
+        width: 100%;
+        height: 3rem;
+      }
+    }
+    .left {
+      left: 0;
+    }
+    .right {
+      right: 0;
+    }
+    .arrow-none {
+      display: flex;
+    }
+    .list-posters {
+      width: auto;
+      height: 16rem;
+      display: grid;
+      grid-auto-flow: column dense;
+      grid-template-rows: 100%;
+      gap: .5rem;
+      overflow-x: scroll;
+      overflow-y: hidden;
+      // !Firefox
+      scrollbar-color: #070707 #070707;
+      scrollbar-width: thin;
+      .loadMore {
+        width: 9rem;
+        background: transparent;
+        background: #1d1d1d;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: "Roboto 300";
+        font-size: 1rem;
+        color: #b3b3b3;
+      }
+    }
+  }
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
     width: 100%;
     height: 26rem;
-    margin-top: 35rem;
+    margin-top: 30rem;
     margin-bottom: 2rem;
     display: flex;
     flex-direction: column;
@@ -76,7 +153,9 @@ const ClusterSt = styled.div`
         gap: 1rem;
         overflow-x: scroll;
         overflow-y: hidden;
-        
+        // !Firefox
+        scrollbar-color: #070707 #070707;
+        scrollbar-width: thin;
         .loadMore {
           width: 13rem;
           background: transparent;
@@ -192,12 +271,12 @@ const MoviesGender = (props: Props) => {
           <section ref={ref} className="loadMore">
             {hasMore ? "Cargando..." : "Llegaste al final."}
           </section>
-          {state.length === 0 && <Spinner05 />}
+          {/* {state.length === 0 && <Spinner05 />} */}
         </div>
-        <section className="arrow left arrow-none" onClick={ScrollLeft}>
+        <section className="arrow left " onClick={ScrollLeft}>
           <ArrowLeftIcon className="sysIconArrow" />
         </section>
-        <section className="arrow right arrow-none" onClick={ScrollRight}>
+        <section className="arrow right " onClick={ScrollRight}>
           <ArrowRightIcon className="sysIconArrow" />
         </section>
       </div>

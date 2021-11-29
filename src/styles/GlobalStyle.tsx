@@ -81,9 +81,9 @@ body{
   }
 }
 // !Media query a partir de 768px  
-@media only screen and (max-width: 768px) {
+@media only screen and (min-width: 568px) {
   html{
-    font-size: 8px;
+    font-size: 9px;
   }
 }
 // !Media query a partir de 768px  

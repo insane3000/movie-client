@@ -12,6 +12,46 @@ import { useIntersectionObserver } from "hooks/useIntersectionObserver";
 import Spinner03 from "../atoms/Spinner03";
 
 const GenreSt = styled.div`
+  width: 100%;
+  height: auto;
+  /* overflow-y: scroll;
+    position: relative; */
+  .title-component {
+    width: 100%;
+    height: auto;
+    /* line-height: 3rem; */
+    font-family: "Roboto 700";
+    font-size: 1rem;
+    text-align: start;
+    /* margin-top: 6rem; */
+    color: #d3d3d3;
+    padding: 0 1rem;
+    /* background: lime; */
+  }
+  .container-movies {
+    width: 100%;
+    height: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(9rem, 9rem));
+    grid-auto-rows: 16rem;
+    justify-content: center;
+    align-content: flex-start;
+    gap: 1rem;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+    /* padding: 0 10rem; */
+  }
+  .loadMore {
+    width: 100%;
+    height: 3rem;
+    /* background: red; */
+    color: #666666;
+
+    text-align: center;
+    line-height: 3rem;
+    font-family: "Roboto 300";
+    font-size: 1rem;
+  }
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
     width: 100%;
@@ -44,7 +84,8 @@ const GenreSt = styled.div`
       width: 100%;
       height: 3rem;
       /* background: red; */
-      color: white;
+      color: #666666;
+
       text-align: center;
       line-height: 3rem;
       font-family: "Roboto 300";
@@ -82,13 +123,16 @@ const Genre = () => {
 
   const InitialFetch = async () => {
     await axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/genre?genre=${params.genre}&page=${nextPage}&limit=10`, {
-        headers: {
-          authorization: `Bearer ${app.login.token}`,
-          id: `${app.login.user}`,
-          role: `${app.login.role}`,
-        },
-      })
+      .get(
+        `${process.env.REACT_APP_BACKEND_URL}/genre?genre=${params.genre}&page=${nextPage}&limit=20`,
+        {
+          headers: {
+            authorization: `Bearer ${app.login.token}`,
+            id: `${app.login.user}`,
+            role: `${app.login.role}`,
+          },
+        }
+      )
       .then(function (response: any) {
         setState((prev: any) => [...prev, ...response.data.docs]);
         setNextPage(response.data.nextPage);

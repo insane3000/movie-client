@@ -11,6 +11,46 @@ import { useNavigate } from "react-router";
 import Spinner03 from "../atoms/Spinner03";
 import { useIntersectionObserver } from "hooks/useIntersectionObserver";
 const AllMoviesSt = styled.div`
+  width: 100%;
+  height: auto;
+  /* overflow-y: scroll;
+    position: relative; */
+  .title-component {
+    width: 100%;
+    height: auto;
+    /* line-height: 3rem; */
+    font-family: "Roboto 700";
+    font-size: 1rem;
+    text-align: start;
+    /* margin-top: 6rem; */
+    color: #d3d3d3;
+    padding: 0 1rem;
+    /* background: lime; */
+  }
+  .container-movies {
+    width: 100%;
+    height: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(9rem, 9rem));
+    grid-auto-rows: 16rem;
+    justify-content: center;
+    align-content: flex-start;
+    gap: 1rem;
+    margin-top: .5rem;
+    margin-bottom: 1rem;
+    /* padding: 0 10rem; */
+  }
+  .loadMore {
+    width: 100%;
+    height: 3rem;
+    /* background: red; */
+    color: #666666;
+
+    text-align: center;
+    line-height: 3rem;
+    font-family: "Roboto 300";
+    font-size: 1rem;
+  }
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
     width: 100%;
@@ -45,7 +85,8 @@ const AllMoviesSt = styled.div`
       width: 100%;
       height: 3rem;
       /* background: red; */
-      color: white;
+      color: #666666;
+
       text-align: center;
       line-height: 3rem;
       font-family: "Roboto 300";
@@ -80,11 +121,11 @@ const AllMovies = () => {
   const [nextPage, setNextPage] = useState(1);
   const [spinner, setSpinner] = useState(false);
 
-//   console.log(process.env.REACT_APP_BACKEND_URL);
-  
+  //   console.log(process.env.REACT_APP_BACKEND_URL);
+
   const InitialFetch = async () => {
     await axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/year?year=${year}&page=${nextPage}&limit=10`, {
+      .get(`${process.env.REACT_APP_BACKEND_URL}/year?year=${year}&page=${nextPage}&limit=20`, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
           id: `${app.login.user}`,

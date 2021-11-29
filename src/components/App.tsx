@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { HashRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 // *Fonts
 import "fonts/fonts.css";
@@ -48,10 +48,7 @@ function App() {
           }}
         />
         <Routes>
-          <Route
-            path="/"
-            element={app.login.token === "" ? <Welcome /> : <Navigate to="browser/home" />}
-          />
+          <Route path="/*" element={app.login.token === "" ? <Welcome /> : <Browser />} />
           {app.login.token !== "" && <Route path="/browser/*" element={<Browser />} />}
           <Route path="/welcome" element={<Welcome />} />
           <Route path="/*" element={<Error404 />} />

@@ -9,7 +9,193 @@ import { loginServer, setModal } from "redux/actions/appAction";
 // *Icons
 import CloseIcon from "icons/CloseIcon";
 import Spinner05 from "../atoms/Spinner05";
+import Error404 from "components/Error404";
 const MovieSt = styled.div`
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  /* overflow: hidden; */
+
+  .gradient-movie {
+    width: 100%;
+    height: 100%;
+    background: #00000026;
+    position: absolute;
+    /* backdrop-filter: blur(10px); */
+  }
+
+  .loader {
+    width: 100vw;
+    height: 1000vh;
+    background: #1a1720;
+    background: #0f0f0f;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 2rem;
+    position: absolute;
+    z-index: 2;
+  }
+  .errorWindow {
+    width: 100vw;
+    height: 100vh;
+    background: #1a1720;
+    background: #0f0f0f;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 2rem;
+    position: absolute;
+    z-index: 2;
+  }
+  .movie-container {
+    width: 100vw;
+    height: 100vh;
+    background: #1a1720;
+    background: #0f0f0f;
+    /* padding-top: 4rem; */
+    overflow-y: scroll;
+    z-index: 1;
+    position: relative;
+    .close-div {
+      /* background: red; */
+      width: 100%;
+      height: 3rem;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+
+      .sysClose {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        font-size: 3rem;
+        background: white;
+        border-radius: 100%;
+        color: black;
+        cursor: pointer;
+        &:hover {
+          background: #d6d6d6;
+        }
+      }
+    }
+    .container-poster-data {
+      width: 90%;
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin: auto auto 2rem auto;
+
+      .container-poster {
+        width: 80%;
+        height: auto;
+        position: relative;
+        /* background: red; */
+        margin-bottom: 1rem;
+
+        .img-movie {
+          width: 100%;
+          height: auto;
+          object-fit: cover;
+          border-radius: 0.3rem;
+        }
+        .spinnerPoster {
+          width: 100%;
+          height: 100%;
+          top: 0;
+          position: absolute;
+          background: #0f0f0f;
+        }
+      }
+      .container-data {
+        width: 100%;
+        height: auto;
+        .title-movie {
+          font-family: "Roboto 900";
+          font-size: 2rem;
+          line-height: 2rem;
+          margin-bottom: 0.5rem;
+          text-align: center;
+          color: #5900ff;
+        }
+        .year-genre-time {
+          font-family: "Roboto 100";
+          font-size: .8rem;
+          text-align: center;
+          color: white;
+          margin-bottom: 0.5rem;
+        }
+
+        .rate {
+          font-family: "Roboto 900";
+          font-size: 1rem;
+          color: white;
+          margin-bottom: 0.5rem;
+          /* background: #772121; */
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          .span {
+            color: #6200ff;
+            font-family: "Roboto 900";
+            font-size: 1rem;
+            margin-right: 0.5rem;
+          }
+        }
+        .actors {
+          width: 100%;
+          height: auto;
+          font-family: "Roboto 100";
+          font-size: 1rem;
+          color: white;
+          margin-bottom: 0.5rem;
+
+          // !Dots ...
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          .span {
+            color: #6200ff;
+            font-family: "Roboto 900";
+            font-size: 1rem;
+            /* margin-right: 0.5rem; */
+          }
+        }
+        .synopsis {
+          width: 100%;
+          height: auto;
+          font-family: "Roboto 300";
+          font-size: 1rem;
+          color: white;
+          /* background: red; */
+          /* margin-top: 1rem; */
+        }
+      }
+    }
+
+    .player-container {
+      width: 90%;
+      min-height: 10rem;
+      height: fit-content;
+      margin: auto;
+      /* margin-bottom: 2rem; */
+      /* overflow: hidden; */
+      background: black;
+      .player {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+      }
+    }
+  }
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
     width: 100vw;
@@ -28,6 +214,19 @@ const MovieSt = styled.div`
     }
 
     .loader {
+      width: 80vw;
+      height: 90vh;
+      background: #1a1720;
+      background: #0f0f0f;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding-bottom: 2rem;
+      position: absolute;
+      z-index: 2;
+    }
+    .errorWindow {
       width: 80vw;
       height: 90vh;
       background: #1a1720;
@@ -205,6 +404,7 @@ const Movie = () => {
   const [state, setState] = useState(movieTemplate);
   const [spinner, setSpinner] = useState(false);
   const [spinnerPoster, setSpinnerPoster] = useState(true);
+  const [errorWindow, setErrorWindow] = useState(false);
 
   const modifyLink = state.link?.split(".mp4")[0];
   // ! Scroll to TOP
@@ -215,6 +415,9 @@ const Movie = () => {
   const handleModal = () => {
     dispatch(setModal("", false));
   };
+
+  //   console.log(state);
+
   const fetchData = async () => {
     setSpinner(true);
 
@@ -226,10 +429,10 @@ const Movie = () => {
           role: `${app.login.role}`,
         },
       })
-
       .then(function (response) {
         setSpinner(false);
-        setState(response.data);
+        response.status === 204 ? setErrorWindow(true) : setState(response.data);
+        // console.log(response);
       })
       .catch(function (error) {
         console.log(error);
@@ -280,8 +483,8 @@ const Movie = () => {
           <div className="container-data">
             <h2 className="title-movie">{state.title}</h2>
             <h3 className="year-genre-time">
-              {state.year} • {cleanText.split(" ")[0]} {cleanText.split(" ")[1]}{" "}
-              {cleanText.split(" ")[2]} {cleanText.split(" ")[3]} • {state.time}
+              {state.year} • {cleanText.split(".")[0]}. {cleanText.split(".")[1]}.{" "}
+              {cleanText.split(".")[2]} • {state.time}
             </h3>
             <h3 className="rate">
               <span className="span">Calificación: </span> {state.rating}
@@ -316,6 +519,11 @@ const Movie = () => {
         </div>
         {state.genre !== "" && <Cluster genre={genero} subtitle="Relacionados" text="" />}
       </div>
+      {errorWindow && (
+        <div className="errorWindow">
+          <Error404 />
+        </div>
+      )}
       {spinner === true && (
         <div className="loader">
           <Spinner05 />

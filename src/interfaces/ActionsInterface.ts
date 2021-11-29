@@ -12,7 +12,7 @@ interface loginServer {
 }
 interface search {
   type: ActionType.SEARCH;
-  payload: MovieIT;
+  payload: String;
 }
 interface scroll {
   type: ActionType.SCROLL;

@@ -9,8 +9,63 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { loginServer } from "redux/actions/appAction";
 const UpdateUserSt = styled.div`
-  /* overflow-y: scroll;
-  overflow-x: hidden; */
+  width: 100%;
+  height: 100%;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  .userContainer {
+    /* background: #0c0c0c; */
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.5rem;
+    margin-top: 3rem;
+    .sysIconUser {
+      background: #5901e7;
+      width: 5rem;
+      height: 5rem;
+      margin-bottom: 2rem;
+      border-radius: 100%;
+      padding: 1rem;
+    }
+    .section {
+      width: 80%;
+      height: 3rem;
+      position: relative;
+      margin-bottom: 2rem;
+      border: 0.0625rem solid #5901e7;
+      border-radius: 0.3rem;
+      .label {
+        height: 1rem;
+        position: absolute;
+        top: -1.2rem;
+        font-family: "Roboto 300";
+        font-size: 0.9rem;
+        color: #b9b9b9;
+      }
+      .data {
+        width: 100%;
+        height: 100%;
+        line-height: 3rem;
+        padding: 0 0.5rem;
+        font-family: "Roboto 900";
+        font-size: 1.5rem;
+      }
+      .name {
+        text-transform: capitalize;
+      }
+      .date {
+        font-family: "Roboto 300";
+        font-size: 1rem;
+      }
+    }
+  }
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
     width: 100%;

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 // *Fonts
 import "fonts/fonts.css";
 // *Components
@@ -14,9 +14,11 @@ import Categories from "./pages/Categories";
 // import Welcome from "./pages/Welcome";
 import { useDispatch, useSelector } from "react-redux";
 import { StoreInterface } from "interfaces/storeTemplate";
-import { setModal } from "redux/actions/appAction";
+import { setModal, showMenu } from "redux/actions/appAction";
 import Navigation from "./organisms/Navigation";
+import NavigationMobile from "./organisms/NavigationMobile";
 import { useLocation } from "react-router";
+import { NavLink } from "react-router-dom";
 const BrowserSt = styled.div`
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
@@ -36,6 +38,54 @@ const ModalSt = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 1;
+`;
+const MenuSt = styled.div`
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #000000cf;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  color: white;
+  .gradient {
+    width: 100%;
+    height: 100%;
+  }
+  .menuDetails {
+    width: 80%;
+    height: 100%;
+    background: #0e0d0d;
+    position: absolute;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .ul {
+      width: 80%;
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      .li {
+        width: 100%;
+        height: 2rem;
+        line-height: 2rem;
+        padding: 0 1rem;
+        margin-bottom: 0.5rem;
+        text-decoration: none;
+        font-family: "Roboto 100";
+        font-size: .8rem;
+        color: #c0c0c0;
+        background: black;
+        border-radius: .3rem;
+      }
+    }
+  }
 `;
 const User = () => {
   const { pathname } = useLocation();
@@ -73,11 +123,17 @@ const User = () => {
   useEffect(() => {
     scrollToTopCallback();
   }, [pathname, scrollToTopCallback]);
+
+  // !Close Menu
+  const closeMenu = () => {
+    dispatch(showMenu(false));
+  };
   return (
     <BrowserSt id="app" ref={refScroll}>
       <Navigation bg={bg} />
+      <NavigationMobile bg={bg} />
       <Routes>
-        <Route path="/" element={<Navigate to="/browser/home" />} />
+        <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
         <Route path="/premieres" element={<Premieres />} />
         <Route path="/movie/:id" element={<Movie />} />
@@ -90,6 +146,27 @@ const User = () => {
         <ModalSt>
           <Movie />
         </ModalSt>
+      )}
+      {app.showMenu && (
+        <MenuSt>
+          <div className="gradient" onClick={closeMenu}></div>
+          <div className="menuDetails">
+            <section className="ul">
+              <NavLink className="li" to="/browser/home" onClick={closeMenu}>
+                Inicio
+              </NavLink>
+              <NavLink className="li" to="/browser/premieres" onClick={closeMenu}>
+                Estrenos
+              </NavLink>
+              <NavLink className="li" to="/browser/category" onClick={closeMenu}>
+                Categorías
+              </NavLink>
+              <NavLink className="li" to="/browser/profile" onClick={closeMenu}>
+                Perfil
+              </NavLink>
+            </section>
+          </div>
+        </MenuSt>
       )}
     </BrowserSt>
   );
