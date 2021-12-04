@@ -13,9 +13,9 @@ import { useIntersectionObserver } from "hooks/useIntersectionObserver";
 // import Spinner05 from "../atoms/Spinner05";
 import MoviePoster from "../molecules/MoviePoster";
 const ClusterSt = styled.div`
-  width: 100%;
+  width: 100vw;
   height: 18rem;
-  margin-top: 35rem;
+  margin-top: 75vh;
   /* margin-bottom: 2rem; */
   display: flex;
   flex-direction: column;
@@ -66,17 +66,25 @@ const ClusterSt = styled.div`
       display: flex;
     }
     .list-posters {
-      width: auto;
+      width: 100vw;
       height: 16rem;
       display: grid;
-      grid-auto-flow: column dense;
-      grid-template-rows: 100%;
-      gap: .5rem;
+      grid-auto-flow: column;
+      grid-auto-columns: 9rem;
+      /* grid-template-rows: 100%; */
+      gap: 0.5rem;
       overflow-x: scroll;
       overflow-y: hidden;
+      /* background: red; */
       // !Firefox
       scrollbar-color: #070707 #070707;
       scrollbar-width: thin;
+      // !Chrome
+      &::-webkit-scrollbar {
+        width: 0.5rem;
+        height: 0rem;
+        -webkit-appearance: none;
+      }
       .loadMore {
         width: 9rem;
         background: transparent;
@@ -85,7 +93,7 @@ const ClusterSt = styled.div`
         justify-content: center;
         align-items: center;
         font-family: "Roboto 300";
-        font-size: 1rem;
+        font-size: 0.8rem;
         color: #b3b3b3;
       }
     }
@@ -94,7 +102,7 @@ const ClusterSt = styled.div`
   @media only screen and (min-width: 568px) {
     width: 100%;
     height: 26rem;
-    margin-top: 30rem;
+    margin-top: 75vh;
     margin-bottom: 2rem;
     display: flex;
     flex-direction: column;
@@ -148,7 +156,8 @@ const ClusterSt = styled.div`
         width: auto;
         height: 100%;
         display: grid;
-        grid-auto-flow: column dense;
+        grid-auto-flow: column;
+        grid-auto-columns: 13rem;
         grid-template-rows: 100%;
         gap: 1rem;
         overflow-x: scroll;

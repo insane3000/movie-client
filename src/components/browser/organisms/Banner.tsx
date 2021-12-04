@@ -8,12 +8,13 @@ import { StoreInterface } from "interfaces/storeTemplate";
 import Spinner05 from "../atoms/Spinner05";
 const BannerSt = styled.div`
   width: 100%;
-  height: 50rem;
+  height: 100vh;
   position: absolute;
   top: 0;
   display: flex;
   flex-wrap: wrap;
   overflow: hidden;
+  background: red;
   img {
     width: 100%;
     height: 100%;
@@ -24,12 +25,14 @@ const BannerSt = styled.div`
     height: 100%;
     position: absolute;
     top: 0;
-    background: rgb(63, 94, 251);
+    /* background: rgb(63, 94, 251);
     background: radial-gradient(
       circle,
       rgba(63, 94, 251, 0) 0%,
       rgba(0, 0, 0, 0.9827001064097514) 100%
-    );
+    ); */
+    background: rgb(0, 0, 0);
+    background: linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(255, 0, 0, 0) 100%);
     display: flex;
     flex-direction: column;
     justify-content: start;
@@ -40,7 +43,7 @@ const BannerSt = styled.div`
       width: 100%;
       height: auto;
       position: absolute;
-      bottom: 14rem;
+      bottom: 20vh;
       /* background: red; */
       display: flex;
       flex-direction: column;
@@ -49,17 +52,18 @@ const BannerSt = styled.div`
       padding: 1rem;
       .banner-title {
         font-family: "Roboto 900";
-        font-size: 2.5rem;
+        font-size: 1.5rem;
         line-height: 2.5rem;
         color: white;
         text-shadow: 1px 1px 3px black;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0rem;
         text-align: center;
+        /* text-transform:uppercase; */
       }
       .genre {
         width: 100%;
         font-family: "Roboto 300";
-        font-size: 1.2rem;
+        font-size: 1rem;
         color: white;
         text-shadow: 1px 1px 3px black;
         /* margin-bottom: 0.5rem; */
@@ -67,34 +71,38 @@ const BannerSt = styled.div`
       }
       .rating {
         font-family: "Roboto 900";
-        font-size: 3rem;
+        font-size: 2rem;
+        line-height: 2rem;
         color: white;
         text-shadow: 1px 1px 3px black;
-        margin-bottom: 1rem;
+        margin-bottom: .3rem;
         text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         span {
           font-family: "Roboto 300";
           font-size: 1rem;
           color: white;
           text-shadow: 1px 1px 3px black;
-          margin-bottom: 1rem;
+          margin-bottom: 0rem;
         }
       }
       .btn-container {
         width: 100%;
-        height: 3rem;
+        height: 2.5rem;
         text-shadow: 1px 1px 3px black;
         display: flex;
         justify-content: center;
         align-items: center;
         .button-play {
           background: white;
-          width: 10rem;
-          height: 3rem;
+          width: 7rem;
+          height: 2.2rem;
           border-style: none;
           border-radius: 0.3rem;
           font-family: "Roboto 900";
-          font-size: 1.2rem;
+          font-size: 1rem;
           color: #000000;
           cursor: pointer;
           box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -122,7 +130,7 @@ const BannerSt = styled.div`
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
     width: 100%;
-    height: 50rem;
+    height: 100vh;
     position: absolute;
     top: 0;
     display: flex;
@@ -155,7 +163,11 @@ const BannerSt = styled.div`
         height: auto;
         position: absolute;
         left: 4rem;
-        bottom: 17rem;
+        bottom: 20vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
         /* padding: 0 2rem; */
         .banner-title {
           font-family: "Roboto 900";
@@ -164,6 +176,7 @@ const BannerSt = styled.div`
           color: white;
           text-shadow: 1px 1px 3px black;
           margin-bottom: 0.5rem;
+          text-align: start;
         }
         .genre {
           font-family: "Roboto 300";
@@ -171,6 +184,7 @@ const BannerSt = styled.div`
           color: white;
           text-shadow: 1px 1px 3px black;
           /* margin-bottom: 0.5rem; */
+          text-align: start;
         }
         .rating {
           font-family: "Roboto 700";
@@ -178,6 +192,7 @@ const BannerSt = styled.div`
           color: white;
           text-shadow: 1px 1px 3px black;
           margin-bottom: 1rem;
+          text-align: start;
           span {
             font-family: "Roboto 300";
             font-size: 1rem;

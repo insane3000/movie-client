@@ -71,6 +71,10 @@ const LoginSt = styled.div`
       padding: 0 1rem;
       margin-bottom: 2rem;
     }
+    input::-ms-reveal,
+    input::-ms-clear {
+      display: none;
+    }
     .word0 {
       color: #00a2ff;
     }
@@ -150,6 +154,10 @@ const LoginSt = styled.div`
         letter-spacing: 2rem;
         padding: 0 4rem;
         margin-bottom: 2rem;
+      }
+      input::-ms-reveal,
+      input::-ms-clear {
+        display: none;
       }
       .word0 {
         color: #00a2ff;

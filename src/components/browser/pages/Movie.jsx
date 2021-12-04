@@ -39,6 +39,7 @@ const MovieSt = styled.div`
     padding-bottom: 2rem;
     position: absolute;
     z-index: 2;
+    /* background: red; */
   }
   .errorWindow {
     width: 100vw;
@@ -79,6 +80,7 @@ const MovieSt = styled.div`
         border-radius: 100%;
         color: black;
         cursor: pointer;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
         &:hover {
           background: #d6d6d6;
         }
@@ -95,6 +97,7 @@ const MovieSt = styled.div`
 
       .container-poster {
         width: 80%;
+        min-height: 25rem;
         height: auto;
         position: relative;
         /* background: red; */
@@ -127,7 +130,7 @@ const MovieSt = styled.div`
         }
         .year-genre-time {
           font-family: "Roboto 100";
-          font-size: .8rem;
+          font-size: 0.8rem;
           text-align: center;
           color: white;
           margin-bottom: 0.5rem;
@@ -265,6 +268,8 @@ const MovieSt = styled.div`
           border-radius: 100%;
           color: black;
           cursor: pointer;
+          box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+
           &:hover {
             background: #d6d6d6;
           }
@@ -274,7 +279,10 @@ const MovieSt = styled.div`
         width: 90%;
         height: auto;
         display: flex;
-        margin: auto auto 2rem auto;
+        flex-direction: row;
+        justify-content: center;
+        align-items: flex-start;
+        /* margin: auto auto 2rem auto; */
 
         .container-poster {
           width: 18rem;
@@ -458,6 +466,27 @@ const Movie = () => {
   const handleLoadImg = (e) => {
     e.currentTarget.complete && setSpinnerPoster(false);
   };
+  // !Blob
+  //   const fethingVideo = async () => {
+  //     //       url: "https://f002.backblazeb2.com/file/msc-terror/Los+Muchachos+Perdidos.mp4",
+  //     axios({
+  //       url: "https://f002.backblazeb2.com/file/msc-terror/Los+Muchachos+Perdidos.mp4", //your url
+  //       method: "GET",
+  //       responseType: "blob", // important
+  //     }).then((response) => {
+  //       const url = window.URL.createObjectURL(new Blob([response.data]));
+  //       const link = document.createElement("a");
+  //       link.href = url;
+  //       link.setAttribute("download", "file.pdf"); //or any other extension
+  //       document.body.appendChild(link);
+  //       link.click();
+  //       console.log(response);
+  //     });
+  //   };
+  //   useEffect(() => {
+  //     fethingVideo();
+  //   }, []);
+  console.log(state)
   return (
     <MovieSt>
       <div className="gradient-movie" onClick={handleModal}></div>
@@ -487,7 +516,8 @@ const Movie = () => {
               {cleanText.split(".")[2]} • {state.time}
             </h3>
             <h3 className="rate">
-              <span className="span">Calificación: </span> {state.rating}
+              <span className="span">Calificación: </span>{" "}
+              {state.rating === 0 ? "Sin calificación" : state.rating}
               {/* <img className="span" src={star} alt="" /> {state.rating} */}
             </h3>
             <p className="actors">
@@ -507,6 +537,7 @@ const Movie = () => {
               //       file={state.link}
               onBeforePlay={() => console.log("onBeforePlay fired!")}
               // image={state.image}
+              onLoad={() => console.log("allaaallala")}
               type="mp4"
               preload="auto"
               customProps={{

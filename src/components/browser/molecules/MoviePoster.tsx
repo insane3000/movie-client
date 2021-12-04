@@ -18,7 +18,7 @@ const MoviesPosterSt = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
+  /* overflow: hidden; */
   .container-poster {
     width: 100%;
     height: calc(100% - 3rem);
@@ -47,7 +47,7 @@ const MoviesPosterSt = styled.div`
       width: 100%;
       height: 100%;
       text-decoration: none;
-      overflow: hidden;
+      /* overflow: hidden; */
       /* position: relative; */
       display: none;
       justify-content: center;
@@ -128,7 +128,7 @@ const MoviesPosterSt = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
+    /* overflow: hidden; */
     .container-poster {
       width: 100%;
       height: calc(100% - 3rem);
@@ -157,7 +157,7 @@ const MoviesPosterSt = styled.div`
         width: 100%;
         height: 100%;
         text-decoration: none;
-        overflow: hidden;
+        /* overflow: hidden; */
         /* position: relative; */
         display: none;
         justify-content: center;
@@ -255,7 +255,7 @@ const MoviePoster = (props: Props) => {
           className="poster"
           src={`${process.env.REACT_APP_BUCKET}${props.img}`}
           alt=""
-          loading="lazy"
+          //   loading="lazy"
           onLoad={(e) => handleLoadImg(e)}
         />
         {!imageLoad && <Spinner04 />}
@@ -266,8 +266,14 @@ const MoviePoster = (props: Props) => {
       <div className="name-rating">
         <span className="title">{props.title}</span>
         <span className="rating">
-          {props.rating}
-          <p className="p">/10</p>
+          {props.rating !== 0 ? (
+            <>
+              {props.rating}
+              <p className="p">/10</p>
+            </>
+          ) : (
+            "Sin calificación"
+          )}
           <p className="year">{props.year}</p>
         </span>
       </div>

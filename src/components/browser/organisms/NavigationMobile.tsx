@@ -1,19 +1,19 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 // *Icons
 import SearchIcon from "icons/SearchIcon";
 import MenuIcon from "icons/MenuIcon";
 import { useDispatch } from "react-redux";
-import { loginServer, restartScroll, search, showMenu } from "redux/actions/appAction";
+import { restartScroll, search, showMenu } from "redux/actions/appAction";
 import toast from "react-hot-toast";
 
-const NavigationSt = styled.nav`
+const NavigationMobileSt = styled.nav`
   width: 100%;
   height: 3.125rem;
-  /* background: rgb(255, 0, 0);
-  background: linear-gradient(0deg, rgba(255, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8) 100%); */
+  background: rgb(0, 0, 0);
+  background: linear-gradient(0deg, rgba(255, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8) 100%);
   position: sticky;
   top: 0;
   z-index: 1;
@@ -42,6 +42,7 @@ const NavigationSt = styled.nav`
     font-size: 1.2rem;
     text-decoration: none;
     color: #ffffff;
+    text-shadow: 1px 1px 3px black;
     /* background: lime; */
   }
 
@@ -69,7 +70,7 @@ const NavigationSt = styled.nav`
     display: none;
   }
 `;
-const SearchSt = styled.form`
+const SearchMobileSt = styled.form`
   position: absolute;
   right: 0.8rem;
   width: 18rem;
@@ -118,9 +119,9 @@ const SearchSt = styled.form`
       }
     }
   }
-  animation-name: example;
+  animation-name: exampleMobile;
   animation-duration: 0.3s;
-  @keyframes example {
+  @keyframes exampleMobile {
     from {
       width: 2.5rem;
     }
@@ -128,9 +129,12 @@ const SearchSt = styled.form`
       width: 18rem;
     }
   }
+  @media only screen and (min-width: 568px) {
+    display: none;
+  }
 `;
-const Navigation = (props: any) => {
-  const searchRef = useRef<any>();
+const NavigationMobile = (props: any) => {
+  const searchRefMobile = useRef<any>();
   let navigate = useNavigate();
   const dispatch = useDispatch();
   const [state, setState] = useState("");
@@ -156,24 +160,15 @@ const Navigation = (props: any) => {
     navigate("/browser/search");
   };
 
-  const logout = () => {
-    dispatch(loginServer("", "", ""));
-    localStorage.setItem("token", "");
-    localStorage.setItem("user", "");
-    localStorage.setItem("role", "");
-    localStorage.setItem("fails", "0");
-    navigate(`/`);
-  };
-
   const [showSearch, setShowSearch] = useState(false);
   // !Test Icons Search***************************************
-  let ref = useRef<any>(null);
+  let refMobile = useRef<any>(null);
 
   const handleClickOutside = (event: any) => {
     setShowSearch(true);
-    if (ref.current && !ref.current.contains(event.target)) {
+    if (refMobile.current && !refMobile.current.contains(event.target)) {
       props.onClickOutside && props.onClickOutside();
-      console.log("click");
+      //       console.log("click");
       setShowSearch(false);
     }
   };
@@ -188,7 +183,7 @@ const Navigation = (props: any) => {
     dispatch(showMenu(true));
   };
   return (
-    <NavigationSt style={{ background: props.bg }}>
+    <NavigationMobileSt style={{ background: props.bg }}>
       <button className="hamburgerBtn" onClick={closeMenu}>
         <MenuIcon className="sysIconMenu" />
       </button>
@@ -212,26 +207,27 @@ const Navigation = (props: any) => {
       </button>
 
       {showSearch && (
-        <SearchSt onSubmit={handleSubmit} ref={ref}>
+        <SearchMobileSt onSubmit={handleSubmit} ref={refMobile}>
           <input
-            ref={searchRef}
+            ref={searchRefMobile}
             className="search-input"
             type="text"
             name="search"
             placeholder="Buscar..."
             onChange={(e) => handleChangeSearch(e)}
+            autoFocus
           />
           <button className="btn-submit" type="submit">
             <SearchIcon className="icon-submit" />
           </button>
-        </SearchSt>
+        </SearchMobileSt>
       )}
 
       {/* <span className="exit" onClick={logout} title="salir">
         <ExitIcon className="sysIconExit" />
       </span> */}
-    </NavigationSt>
+    </NavigationMobileSt>
   );
 };
 
-export default Navigation;
+export default NavigationMobile;

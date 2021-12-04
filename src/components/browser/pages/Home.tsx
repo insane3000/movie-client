@@ -16,13 +16,17 @@ const Home = () => {
     <HomeSt>
       <Banner />
       <JustAdded subtitle="Recien Agregados" />
-      <Cluster genre="acci" subtitle="Acción" text="" />
+
+      <Cluster genre="accion" subtitle="Acción" text="" />
+      <Cluster genre="animacion" subtitle="Animación" text="" />
+      <Cluster genre="aventura" subtitle="Accion" text="" />
+      <Cluster genre="sci-fi" subtitle="Ciencia ficción" text="" />
       <Cluster genre="comedia" subtitle="Comedia" text="" />
-      <Cluster genre="terror" subtitle="Terror" text="" />
-      <Cluster genre="animaci" subtitle="Animación" text="" />
       <Cluster genre="drama" subtitle="Drama" text="" />
+      <Cluster genre="fantasia" subtitle="Fantasia" text="" />
       <Cluster genre="romance" subtitle="Romance" text="" />
-      <Cluster genre="cienc" subtitle="Ciencia ficción" text="" />
+      <Cluster genre="terror" subtitle="Terror" text="" />
+      <Cluster genre="thriller" subtitle="Thriller" text="" />
     </HomeSt>
   );
 };

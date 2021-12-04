@@ -16,6 +16,18 @@ const GenreSt = styled.div`
   height: auto;
   /* overflow-y: scroll;
     position: relative; */
+  position: relative;
+  .loader-genre {
+    width: 100vw;
+    height: 100vh;
+    background: #070707;
+    position: absolute;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 40vh;
+  }
   .title-component {
     width: 100%;
     height: auto;
@@ -27,9 +39,11 @@ const GenreSt = styled.div`
     color: #d3d3d3;
     padding: 0 1rem;
     /* background: lime; */
+    text-transform: capitalize;
   }
   .container-movies {
     width: 100%;
+    min-height: 100vh;
     height: auto;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(9rem, 9rem));
@@ -66,6 +80,7 @@ const GenreSt = styled.div`
       /* margin-top: 6rem; */
       color: #d3d3d3;
       padding: 0 10rem;
+      text-transform: capitalize;
     }
     .container-movies {
       width: 100%;
@@ -120,24 +135,52 @@ const Genre = () => {
   const [hasMore, setHasMore] = useState(true);
   const [nextPage, setNextPage] = useState(1);
   const [spinner, setSpinner] = useState(false);
+  const [loader, setLoader] = useState(true);
 
-  const InitialFetch = async () => {
+  // ! ORIGEN
+  const fetchDataOnRender = async (genre: any) => {
     await axios
-      .get(
-        `${process.env.REACT_APP_BACKEND_URL}/genre?genre=${params.genre}&page=${nextPage}&limit=20`,
-        {
-          headers: {
-            authorization: `Bearer ${app.login.token}`,
-            id: `${app.login.user}`,
-            role: `${app.login.role}`,
-          },
-        }
-      )
+      .get(`${process.env.REACT_APP_BACKEND_URL}/genre?genre=${genre}&page=1&limit=20`, {
+        headers: {
+          authorization: `Bearer ${app.login.token}`,
+          id: `${app.login.user}`,
+          role: `${app.login.role}`,
+        },
+      })
+      .then(function (response: any) {
+        //   dispatch(search(response.data.docs));
+        setState(response.data.docs);
+        setNextPage(response.data.nextPage);
+        setHasMore(response.data.hasNextPage);
+        setSpinner(false);
+        // console.log(response);
+        setLoader(false);
+      })
+      .catch(function (error) {
+        console.log(error);
+        dispatch(loginServer("", "", ""));
+        localStorage.setItem("token", "");
+        localStorage.setItem("user", "");
+        localStorage.setItem("role", "");
+        // navigate(`/browser/home`);
+      });
+  };
+
+  const InitialFetch = async (genre: any) => {
+    await axios
+      .get(`${process.env.REACT_APP_BACKEND_URL}/genre?genre=${genre}&page=${nextPage}&limit=20`, {
+        headers: {
+          authorization: `Bearer ${app.login.token}`,
+          id: `${app.login.user}`,
+          role: `${app.login.role}`,
+        },
+      })
       .then(function (response: any) {
         setState((prev: any) => [...prev, ...response.data.docs]);
         setNextPage(response.data.nextPage);
         setHasMore(response.data.hasNextPage);
         setSpinner(false);
+        setLoader(false);
       })
       .catch(function (error) {
         console.log(error);
@@ -159,40 +202,58 @@ const Genre = () => {
     },
     false // don't remove the observer after intersected.
   );
+  useEffect(() => {
+    setLoader(true);
+    setState([]);
+    fetchDataOnRender(params.genre);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params.genre]);
 
   useEffect(() => {
     if (isBottomVisible) {
       if (hasMore) {
+        // setLoader(true);
         setSpinner(true);
-        InitialFetch();
+        InitialFetch(params.genre);
+
         // console.log("fething");
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isBottomVisible, hasMore]);
+  }, [isBottomVisible, hasMore, params]);
   let genero = "";
   switch (params?.genre) {
-    case "acci":
+    case "accion":
       genero = "Acción";
+      break;
+    case "animacion":
+      genero = "Animación";
+      break;
+    case "aventura":
+      genero = "Aventura";
+      break;
+    case "sci-fi":
+      genero = "Ciencia Ficción";
       break;
     case "comedia":
       genero = "Comedia";
       break;
-    case "terror":
-      genero = "Terror";
-      break;
-    case "animaci":
-      genero = "Animacion";
-      break;
     case "drama":
       genero = "Drama";
+      break;
+    case "fantasia":
+      genero = "Fantasia";
       break;
     case "romance":
       genero = "Romance";
       break;
-    case "cienc":
-      genero = "Ciencia Ficcion";
+    case "terror":
+      genero = "Terror";
       break;
+    case "thriller":
+      genero = "Thriller";
+      break;
+
     default:
       break;
   }
@@ -215,6 +276,11 @@ const Genre = () => {
         {!hasMore && "Llegaste al final."}
         {spinner && <Spinner03 />}
       </section>
+      {loader && (
+        <div className="loader-genre">
+          <Spinner03 />
+        </div>
+      )}
     </GenreSt>
   );
 };

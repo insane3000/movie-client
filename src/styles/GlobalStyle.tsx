@@ -11,10 +11,9 @@ const GlobalStyle = createGlobalStyle`
     -ms-box-sizing: border-box;
     box-sizing: border-box;
 
-    /* user-select: none; */
+    user-select: none;
     scroll-behavior: smooth;
-    /* user-select: none; */
-
+    -webkit-scroll-behavior: smooth
 
 }
 body{

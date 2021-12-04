@@ -10,13 +10,13 @@ import { StoreInterface } from "interfaces/storeTemplate";
 import { loginServer } from "redux/actions/appAction";
 import { useNavigate } from "react-router";
 import { useIntersectionObserver } from "hooks/useIntersectionObserver";
-import Spinner05 from "../atoms/Spinner05";
+// import Spinner05 from "../atoms/Spinner05";
 import MoviePoster from "../molecules/MoviePoster";
 const ClusterSt = styled.div`
   width: 100%;
   height: 18rem;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
+  /* margin-top: 2rem;
+  margin-bottom: 2rem; */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -69,14 +69,22 @@ const ClusterSt = styled.div`
       width: auto;
       height: 100%;
       display: grid;
-      grid-auto-flow: column dense;
+      grid-auto-flow: column;
+      grid-auto-columns: 9rem;
+      /* grid-auto-flow: column dense; */
       grid-template-rows: 100%;
-      gap: .5rem;
+      gap: 0.5rem;
       overflow-x: scroll;
       overflow-y: hidden;
       // !Firefox
       scrollbar-color: #070707 #070707;
       scrollbar-width: thin;
+      // !Chrome
+      &::-webkit-scrollbar {
+        width: 0.5rem;
+        height: 0rem;
+        -webkit-appearance: none;
+      }
       .loadMore {
         width: 9rem;
         background: transparent;
@@ -86,7 +94,8 @@ const ClusterSt = styled.div`
         justify-content: center;
         align-items: center;
         font-family: "Roboto 300";
-        font-size: 1rem;
+        font-size: 0.8rem;
+
         color: #b3b3b3;
       }
     }
@@ -149,7 +158,8 @@ const ClusterSt = styled.div`
         width: auto;
         height: 100%;
         display: grid;
-        grid-auto-flow: column dense;
+        grid-auto-flow: column;
+        grid-auto-columns: 13rem;
         grid-template-rows: 100%;
         gap: 1rem;
         overflow-x: scroll;
@@ -209,7 +219,7 @@ const MoviesGender = (props: Props) => {
   const [state, setState] = useState<any>([]);
   const [hasMore, setHasMore] = useState(true);
   const [nextPage, setNextPage] = useState(1);
-  const [spinner, setSpinner] = useState(false);
+  //   const [spinner, setSpinner] = useState(false);
 
   const InitialFetch = async () => {
     await axios
@@ -227,7 +237,7 @@ const MoviesGender = (props: Props) => {
         setState((prev: any) => [...prev, ...response.data.docs]);
         setNextPage(response.data.nextPage);
         setHasMore(response.data.hasNextPage);
-        setSpinner(false);
+        // setSpinner(false);
       })
       .catch(function (error) {
         console.log(error);
@@ -254,7 +264,7 @@ const MoviesGender = (props: Props) => {
     if (isBottomVisible) {
       if (hasMore) {
         InitialFetch();
-        setSpinner(true);
+        // setSpinner(true);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -264,35 +274,35 @@ const MoviesGender = (props: Props) => {
     <ClusterSt>
       <h2 className="title-cluster">{props.subtitle}</h2>
 
-      {spinner ? (
+      {/* {spinner ? (
         <Spinner05 />
-      ) : (
-        <div className="container-postersArrow">
-          <div ref={moviesGenderRef} className="list-posters">
-            {state?.map((i: any) => (
-              <MoviePoster
-                key={i._id}
-                img={i.imageM}
-                id={i._id}
-                rating={i.rating}
-                title={i.title}
-                year={i.year}
-              />
-            ))}
+      ) : ( */}
+      <div className="container-postersArrow">
+        <div ref={moviesGenderRef} className="list-posters">
+          {state?.map((i: any) => (
+            <MoviePoster
+              key={i._id}
+              img={i.imageM}
+              id={i._id}
+              rating={i.rating}
+              title={i.title}
+              year={i.year}
+            />
+          ))}
 
-            <section ref={ref} className="loadMore">
-              {hasMore ? "Cargando..." : "Llegaste al final."}
-            </section>
-          </div>
-
-          <section className="arrow  left " onClick={ScrollLeft}>
-            <ArrowLeftIcon className="sysIconArrow" />
-          </section>
-          <section className="arrow right " onClick={ScrollRight}>
-            <ArrowRightIcon className="sysIconArrow" />
+          <section ref={ref} className="loadMore">
+            {hasMore ? "Cargando..." : "Llegaste al final."}
           </section>
         </div>
-      )}
+
+        <section className="arrow  left " onClick={ScrollLeft}>
+          <ArrowLeftIcon className="sysIconArrow" />
+        </section>
+        <section className="arrow right " onClick={ScrollRight}>
+          <ArrowRightIcon className="sysIconArrow" />
+        </section>
+      </div>
+      {/* )} */}
     </ClusterSt>
   );
 };

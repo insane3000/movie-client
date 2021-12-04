@@ -6,7 +6,7 @@ import styled from "styled-components";
 import SearchIcon from "icons/SearchIcon";
 import ExitIcon from "icons/ExitIcon";
 import { useDispatch } from "react-redux";
-import { loginServer, restartScroll, search } from "redux/actions/appAction";
+import { loginServer, search } from "redux/actions/appAction";
 import toast from "react-hot-toast";
 
 const NavigationSt = styled.nav`
@@ -101,62 +101,66 @@ const NavigationSt = styled.nav`
   }
 `;
 const SearchSt = styled.form`
-  position: absolute;
-  right: 7rem;
-  width: 20rem;
-  height: 2.5rem;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  border-radius: 0.3rem;
-  background: #1f1d1d;
-  background: #ebebeb;
-
-  .search-input {
-    height: 100%;
-    width: calc(100% - 3rem);
-    padding: 0 1rem;
-    font-family: "Roboto 300";
-    color: black;
-    font-size: 1rem;
-    outline: none;
-    border-style: none;
-    background: none;
-    background: none;
-    color: #000000;
+  display: none;
+  // !Estilos para Desktop
+  @media only screen and (min-width: 568px) {
+    position: absolute;
+    right: 7rem;
+    width: 20rem;
+    height: 2.5rem;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     border-radius: 0.3rem;
-  }
-  .btn-submit {
-    width: 3rem;
-    height: 100%;
-    cursor: pointer;
-    border-style: none;
-    background: none;
+    background: #1f1d1d;
+    background: #ebebeb;
 
-    .icon-submit {
-      width: 100%;
+    .search-input {
       height: 100%;
-      padding: 0.5rem;
+      width: calc(100% - 3rem);
+      padding: 0 1rem;
+      font-family: "Roboto 300";
+      color: black;
+      font-size: 1rem;
+      outline: none;
+      border-style: none;
       background: none;
-      transition: 0.1s;
-      color: #161616;
       background: none;
-      &:hover {
-        /* transform: scale(1.1); */
+      color: #000000;
+      border-radius: 0.3rem;
+    }
+    .btn-submit {
+      width: 3rem;
+      height: 100%;
+      cursor: pointer;
+      border-style: none;
+      background: none;
+
+      .icon-submit {
+        width: 100%;
+        height: 100%;
+        padding: 0.5rem;
+        background: none;
         transition: 0.1s;
-        color: #000000;
+        color: #161616;
+        background: none;
+        &:hover {
+          /* transform: scale(1.1); */
+          transition: 0.1s;
+          color: #000000;
+        }
       }
     }
-  }
-  animation-name: example;
-  animation-duration: 0.4s;
-  @keyframes example {
-    from {
-      width: 2.5rem;
-    }
-    to {
-      width: 20rem;
+    animation-name: example;
+    animation-duration: 0.4s;
+    @keyframes example {
+      from {
+        width: 2.5rem;
+      }
+      to {
+        width: 20rem;
+      }
     }
   }
 `;
@@ -204,7 +208,7 @@ const Navigation = (props: any) => {
     setShowSearch(true);
     if (ref.current && !ref.current.contains(event.target)) {
       props.onClickOutside && props.onClickOutside();
-      console.log("click");
+//       console.log("click");
       setShowSearch(false);
     }
   };
@@ -225,17 +229,11 @@ const Navigation = (props: any) => {
       </Link>
 
       <section className="ul">
-        <NavLink
-          className="li"
-          to="/browser/home"
-        >
+        <NavLink className="li" to="/browser/home">
           Inicio
         </NavLink>
 
-        <NavLink
-          className="li"
-          to="/browser/premieres"
-        >
+        <NavLink className="li" to="/browser/premieres">
           Estrenos
         </NavLink>
         <NavLink className="li" to="/browser/category">
@@ -265,6 +263,7 @@ const Navigation = (props: any) => {
             placeholder="Buscar..."
             onChange={(e) => handleChangeSearch(e)}
             //     minLength={1}
+            autoFocus
           />
           <button className="btn-submit" type="submit">
             <SearchIcon className="icon-submit" />

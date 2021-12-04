@@ -16,7 +16,7 @@ const CategoriesSt = styled.div`
     justify-content: center;
     align-content: flex-start;
     /* padding: 5rem 5rem; */
-    gap: .5rem;
+    gap: 0.5rem;
 
     .category {
       border-radius: 0.5rem;
@@ -91,13 +91,16 @@ const CategoriesSt = styled.div`
 `;
 const Categories = () => {
   const color = [
-    { to: "acci", name: "Acción" },
+    { to: "accion", name: "Acción" },
+    { to: "animacion", name: "Animación" },
+    { to: "aventura", name: "Aventuras" },
+    { to: "sci-fi", name: "Cienca Ficción" },
     { to: "comedia", name: "Comedia" },
-    { to: "terror", name: "Terror" },
-    { to: "animaci", name: "Animación" },
     { to: "drama", name: "Drama" },
+    { to: "fantasia", name: "Fantasia" },
     { to: "romance", name: "Romance" },
-    { to: "cienc", name: "Cienca Ficción" },
+    { to: "terror", name: "Terror" },
+    { to: "thriller", name: "Thriller" },
   ];
 
   return (
