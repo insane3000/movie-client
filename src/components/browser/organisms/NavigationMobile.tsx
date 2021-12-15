@@ -12,8 +12,8 @@ import toast from "react-hot-toast";
 const NavigationMobileSt = styled.nav`
   width: 100%;
   height: 3.125rem;
-  background: rgb(0, 0, 0);
-  background: linear-gradient(0deg, rgba(255, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8) 100%);
+  /* background: rgb(0, 0, 0);
+  background: linear-gradient(0deg, rgba(255, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8) 100%); */
   position: sticky;
   top: 0;
   z-index: 1;

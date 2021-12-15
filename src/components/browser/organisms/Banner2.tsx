@@ -7,91 +7,90 @@ import axios from "axios";
 import { StoreInterface } from "interfaces/storeTemplate";
 import Spinner05 from "../atoms/Spinner05";
 import { useLocation, useNavigate } from "react-router-dom";
-const BannerSt = styled.div`
-  width: 100%;
-  height: 100vh;
+const Banner2St = styled.div`
+  width: 100vw;
+  height: 85vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
   position: absolute;
   top: 0;
-  display: flex;
-  flex-wrap: wrap;
-  overflow: hidden;
-  /* background: red; */
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  .gradient-banner {
+  .image-bg {
     width: 100%;
     height: 100%;
     position: absolute;
-    top: 0;
-    /* background: rgb(63, 94, 251);
-    background: radial-gradient(
-      circle,
-      rgba(63, 94, 251, 0) 0%,
-      rgba(0, 0, 0, 0.9827001064097514) 100%
-    ); */
-    background: rgb(0, 0, 0);
-    background: linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(255, 0, 0, 0) 100%);
+    object-fit: cover;
+  }
+  .gradient-top {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+
+    background: rgb(7, 7, 7);
+    background: linear-gradient(180deg, rgba(7, 7, 7, 1) 0%, rgba(255, 0, 0, 0) 10%);
+  }
+  .gradient-bottom {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    backdrop-filter: none;
+    background: rgb(7, 7, 7);
+    background: linear-gradient(0deg, rgba(7, 7, 7, 1) 0%, rgba(255, 0, 0, 0) 90%);
+  }
+  .data-poster {
+    width: 90%;
+    height: auto;
+    position: absolute;
+    bottom: 5vh;
     display: flex;
-    flex-direction: column;
-    justify-content: start;
+    flex-direction: row;
+    justify-content: center;
     align-items: center;
-    /* padding-top: 15rem;
-      padding-left: 8rem; */
-    .data-container {
+    /* background: red; */
+    .data {
       width: 100%;
-      height: auto;
-      position: absolute;
-      bottom: 20vh;
-      /* background: red; */
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding: 1rem;
+      /* padding-right: 1rem; */
       .banner-title {
-        font-family: "Roboto 900";
-        font-size: 1.5rem;
-        line-height: 2.5rem;
-        color: white;
-        text-shadow: 1px 1px 3px black;
-        margin-bottom: 0rem;
-        text-align: center;
-        /* text-transform:uppercase; */
-      }
-      .genre {
         width: 100%;
-        font-family: "Roboto 300";
-        font-size: 1rem;
-        color: white;
-        text-shadow: 1px 1px 3px black;
-        /* margin-bottom: 0.5rem; */
-        text-align: center;
-      }
-      .rating {
+        height: auto;
         font-family: "Roboto 900";
         font-size: 2rem;
         line-height: 2rem;
         color: white;
+        text-shadow: 1px 1px 5px black;
+        text-align: center;
+      }
+      .genre {
+        font-family: "Roboto 300";
+        font-size: 1rem;
+        color: white;
         text-shadow: 1px 1px 3px black;
-        margin-bottom: 0.3rem;
+      }
+      .rating {
+        font-family: "Roboto 900";
+        font-size: 2rem;
+        color: white;
+        text-shadow: 1px 1px 3px black;
         text-align: center;
         display: flex;
         justify-content: center;
         align-items: center;
-        span {
-          font-family: "Roboto 300";
+        .out-of {
+          font-family: "Roboto 100";
+          line-height: 1rem;
+          margin-bottom: 0.5rem;
           font-size: 1rem;
           color: white;
           text-shadow: 1px 1px 3px black;
-          margin-bottom: 0rem;
         }
       }
       .btn-container {
-        width: 100%;
-        height: 2.5rem;
+        height: 2rem;
         text-shadow: 1px 1px 3px black;
         display: flex;
         justify-content: center;
@@ -99,7 +98,7 @@ const BannerSt = styled.div`
         .button-play {
           background: white;
           width: 7rem;
-          height: 2.2rem;
+          height: 2rem;
           border-style: none;
           border-radius: 0.3rem;
           font-family: "Roboto 900";
@@ -116,6 +115,13 @@ const BannerSt = styled.div`
         }
       }
     }
+    .poster {
+      width: auto;
+      height: 100%;
+      object-fit: contain;
+      display: none;
+      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    }
   }
   .spinnerPoster {
     width: 100%;
@@ -128,86 +134,95 @@ const BannerSt = styled.div`
     align-items: flex-start;
     padding-top: 10rem;
   }
+
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
-    width: 100%;
-    height: 100vh;
+    width: 100vw;
+    height: 95vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
     position: absolute;
     top: 0;
-    display: flex;
-    flex-wrap: wrap;
-    overflow: hidden;
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .gradient-banner {
+    .image-bg {
       width: 100%;
       height: 100%;
       position: absolute;
-      top: 0;
-      background: rgb(63, 94, 251);
-      background: radial-gradient(
-        circle,
-        rgba(63, 94, 251, 0) 0%,
-        rgba(0, 0, 0, 0.9827001064097514) 100%
-      );
+      object-fit: cover;
+    }
+    .gradient-top {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+
+      background: rgb(7, 7, 7);
+      background: linear-gradient(180deg, rgba(7, 7, 7, 1) 0%, rgba(255, 0, 0, 0) 30%);
+    }
+    .gradient-bottom {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      backdrop-filter: blur(50px) brightness(20%);
+      background: rgb(7, 7, 7);
+      background: linear-gradient(0deg, rgba(7, 7, 7, 1) 0%, rgba(255, 0, 0, 0) 80%);
+    }
+    .data-poster {
+      width: 85%;
+      height: 75%;
+      position: absolute;
+      bottom: auto;
       display: flex;
-      flex-direction: column;
-      justify-content: start;
-      align-items: flex-start;
-      /* padding-top: 15rem;
-      padding-left: 8rem; */
-      .data-container {
-        width: auto;
-        height: auto;
-        position: absolute;
-        left: 4rem;
-        bottom: 20vh;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+
+      .data {
+        width: 55%;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: flex-start;
-        /* padding: 0 2rem; */
+        padding-right: 1rem;
         .banner-title {
+          width: 100%;
+          height: auto;
           font-family: "Roboto 900";
-          font-size: 4rem;
-          line-height: 3rem;
+          font-size: 5rem;
+          line-height: 5rem;
           color: white;
-          text-shadow: 1px 1px 3px black;
-          margin-bottom: 0.5rem;
+          text-shadow: 5px 5px 10px black;
           text-align: start;
         }
         .genre {
           font-family: "Roboto 300";
-          font-size: 2rem;
-          color: white;
-          text-shadow: 1px 1px 3px black;
-          /* margin-bottom: 0.5rem; */
-          text-align: start;
-        }
-        .rating {
-          font-family: "Roboto 700";
           font-size: 3rem;
           color: white;
-          text-shadow: 1px 1px 3px black;
-          margin-bottom: 1rem;
-          text-align: start;
-          span {
-            font-family: "Roboto 300";
+          text-shadow: 3px 3px 10px black;
+        }
+        .rating {
+          font-family: "Roboto 900";
+          font-size: 3.5rem;
+          color: white;
+          text-shadow: 3px 3px 10px black;
+          text-align: center;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          .out-of {
+            font-family: "Roboto 100";
+            line-height: 1rem;
+            margin-bottom: 1.5rem;
             font-size: 1rem;
             color: white;
             text-shadow: 1px 1px 3px black;
-            margin-bottom: 1rem;
           }
         }
         .btn-container {
-          width: 100%;
-          height: 3rem;
+          height: 5rem;
           text-shadow: 1px 1px 3px black;
           display: flex;
-          justify-content: start;
+          justify-content: center;
           align-items: center;
           .button-play {
             background: white;
@@ -229,6 +244,13 @@ const BannerSt = styled.div`
           }
         }
       }
+      .poster {
+        width: auto;
+        height: 100%;
+        object-fit: contain;
+        display: flex;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+      }
     }
     .spinnerPoster {
       width: 100%;
@@ -243,6 +265,28 @@ const BannerSt = styled.div`
     }
   }
 `;
+interface MovieIT {
+  actors: string;
+  available: true;
+  createdAt: string;
+  folder: string;
+  genre: string;
+  imageL: string;
+  imageM: string;
+  imageS: string;
+  imageXL: string;
+  language: string;
+  link: string;
+  originalTitle: string;
+  rating: number;
+  server: string;
+  synopsis: string;
+  time: string;
+  title: string;
+  updatedAt: string;
+  year: string;
+  _id: string;
+}
 const Banner = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
@@ -250,11 +294,8 @@ const Banner = () => {
   const app = useSelector((store: StoreInterface) => store.app);
 
   // ! States
-  const [movieId, setMovieId] = useState<string>("");
-  const [title, setTitle] = useState<string>("");
-  const [rating, setRating] = useState<any>(0);
-  const [banner, setBanner] = useState<string>("");
-  const [genre, setGenre] = useState<string>("");
+  const [state, setState] = useState<MovieIT>();
+
   const [spinnerPoster, setSpinnerPoster] = useState(true);
   // !Spinner Poster
   const handleLoadImg = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
@@ -263,13 +304,13 @@ const Banner = () => {
 
   //! Handle modal
   const handleModal = (id: string) => {
-    //     console.log(id);
     dispatch(setModal(id, true));
     !app.modal.show && navigate(pathname);
   };
   const fetchData = async () => {
     axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/banner/61a183f2695ffb8404d0d73a`, {
+      //       .get(`${process.env.REACT_APP_BACKEND_URL}/movies/${"61aa49e53cda0c8683b6d6cf"}`, {
+      .get(`${process.env.REACT_APP_BACKEND_URL}/last-premiere?limit=5`, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
           id: `${app.login.user}`,
@@ -278,55 +319,64 @@ const Banner = () => {
       })
       .then(function (response) {
         //TODO Por cada nuevo dato seteado, se renderiza de nuevo. fixear!!!
-        setTitle(response.data.title);
-        setRating(response.data.rating);
-        setGenre(response.data.genre);
-        setMovieId(response.data.movieId);
-        setBanner(response.data.banner);
-        // console.log(response);
+        // setTitle(response.data.title);
+        // setRating(response.data.rating);
+        // setGenre(response.data.genre);
+        // setMovieId(response.data.movieId);
+        // setBanner(response.data.banner);
+
+        setState(response.data.docs[Math.floor(Math.random() * 5)]);
+        // console.log(Math.random() * 5);
       })
       .catch(function (error) {
         console.log(error);
       });
   };
+  //   console.log(state);
   useEffect(() => {
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const cleanText = genre?.replace("|", ".");
+  const cleanText = state?.genre.replace("|", ".");
 
   return (
-    <BannerSt>
+    <Banner2St>
       <img
-        src={banner && `${process.env.REACT_APP_BUCKET}${banner}`}
+        className="image-bg"
+        src={`${process.env.REACT_APP_BUCKET}${state?.imageL}`}
         alt=""
         onLoad={(e) => handleLoadImg(e)}
       />
+      <div className="gradient-top"></div>
+      <div className="gradient-bottom"></div>
 
-      <div className="gradient-banner">
-        <div className="data-container">
-          <h1 className="banner-title">{title}</h1>
-          <span className="genre">
-            {cleanText.split(".")[0]} • {cleanText.split(".")[1]} • {cleanText.split(".")[2]}
-          </span>
+      <div className="data-poster">
+        <div className="data">
+          <h1 className="banner-title">{state?.title}</h1>
+          <section className="genre">
+            {cleanText?.split(".")[0]} {cleanText?.split(".")[1] && "•"} {cleanText?.split(".")[1]}{" "}
+            {cleanText?.split(".")[2] && "•"} {cleanText?.split(".")[2]}
+          </section>
           <h3 className="rating">
-            {rating}
-            <span>/10</span>{" "}
+            {state?.rating}
+            <span className="out-of">/10</span>{" "}
           </h3>
           <section className="btn-container">
-            <button className="button-play" onClick={() => handleModal(`${movieId}`)}>
+            <button className="button-play" onClick={() => handleModal(`${state?._id}`)}>
               Ver Ahora
             </button>
           </section>
         </div>
+        <img className="poster" src={`${process.env.REACT_APP_BUCKET}${state?.imageL}`} alt="" />
       </div>
+
       {spinnerPoster && (
         <section className="spinnerPoster">
           <Spinner05 />
         </section>
       )}
-    </BannerSt>
+    </Banner2St>
   );
 };
 

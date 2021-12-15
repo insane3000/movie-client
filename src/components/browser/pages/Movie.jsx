@@ -14,24 +14,17 @@ const MovieSt = styled.div`
   width: 100vw;
   height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   position: relative;
   /* overflow: hidden; */
 
-  .gradient-movie {
-    width: 100%;
-    height: 100%;
-    background: #00000026;
-    position: absolute;
-    /* backdrop-filter: blur(10px); */
-  }
-
   .loader {
     width: 100vw;
     height: 1000vh;
     background: #1a1720;
-    background: #0f0f0f;
+    background: #080808;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -45,7 +38,7 @@ const MovieSt = styled.div`
     width: 100vw;
     height: 100vh;
     background: #1a1720;
-    background: #0f0f0f;
+    background: #080808;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -58,7 +51,7 @@ const MovieSt = styled.div`
     width: 100vw;
     height: 100vh;
     background: #1a1720;
-    background: #0f0f0f;
+    background: #080808;
     /* padding-top: 4rem; */
     overflow-y: scroll;
     z-index: 1;
@@ -204,6 +197,7 @@ const MovieSt = styled.div`
     width: 100vw;
     height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     position: relative;
@@ -211,16 +205,16 @@ const MovieSt = styled.div`
     .gradient-movie {
       width: 100%;
       height: 100%;
-      background: #00000026;
+      background: #080808;
       position: absolute;
       backdrop-filter: blur(10px);
     }
 
     .loader {
-      width: 80vw;
-      height: 90vh;
+      width: 100vw;
+      height: 100vh;
       background: #1a1720;
-      background: #0f0f0f;
+      background: #080808;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -230,10 +224,10 @@ const MovieSt = styled.div`
       z-index: 2;
     }
     .errorWindow {
-      width: 80vw;
-      height: 90vh;
+      width: 100vw;
+      height: 100vh;
       background: #1a1720;
-      background: #0f0f0f;
+      background: #080808;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -243,10 +237,10 @@ const MovieSt = styled.div`
       z-index: 2;
     }
     .movie-container {
-      width: 80vw;
-      height: 90vh;
+      width: 100vw;
+      height: 100vh;
       background: #1a1720;
-      background: #0f0f0f;
+      background: #080808;
       /* padding-top: 4rem; */
       overflow-y: scroll;
       z-index: 1;
@@ -261,8 +255,8 @@ const MovieSt = styled.div`
 
         .sysClose {
           position: absolute;
-          top: 1rem;
-          right: 1rem;
+          top: 2rem;
+          right: 2rem;
           font-size: 4rem;
           background: white;
           border-radius: 100%;
@@ -276,7 +270,7 @@ const MovieSt = styled.div`
         }
       }
       .container-poster-data {
-        width: 90%;
+        width: 80%;
         height: auto;
         display: flex;
         flex-direction: row;
@@ -371,7 +365,7 @@ const MovieSt = styled.div`
       }
 
       .player-container {
-        width: 90%;
+        width: 80%;
         min-height: 30rem;
         height: fit-content;
         margin: auto;
@@ -396,6 +390,7 @@ const movieTemplate = {
   genre: "",
   time: "",
   actors: "",
+  folder: "",
   synopsis: "",
   link: "",
   imageXL: "",
@@ -414,7 +409,7 @@ const Movie = () => {
   const [spinnerPoster, setSpinnerPoster] = useState(true);
   const [errorWindow, setErrorWindow] = useState(false);
 
-  const modifyLink = state.link?.split(".mp4")[0];
+  //   const modifyLink = state.link?.split(".mp4")[0];
   // ! Scroll to TOP
   const movieRef = useRef();
   const scrollToTop = () => {
@@ -422,6 +417,7 @@ const Movie = () => {
   };
   const handleModal = () => {
     dispatch(setModal("", false));
+    navigate(-1);
   };
 
   //   console.log(state);
@@ -458,7 +454,7 @@ const Movie = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [app.modal.id]);
   //!para validar query
-  let genero = state.genre.slice(0, 4).toLowerCase();
+  //   let genero = state.genre.slice(0, 4).toLowerCase();
 
   const cleanText = state.genre?.replace("|", ".");
   const cleanSynopsis = state.synopsis.replace("(FILMAFFINITY)", "");
@@ -486,10 +482,9 @@ const Movie = () => {
   //   useEffect(() => {
   //     fethingVideo();
   //   }, []);
-  console.log(state)
+  //   console.log(state)
   return (
     <MovieSt>
-      <div className="gradient-movie" onClick={handleModal}></div>
       <div className="movie-container" ref={movieRef}>
         <div className="close-div">
           <CloseIcon className="sysClose" onClick={handleModal} />
@@ -532,9 +527,9 @@ const Movie = () => {
               className="player"
               playerId="jw-player"
               playerScript="https://content.jwplatform.com/libraries/KB5zFt7A.js"
-              file={`${modifyLink}.mp4`}
+              //       file={`${modifyLink}.mp4`}
               //     file={modifyLink && `${modifyLink}.mp4`}
-              //       file={state.link}
+              file={state.link}
               onBeforePlay={() => console.log("onBeforePlay fired!")}
               // image={state.image}
               onLoad={() => console.log("allaaallala")}
@@ -548,7 +543,7 @@ const Movie = () => {
             />
           )}
         </div>
-        {state.genre !== "" && <Cluster genre={genero} subtitle="Relacionados" text="" />}
+        {state.genre !== "" && <Cluster genre={state.folder} subtitle="Relacionados" text="" />}
       </div>
       {errorWindow && (
         <div className="errorWindow">

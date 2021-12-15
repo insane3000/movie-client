@@ -8,7 +8,9 @@ import { useState } from "react";
 // import SpinnerImg from "../atoms/SpinnerImg";
 // *Redux
 import { setModal } from "redux/actions/appAction";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router";
+import { StoreInterface } from "interfaces/storeTemplate";
 
 const MoviesPosterSt = styled.div`
   width: 9rem;
@@ -40,6 +42,7 @@ const MoviesPosterSt = styled.div`
       width: 100%;
       height: 100%;
       object-fit: cover;
+      filter: saturate(110%) contrast(110%);
     }
     .gradient {
       cursor: pointer;
@@ -150,6 +153,7 @@ const MoviesPosterSt = styled.div`
         width: 100%;
         height: 100%;
         object-fit: cover;
+        filter: saturate(110%) contrast(110%);
       }
       .gradient {
         cursor: pointer;
@@ -238,7 +242,11 @@ interface Props {
   year: string;
 }
 const MoviePoster = (props: Props) => {
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const app = useSelector((store: StoreInterface) => store.app);
+
   const [imageLoad, setImageLoad] = useState(false);
   const handleLoadImg = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
     e.currentTarget.complete && setImageLoad(true);
@@ -246,6 +254,7 @@ const MoviePoster = (props: Props) => {
   const handleModal = (id: string) => {
     //     console.log(id);
     dispatch(setModal(id, true));
+    !app.modal.show && navigate(pathname);
   };
 
   return (

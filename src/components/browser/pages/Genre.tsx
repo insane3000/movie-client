@@ -43,7 +43,7 @@ const GenreSt = styled.div`
   }
   .container-movies {
     width: 100%;
-    min-height: 100vh;
+    /* min-height: 100vh; */
     height: auto;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(9rem, 9rem));
@@ -136,6 +136,7 @@ const Genre = () => {
   const [nextPage, setNextPage] = useState(1);
   const [spinner, setSpinner] = useState(false);
   const [loader, setLoader] = useState(true);
+  const [firstFetch, setFirstFetch] = useState(false);
 
   // ! ORIGEN
   const fetchDataOnRender = async (genre: any) => {
@@ -155,6 +156,7 @@ const Genre = () => {
         setSpinner(false);
         // console.log(response);
         setLoader(false);
+        setFirstFetch(true);
       })
       .catch(function (error) {
         console.log(error);
@@ -203,6 +205,7 @@ const Genre = () => {
     false // don't remove the observer after intersected.
   );
   useEffect(() => {
+    setFirstFetch(false);
     setLoader(true);
     setState([]);
     fetchDataOnRender(params.genre);
@@ -210,7 +213,7 @@ const Genre = () => {
   }, [params.genre]);
 
   useEffect(() => {
-    if (isBottomVisible) {
+    if (isBottomVisible && firstFetch) {
       if (hasMore) {
         // setLoader(true);
         setSpinner(true);
@@ -220,7 +223,7 @@ const Genre = () => {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isBottomVisible, hasMore, params]);
+  }, [isBottomVisible, hasMore, params.genre]);
   let genero = "";
   switch (params?.genre) {
     case "accion":
@@ -229,20 +232,32 @@ const Genre = () => {
     case "animacion":
       genero = "Animación";
       break;
+    case "anime":
+      genero = "Anime";
+      break;
     case "aventura":
       genero = "Aventura";
       break;
-    case "sci-fi":
+    case "belico":
+      genero = "Bélico";
+      break;
+    case "ciencia-ficcion":
       genero = "Ciencia Ficción";
       break;
     case "comedia":
       genero = "Comedia";
+      break;
+    case "documental":
+      genero = "Documental";
       break;
     case "drama":
       genero = "Drama";
       break;
     case "fantasia":
       genero = "Fantasia";
+      break;
+    case "intriga":
+      genero = "Intriga";
       break;
     case "romance":
       genero = "Romance";
@@ -253,7 +268,9 @@ const Genre = () => {
     case "thriller":
       genero = "Thriller";
       break;
-
+    case "western":
+      genero = "Western";
+      break;
     default:
       break;
   }

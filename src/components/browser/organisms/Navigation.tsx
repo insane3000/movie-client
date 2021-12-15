@@ -15,8 +15,8 @@ const NavigationSt = styled.nav`
   @media only screen and (min-width: 568px) {
     width: 100%;
     height: 5rem;
-    background: rgb(255, 0, 0);
-    background: linear-gradient(0deg, rgba(255, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8) 100%);
+    /* background: rgb(255, 0, 0);
+    background: linear-gradient(0deg, rgba(255, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8) 100%); */
     position: sticky;
     top: 0;
     z-index: 1;
@@ -208,7 +208,7 @@ const Navigation = (props: any) => {
     setShowSearch(true);
     if (ref.current && !ref.current.contains(event.target)) {
       props.onClickOutside && props.onClickOutside();
-//       console.log("click");
+      //       console.log("click");
       setShowSearch(false);
     }
   };

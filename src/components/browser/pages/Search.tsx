@@ -225,7 +225,7 @@ const AllMovies = () => {
   useEffect(() => {
     clearTimeout(timerRef.current);
     if (app.search.length > 1) {
-      timerRef.current = setTimeout(() => fetchData(app.search), 500);
+      timerRef.current = setTimeout(() => fetchData(app.search.toLowerCase()), 500);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [app.search]);
@@ -235,7 +235,7 @@ const AllMovies = () => {
       if (isBottomVisible) {
         if (hasMore) {
           setSpinner(true);
-          fetch(app.search);
+          fetch(app.search.toLowerCase());
           // console.log("fething");
         }
       }

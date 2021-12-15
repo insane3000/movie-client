@@ -13,9 +13,10 @@ import { StoreInterface } from "interfaces/storeTemplate";
 const AppSt = styled.div`
   width: 100vw;
   height: 100vh;
-  background: #05010eee;
-  background: #111111;
+  /* background: #05010eee;
+  background: #111111; */
   background: #070707;
+  /* overflow: hidden; */
   .toast {
     width: auto;
     height: 3rem;
@@ -27,6 +28,7 @@ const AppSt = styled.div`
 `;
 
 function App() {
+//   const queryClient = new QueryClient();
   const dispatch = useDispatch();
   const app = useSelector((store: StoreInterface) => store.app);
 
@@ -40,6 +42,7 @@ function App() {
     );
   }, [dispatch]);
   return (
+    //     <QueryClientProvider client={queryClient}>
     <Router>
       <AppSt id="app">
         <Toaster
@@ -55,6 +58,8 @@ function App() {
         </Routes>
       </AppSt>
     </Router>
+    //       <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+    //     </QueryClientProvider>
   );
 }
 

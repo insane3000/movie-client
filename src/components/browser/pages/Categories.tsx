@@ -93,14 +93,19 @@ const Categories = () => {
   const color = [
     { to: "accion", name: "Acción" },
     { to: "animacion", name: "Animación" },
-    { to: "aventura", name: "Aventuras" },
-    { to: "sci-fi", name: "Cienca Ficción" },
+    { to: "anime", name: "Anime" },
+    { to: "aventura", name: "Aventura" },
+    { to: "belico", name: "Bélico" },
+    { to: "ciencia-ficcion", name: "Cienca Ficción" },
     { to: "comedia", name: "Comedia" },
+    { to: "documental", name: "Documental" },
     { to: "drama", name: "Drama" },
     { to: "fantasia", name: "Fantasia" },
+    { to: "intriga", name: "Intriga" },
     { to: "romance", name: "Romance" },
     { to: "terror", name: "Terror" },
     { to: "thriller", name: "Thriller" },
+    { to: "western", name: "Western" },
   ];
 
   return (
