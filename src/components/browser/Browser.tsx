@@ -31,21 +31,22 @@ const BrowserSt = styled.div`
     width: 100%;
     height: 100%;
     overflow-y: scroll;
+    overflow-x: hidden;
     position: relative;
   }
 `;
-const ModalSt = styled.div`
-  position: fixed;
-  top: 0;
-  width: 100vw;
-  height: 100vh;
-  /* background: #05010e55; */
-  /* background: #0f0f0f; */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1;
-`;
+// const ModalSt = styled.div`
+//   position: fixed;
+//   top: 0;
+//   width: 100vw;
+//   height: 100vh;
+//   /* background: #05010e55; */
+//   /* background: #0f0f0f; */
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   z-index: 1;
+// `;
 
 const User = () => {
   const { pathname } = useLocation();
@@ -100,11 +101,11 @@ const User = () => {
         <Route path="/series" element={<Series />} />
         <Route path="/*" element={<Error404 />} />
       </Routes>
-      {app.modal.show && (
-        <ModalSt>
-          <Movie />
-        </ModalSt>
-      )}
+      {/* {app.modal.show && (
+        // <ModalSt>
+        <Movie />
+        // </ModalSt>
+      )} */}
       {app.showMenu && <MenuMobile />}
     </BrowserSt>
   );

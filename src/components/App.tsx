@@ -10,6 +10,7 @@ import { loginServer } from "redux/actions/appAction";
 import Browser from "./browser/Browser";
 import Welcome from "./Welcome";
 import { StoreInterface } from "interfaces/storeTemplate";
+import Movie from "./browser/pages/Movie";
 const AppSt = styled.div`
   width: 100vw;
   height: 100vh;
@@ -17,6 +18,7 @@ const AppSt = styled.div`
   background: #111111; */
   background: #070707;
   /* overflow: hidden; */
+  position: relative;
   .toast {
     width: auto;
     height: 3rem;
@@ -28,7 +30,7 @@ const AppSt = styled.div`
 `;
 
 function App() {
-//   const queryClient = new QueryClient();
+  //   const queryClient = new QueryClient();
   const dispatch = useDispatch();
   const app = useSelector((store: StoreInterface) => store.app);
 
@@ -50,6 +52,8 @@ function App() {
             className: "toast",
           }}
         />
+        {app.modal.show && <Movie />}
+
         <Routes>
           <Route path="/*" element={app.login.token === "" ? <Welcome /> : <Browser />} />
           {app.login.token !== "" && <Route path="/browser/*" element={<Browser />} />}

@@ -150,6 +150,7 @@ const Banner2St = styled.div`
       height: 100%;
       position: absolute;
       object-fit: cover;
+      filter: blur(50px) brightness(20%);
     }
     .gradient-top {
       width: 100%;
@@ -163,7 +164,7 @@ const Banner2St = styled.div`
       width: 100%;
       height: 100%;
       position: absolute;
-      backdrop-filter: blur(50px) brightness(20%);
+      /* backdrop-filter: blur(50px) brightness(20%); */
       background: rgb(7, 7, 7);
       background: linear-gradient(0deg, rgba(7, 7, 7, 1) 0%, rgba(255, 0, 0, 0) 80%);
     }
@@ -188,21 +189,21 @@ const Banner2St = styled.div`
           width: 100%;
           height: auto;
           font-family: "Roboto 900";
-          font-size: 5rem;
-          line-height: 5rem;
+          font-size: 5vw;
+          line-height: 5vw;
           color: white;
           text-shadow: 5px 5px 10px black;
           text-align: start;
         }
         .genre {
           font-family: "Roboto 300";
-          font-size: 3rem;
+          font-size: 3vw;
           color: white;
           text-shadow: 3px 3px 10px black;
         }
         .rating {
           font-family: "Roboto 900";
-          font-size: 3.5rem;
+          font-size: 3.5vw;
           color: white;
           text-shadow: 3px 3px 10px black;
           text-align: center;
@@ -211,9 +212,9 @@ const Banner2St = styled.div`
           align-items: center;
           .out-of {
             font-family: "Roboto 100";
-            line-height: 1rem;
-            margin-bottom: 1.5rem;
-            font-size: 1rem;
+            line-height: 1vw;
+            margin-bottom: 1.5vw;
+            font-size: 1vw;
             color: white;
             text-shadow: 1px 1px 3px black;
           }
@@ -310,7 +311,7 @@ const Banner = () => {
   const fetchData = async () => {
     axios
       //       .get(`${process.env.REACT_APP_BACKEND_URL}/movies/${"61aa49e53cda0c8683b6d6cf"}`, {
-      .get(`${process.env.REACT_APP_BACKEND_URL}/last-premiere?limit=5`, {
+      .get(`${process.env.REACT_APP_BACKEND_URL}/last-premiere?limit=3`, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
           id: `${app.login.user}`,
@@ -325,7 +326,7 @@ const Banner = () => {
         // setMovieId(response.data.movieId);
         // setBanner(response.data.banner);
 
-        setState(response.data.docs[Math.floor(Math.random() * 5)]);
+        setState(response.data.docs[Math.floor(Math.random() * 3)]);
         // console.log(Math.random() * 5);
       })
       .catch(function (error) {

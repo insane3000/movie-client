@@ -11,13 +11,16 @@ import CloseIcon from "icons/CloseIcon";
 import Spinner05 from "../atoms/Spinner05";
 import Error404 from "components/Error404";
 const MovieSt = styled.div`
+  position: fixed;
+  top: 0;
   width: 100vw;
   height: 100vh;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: relative;
+
   /* overflow: hidden; */
 
   .loader {
@@ -194,13 +197,16 @@ const MovieSt = styled.div`
   }
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
+    position: fixed;
+    top: 0;
     width: 100vw;
     height: 100vh;
+    z-index: 2;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    position: relative;
+    /* position: relative; */
 
     .gradient-movie {
       width: 100%;
@@ -383,7 +389,7 @@ const MovieSt = styled.div`
 `;
 
 const movieTemplate = {
-  id: "",
+  _id: "",
   title: "",
   rating: 0,
   year: "",
@@ -482,7 +488,10 @@ const Movie = () => {
   //   useEffect(() => {
   //     fethingVideo();
   //   }, []);
-  //   console.log(state)
+  //f002.backblazeb2.com/file/
+//   console.log(
+//     `http://localhost:4000/local/${state.link?.split("https://f002.backblazeb2.com/file/")[1]}`
+//   );
   return (
     <MovieSt>
       <div className="movie-container" ref={movieRef}>
@@ -525,14 +534,14 @@ const Movie = () => {
           {state.link !== "" && (
             <ReactJWPlayer
               className="player"
-              playerId="jw-player"
-              playerScript="https://content.jwplatform.com/libraries/KB5zFt7A.js"
-              //       file={`${modifyLink}.mp4`}
-              //     file={modifyLink && `${modifyLink}.mp4`}
-              file={state.link}
-              onBeforePlay={() => console.log("onBeforePlay fired!")}
-              // image={state.image}
-              onLoad={() => console.log("allaaallala")}
+              playerId="my-unique-id"
+              playerScript="https://api.moviestorecbba.com/static/KB5zFt7A.js"
+                    file={state.link}
+        //       file={`http://localhost:4000/local/${
+        //         state.link?.split("https://f002.backblazeb2.com/file/")[1]
+        //       }`}
+              //       onBeforePlay={() => console.log("onBeforePlay fired!")}
+              //       onLoad={() => console.log("allaaallala")}
               type="mp4"
               preload="auto"
               customProps={{

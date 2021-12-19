@@ -153,7 +153,7 @@ const UpdateUser = () => {
   useEffect(() => {
     const fetchData = async () => {
       await axios
-        .get(`${process.env.REACT_APP_BACKEND_URL}/users/${app.login.user}`, {
+        .get(`${process.env.REACT_APP_BACKEND_URL}/client/${app.login.user}`, {
           headers: {
             authorization: `Bearer ${app.login.token}`,
             id: `${app.login.user}`,
@@ -164,11 +164,12 @@ const UpdateUser = () => {
           setState(() => ({
             ...state,
             user: response.data.user,
+            password: response.data.password,
             name: response.data.name,
             phone: response.data.phone,
             date: response.data.date,
           }));
-          // console.log(response);
+          console.log(response);
         })
         .catch(function (error) {
           console.log(error);

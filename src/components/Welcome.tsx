@@ -6,7 +6,8 @@ import { loginServer } from "redux/actions/appAction";
 import styled from "styled-components";
 import Spinner05 from "components/browser/atoms/Spinner05";
 import Countdown from "react-countdown";
-
+// *Images
+import Banner from "img/banner.jpg";
 const WelcomeSt = styled.div`
   width: 100%;
   height: 100%;
@@ -14,6 +15,33 @@ const WelcomeSt = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
+  .imgBackground {
+    width: 100vw;
+    height: 100vh;
+    display: none;
+    position: absolute;
+    object-fit: cover;
+    filter: brightness(20%);
+  }
+  .gradient-top {
+    width: 100%;
+    height: 100%;
+    display: none;
+
+    position: absolute;
+    background: rgb(7, 7, 7);
+    background: linear-gradient(300deg, #000000 0%, rgba(255, 0, 0, 0) 50%);
+  }
+  .gradient-bottom {
+    width: 100%;
+    height: 100%;
+    display: none;
+
+    position: absolute;
+    background: rgb(7, 7, 7);
+    background: linear-gradient(130deg, #000000 0%, rgba(255, 0, 0, 0) 50%);
+  }
+
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
     width: 100%;
@@ -22,83 +50,90 @@ const WelcomeSt = styled.div`
     justify-content: center;
     align-items: center;
     position: relative;
+    .imgBackground {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+
+      position: absolute;
+      object-fit: cover;
+      filter: brightness(20%);
+    }
+    .gradient-top {
+      width: 100%;
+      height: 100%;
+      display: flex;
+
+      position: absolute;
+      background: rgb(7, 7, 7);
+      background: linear-gradient(300deg, #000000 0%, rgba(255, 0, 0, 0) 50%);
+    }
+    .gradient-bottom {
+      width: 100%;
+      height: 100%;
+      display: flex;
+
+      position: absolute;
+      background: rgb(7, 7, 7);
+      background: linear-gradient(130deg, #000000 0%, rgba(255, 0, 0, 0) 50%);
+    }
   }
 `;
 const LoginSt = styled.div`
   width: 100%;
-  height: auto;
+  height: 100%;
   overflow: hidden;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   position: relative;
-  /* background: red; */
-  .titleWelcome {
-    font-family: "Roboto 900";
-    font-size: 2rem;
-    margin-top: 2rem;
-    color: #5900ff;
-    text-align: center;
-    padding: 0rem 2rem;
-  }
-  .titleCode {
-    font-family: "Roboto 100";
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-    color: white;
-  }
-  .formActivationCode {
+
+  .formLogin {
     width: 100%;
-    height: auto;
+    height: 100%;
+    /* position: absolute;
+    right: 15vw; */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background: #0e0d0d;
+    border-radius: 0.5rem;
+    /* box-shadow: rgba(0, 0, 0, 0.75) 0px 5px 15px; */
 
-    .cell-input {
-      width: 20rem;
-      height: 5rem;
+    .titleBrand {
       font-family: "Roboto 900";
-      font-size: 3rem;
-      text-align: center;
-      text-transform: uppercase;
-      background: none;
-      border-radius: 0.5rem;
-      border: 0.125rem solid #ff0040;
-      outline: none;
-      /* letter-spacing: 2rem; */
+      font-size: 2rem;
+      color: #5900ff;
+      margin-bottom: 1rem;
+    }
+    .cell-input {
+      width: 80%;
+      height: 3rem;
+      font-family: "Roboto 300";
+      font-size: 1rem;
+      color: white;
       padding: 0 1rem;
-      margin-bottom: 2rem;
+
+      background: #000000;
+      border-radius: 0.5rem;
+      border-style: none;
+      outline: none;
+      margin-bottom: 1rem;
     }
     input::-ms-reveal,
     input::-ms-clear {
       display: none;
     }
-    .word0 {
-      color: #00a2ff;
-    }
-    .word1 {
-      color: #5100ff;
-    }
-    .word2 {
-      color: #c300ff;
-    }
-    .word3 {
-      color: #ff0062;
-    }
-    .word4 {
-      color: #ff9d00;
-    }
 
     .btnSubmit {
-      width: 10rem;
+      width: 80%;
       height: 3rem;
       font-family: "Roboto 900";
-      font-size: 1.5rem;
+      font-size: 1.2rem;
       outline: none;
       border-style: none;
-      border-radius: 0.3rem;
+      border-radius: 0.5rem;
       cursor: pointer;
       background: #5100ff;
       color: white;
@@ -111,78 +146,78 @@ const LoginSt = styled.div`
       }
     }
   }
+  .container-title {
+    position: absolute;
+    left: 12vw;
+    display: none;
+    .h1-title {
+      font-family: "Roboto 900";
+      font-size: 6.5vw;
+      color: #5100ff;
+      text-shadow: 1px 1px 5px black;
+    }
+    .h2-title {
+      font-family: "Roboto 100";
+      font-size: 4vw;
+      color: white;
+      text-shadow: 1px 1px 5px black;
+    }
+  }
   @media only screen and (min-width: 568px) {
     width: 100%;
     height: 100%;
     overflow: hidden;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     position: relative;
-    .titleWelcome {
-      font-family: "Roboto 900";
-      font-size: 4rem;
-      margin-top: 2rem;
-      color: #5900ff;
-    }
-    .titleCode {
-      font-family: "Roboto 100";
-      font-size: 3rem;
-      margin-bottom: 1rem;
-      color: white;
-    }
-    .formActivationCode {
-      width: 100%;
-      height: auto;
+
+    .formLogin {
+      width: 25rem;
+      height: 30rem;
+      position: absolute;
+      right: 15vw;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      background: #0e0d0d;
+      border-radius: 0.5rem;
+      box-shadow: rgba(0, 0, 0, 0.75) 0px 5px 15px;
 
-      .cell-input {
-        width: 65rem;
-        height: 15rem;
+      .titleBrand {
         font-family: "Roboto 900";
-        font-size: 10rem;
-        text-align: center;
-        text-transform: uppercase;
-        background: none;
+        font-size: 2.5rem;
+        color: #5900ff;
+        margin-bottom: 2rem;
+      }
+      .cell-input {
+        width: 20rem;
+        height: 3.5rem;
+        font-family: "Roboto 300";
+        font-size: 1.2rem;
+        color: white;
+        padding: 0 1rem;
+
+        background: #050505;
         border-radius: 0.5rem;
-        border: 0.125rem solid #ff0040;
+        border-style: none;
         outline: none;
-        letter-spacing: 2rem;
-        padding: 0 4rem;
         margin-bottom: 2rem;
       }
       input::-ms-reveal,
       input::-ms-clear {
         display: none;
       }
-      .word0 {
-        color: #00a2ff;
-      }
-      .word1 {
-        color: #5100ff;
-      }
-      .word2 {
-        color: #c300ff;
-      }
-      .word3 {
-        color: #ff0062;
-      }
-      .word4 {
-        color: #ff9d00;
-      }
 
       .btnSubmit {
-        width: 15rem;
-        height: 4rem;
+        width: 20rem;
+        height: 3.5rem;
         font-family: "Roboto 900";
-        font-size: 2rem;
+        font-size: 1.5rem;
         outline: none;
         border-style: none;
-        border-radius: 0.3rem;
+        border-radius: 0.5rem;
         cursor: pointer;
         background: #5100ff;
         color: white;
@@ -193,6 +228,24 @@ const LoginSt = styled.div`
           color: #000000;
           transition: 0.1s;
         }
+      }
+    }
+    .container-title {
+      position: absolute;
+      left: 12vw;
+      display: flex;
+      flex-direction: column;
+      .h1-title {
+        font-family: "Roboto 900";
+        font-size: 6.5vw;
+        color: #5100ff;
+        text-shadow: 1px 1px 5px black;
+      }
+      .h2-title {
+        font-family: "Roboto 100";
+        font-size: 4vw;
+        color: white;
+        text-shadow: 1px 1px 5px black;
       }
     }
   }
@@ -318,21 +371,26 @@ const Welcome = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [state, setState] = useState("");
+  const [state, setState] = useState({
+    user: "invitado",
+    password: "",
+  });
   const [spinner, setSpinner] = useState(false);
   const [numberFails, setNumberFails] = useState<number>(0);
   const [blockUser, setblockUser] = useState(false);
   //   console.log(numberFails);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.target.value.toLowerCase();
-    setState(value);
+    let name = e.target.name;
+    let value = e.target.value;
+    setState({ ...state, [name]: value });
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    console.log(state);
     setSpinner(true);
     e.preventDefault();
     await axios
-      .post(`${process.env.REACT_APP_BACKEND_URL}/login-user`, { user: state })
+      .post(`${process.env.REACT_APP_BACKEND_URL}/client-login`, { user: state })
       .then(function (response) {
         dispatch(loginServer(response.data._id, response.data.token, response.data.role));
         localStorage.setItem("token", response.data.token);
@@ -345,7 +403,7 @@ const Welcome = () => {
         setSpinner(false);
 
         setNumberFails(numberFails + 1);
-        setState("");
+        setState({ user: "", password: "" });
         codeInput.current.focus();
         localStorage.setItem("fails", `${numberFails + 1}`);
         numberFails >= 2 && localStorage.setItem("lastFail", `${Date.now() + 10 * 1000}`);
@@ -394,7 +452,7 @@ const Welcome = () => {
     const handleNavigate = () => {
       setNumberFails(0);
       setblockUser(false);
-      setState("");
+      setState({ user: "", password: "" });
       codeInput.current.focus();
     };
     return (
@@ -422,23 +480,32 @@ const Welcome = () => {
   };
   return (
     <WelcomeSt>
+      <img className="imgBackground" src={Banner} alt="" />
+      <div className="gradient-top"></div>
+      <div className="gradient-bottom"></div>
       <LoginSt>
-        <h2 className="titleWelcome">Bienvenido a Movie Store Cbba</h2>
-        <span className="titleCode">Inserta tu clave de activación.</span>
-        <form className="formActivationCode" onSubmit={(e) => handleSubmit(e)}>
-          <div className="activationCode">
-            <input
-              ref={codeInput}
-              name="word0"
-              className="cell-input word4"
-              type="password"
-              value={state}
-              //       maxLength={6}
-              onChange={handleChange}
-              //     onFocus={(e) => e.target.select()}
-              required
-            />
-          </div>
+        <form className="formLogin" onSubmit={(e) => handleSubmit(e)}>
+          <h2 className="titleBrand">Movie Store Cbba</h2>
+          <input
+            ref={codeInput}
+            name="user"
+            className="cell-input"
+            type="text"
+            value={state.user}
+            onChange={handleChange}
+            //       required
+            placeholder="Usuario"
+          />
+          <input
+            //       ref={codeInput}
+            name="password"
+            className="cell-input"
+            type="password"
+            value={state.password}
+            onChange={handleChange}
+            //       required
+            placeholder="Contraseña"
+          />
 
           {numberFails >= 1 && (
             <AlertSt>Los datos son incorectos. Te quedan {3 - numberFails} intentos.</AlertSt>
@@ -446,6 +513,12 @@ const Welcome = () => {
 
           <input className="btnSubmit" type="submit" value="Entrar" />
         </form>
+        <div className="container-title">
+          <h1 className="h1-title">
+            Tus películas <br /> favoritas.
+          </h1>
+          <span className="h2-title"> Desde cualquier lugar...</span>
+        </div>
       </LoginSt>
       {blockUser && (
         <BlockUserSt>

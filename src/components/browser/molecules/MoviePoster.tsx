@@ -42,7 +42,7 @@ const MoviesPosterSt = styled.div`
       width: 100%;
       height: 100%;
       object-fit: cover;
-      filter: saturate(110%) contrast(110%);
+      /* filter: saturate(110%) contrast(110%); */
     }
     .gradient {
       cursor: pointer;
@@ -153,7 +153,7 @@ const MoviesPosterSt = styled.div`
         width: 100%;
         height: 100%;
         object-fit: cover;
-        filter: saturate(110%) contrast(110%);
+        /* filter: saturate(110%) contrast(110%); */
       }
       .gradient {
         cursor: pointer;
