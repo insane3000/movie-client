@@ -8,7 +8,6 @@ import ExitIcon from "icons/ExitIcon";
 import { useDispatch } from "react-redux";
 import { loginServer, search } from "redux/actions/appAction";
 import toast from "react-hot-toast";
-
 const NavigationSt = styled.nav`
   display: none;
   // !Estilos para Desktop
@@ -175,11 +174,9 @@ const Navigation = (props: any) => {
   // !Handle change con busqueda automarica cada .5seg
   const handleChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.currentTarget.value.trim();
-    //     console.log(value.length);
     clearTimeout(timerRef.current);
     if (value.length >= 1) {
       navigate("/browser/search");
-      //       timerRef.current = setTimeout(() => fetchData(value), 500);
       dispatch(search(value));
     }
     setState(value);
@@ -198,6 +195,7 @@ const Navigation = (props: any) => {
     localStorage.setItem("role", "");
     localStorage.setItem("fails", "0");
     navigate(`/`);
+    //     socket.emit("closeUserID", app.login.user); //TODO falta hacer esta parte
   };
 
   const [showSearch, setShowSearch] = useState(false);

@@ -197,8 +197,8 @@ const UpdateUser = () => {
       <div className="userContainer">
         <UserIconLight className="sysIconUser" />
         <section className="section">
-          <span className="label">Clave:</span>
-          <span className="data">{state.user.toUpperCase().slice(0, 2)}••••••</span>
+          <span className="label">Usuario:</span>
+          <span className="data">{state.user}</span>
         </section>
         <section className="section">
           <span className="label">Nombre:</span>

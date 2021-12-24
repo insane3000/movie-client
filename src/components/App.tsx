@@ -5,6 +5,7 @@ import { Toaster } from "react-hot-toast";
 import "fonts/fonts.css";
 import styled from "styled-components";
 import Error404 from "./Error404";
+import UserConnectedError from "./UserConnectedError";
 import { useDispatch, useSelector } from "react-redux";
 import { loginServer } from "redux/actions/appAction";
 import Browser from "./browser/Browser";
@@ -14,10 +15,7 @@ import Movie from "./browser/pages/Movie";
 const AppSt = styled.div`
   width: 100vw;
   height: 100vh;
-  /* background: #05010eee;
-  background: #111111; */
   background: #070707;
-  /* overflow: hidden; */
   position: relative;
   .toast {
     width: auto;
@@ -30,7 +28,6 @@ const AppSt = styled.div`
 `;
 
 function App() {
-  //   const queryClient = new QueryClient();
   const dispatch = useDispatch();
   const app = useSelector((store: StoreInterface) => store.app);
 
@@ -44,7 +41,6 @@ function App() {
     );
   }, [dispatch]);
   return (
-    //     <QueryClientProvider client={queryClient}>
     <Router>
       <AppSt id="app">
         <Toaster
@@ -53,17 +49,15 @@ function App() {
           }}
         />
         {app.modal.show && <Movie />}
-
         <Routes>
           <Route path="/*" element={app.login.token === "" ? <Welcome /> : <Browser />} />
           {app.login.token !== "" && <Route path="/browser/*" element={<Browser />} />}
           <Route path="/welcome" element={<Welcome />} />
           <Route path="/*" element={<Error404 />} />
+          <Route path="/user-connected-error" element={<UserConnectedError />} />
         </Routes>
       </AppSt>
     </Router>
-    //       <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
-    //     </QueryClientProvider>
   );
 }
 

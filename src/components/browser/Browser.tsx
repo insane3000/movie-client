@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Routes, Route } from "react-router-dom";
+import { useNavigate } from "react-router";
 // *Fonts
 import "fonts/fonts.css";
 // *Components
@@ -21,6 +22,8 @@ import NavigationMobile from "./organisms/NavigationMobile";
 import { useLocation } from "react-router";
 import MenuMobile from "./organisms/MenuMobile";
 import Series from "./pages/Series";
+// *Socket.io
+import socket from "config/Socket";
 const BrowserSt = styled.div`
   width: 100%;
   height: 100%;
@@ -35,30 +38,28 @@ const BrowserSt = styled.div`
     position: relative;
   }
 `;
-// const ModalSt = styled.div`
-//   position: fixed;
-//   top: 0;
-//   width: 100vw;
-//   height: 100vh;
-//   /* background: #05010e55; */
-//   /* background: #0f0f0f; */
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   z-index: 1;
-// `;
 
 const User = () => {
+  const navigate = useNavigate();
   const { pathname } = useLocation();
   const dispatch = useDispatch();
   const app = useSelector((store: StoreInterface) => store.app);
 
   useEffect(() => {
+    socket.emit("userID", app.login.user);
+    socket.on("users", (data) => {
+      let userID = data.filter((i: any) => i.userID === app.login.user);
+//       console.log(userID.length);
+      if (userID.length > 1) {
+        navigate("/user-connected-error");
+      }
+    });
+
     window.addEventListener("popstate", () => dispatch(setModal("", false)));
     return () => {
       window.removeEventListener("popstate", dispatch);
     };
-  }, [dispatch]);
+  }, [dispatch, app.login.user, navigate]);
   // !The scroll listener
   const refScroll = useRef<any>();
 
@@ -85,7 +86,6 @@ const User = () => {
   useEffect(() => {
     scrollToTopCallback();
   }, [pathname, scrollToTopCallback]);
-
   return (
     <BrowserSt id="app" ref={refScroll}>
       {!maintenance && <Navigation bg={bg} />}
@@ -101,11 +101,7 @@ const User = () => {
         <Route path="/series" element={<Series />} />
         <Route path="/*" element={<Error404 />} />
       </Routes>
-      {/* {app.modal.show && (
-        // <ModalSt>
-        <Movie />
-        // </ModalSt>
-      )} */}
+
       {app.showMenu && <MenuMobile />}
     </BrowserSt>
   );

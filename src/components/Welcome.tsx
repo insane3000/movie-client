@@ -386,18 +386,22 @@ const Welcome = () => {
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    console.log(state);
+    //     console.log(state);
     setSpinner(true);
     e.preventDefault();
     await axios
       .post(`${process.env.REACT_APP_BACKEND_URL}/client-login`, { user: state })
       .then(function (response) {
+        // if (response.data.login) {
+        //   return navigate(`/asdasdasddas`);
+        // }
         dispatch(loginServer(response.data._id, response.data.token, response.data.role));
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("user", response.data._id);
         localStorage.setItem("role", response.data.role);
         localStorage.setItem("fails", "0");
         navigate(`/browser`);
+        console.log(response);
       })
       .catch(function (error) {
         setSpinner(false);

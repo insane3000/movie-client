@@ -432,7 +432,7 @@ const Movie = () => {
     setSpinner(true);
 
     await axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/movies/${app.modal.id}`, {
+      .get(`${process.env.REACT_APP_BACKEND_URL}/movie-client/${app.modal.id}`, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
           id: `${app.login.user}`,
