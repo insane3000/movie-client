@@ -4,4 +4,5 @@ export enum ActionType {
   SEARCH = "SEARCH ",
   SCROLL = "SCROLL ",
   MODAL = "MODAL ",
+  MODAL_SERIE = "MODAL_SERIE ",
 }

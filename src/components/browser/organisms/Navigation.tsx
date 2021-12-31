@@ -210,12 +210,12 @@ const Navigation = (props: any) => {
       setShowSearch(false);
     }
   };
-  useEffect(() => {
-    document.addEventListener("click", handleClickOutside, true);
-    return () => {
-      document.removeEventListener("click", handleClickOutside, true);
-    };
-  });
+//   useEffect(() => {
+//     document.addEventListener("click", handleClickOutside, true);
+//     return () => {
+//       document.removeEventListener("click", handleClickOutside, true);
+//     };
+//   });
   return (
     <NavigationSt style={{ background: props.bg }}>
       <Link

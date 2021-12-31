@@ -41,10 +41,20 @@ export const restartScroll =
   };
 // !Seteando MODAL
 export const setModal = (id: string, data: Boolean) => (dispatch: Dispatch<ActionsInterface>) => {
-//   console.log(data);
+  //   console.log(data);
   dispatch({
     type: ActionType.MODAL,
     id: id,
     payload: data,
   });
 };
+// !Seteando  SERIE
+export const setModalSerie =
+  (id: string, data: Boolean) => (dispatch: Dispatch<ActionsInterface>) => {
+//     console.log(id);
+    dispatch({
+      type: ActionType.MODAL_SERIE,
+      id: id,
+      payload: data,
+    });
+  };

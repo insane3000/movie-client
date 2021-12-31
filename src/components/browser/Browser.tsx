@@ -16,12 +16,12 @@ import Categories from "./pages/Categories";
 // import Welcome from "./pages/Welcome";
 import { useDispatch, useSelector } from "react-redux";
 import { StoreInterface } from "interfaces/storeTemplate";
-import { setModal } from "redux/actions/appAction";
+import { setModal, setModalSerie } from "redux/actions/appAction";
 import Navigation from "./organisms/Navigation";
 import NavigationMobile from "./organisms/NavigationMobile";
 import { useLocation } from "react-router";
 import MenuMobile from "./organisms/MenuMobile";
-import Series from "./pages/Series";
+// import Series from "./pages/Series";
 // *Socket.io
 import socket from "config/Socket";
 const BrowserSt = styled.div`
@@ -49,15 +49,17 @@ const User = () => {
     socket.emit("userID", app.login.user);
     socket.on("users", (data) => {
       let userID = data.filter((i: any) => i.userID === app.login.user);
-//       console.log(userID.length);
+      //       console.log(userID.length);
       if (userID.length > 1) {
         navigate("/user-connected-error");
       }
     });
 
     window.addEventListener("popstate", () => dispatch(setModal("", false)));
+    window.addEventListener("popstate", () => dispatch(setModalSerie("", false)));
     return () => {
       window.removeEventListener("popstate", dispatch);
+      //       window.removeEventListener("popstate", dispatch);
     };
   }, [dispatch, app.login.user, navigate]);
   // !The scroll listener
@@ -98,7 +100,7 @@ const User = () => {
         <Route path="/category/*" element={<Categories />} />
         <Route path="/search" element={<Search />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/series" element={<Series />} />
+        {/* <Route path="/series" element={<Series />} /> */}
         <Route path="/*" element={<Error404 />} />
       </Routes>
 

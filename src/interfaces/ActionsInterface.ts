@@ -24,5 +24,10 @@ interface modal {
   id: string;
   payload: Boolean;
 }
+interface modalSerie {
+  type: ActionType.MODAL_SERIE;
+  id: string;
+  payload: Boolean;
+}
 
-export type ActionsInterface = showMenu | loginServer | search | scroll | modal;
+export type ActionsInterface = showMenu | loginServer | search | scroll | modal | modalSerie;

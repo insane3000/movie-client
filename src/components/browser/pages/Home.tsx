@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Cluster from "../organisms/Cluster";
+import ClusterSerieTV from "../organisms/ClusterSerieTV";
 import JustAdded from "../organisms/JustAdded";
 
 // import Banner from "../organisms/Banner";
@@ -18,7 +19,7 @@ const Home = () => {
       {/* <Banner /> */}
       <Banner2 />
       <JustAdded subtitle="Recien Agregados" />
-
+      <ClusterSerieTV url="series-admin" subtitle="Series TV" />
       <Cluster genre="accion" subtitle="Acción" text="" />
       <Cluster genre="animacion" subtitle="Animación" text="" />
       <Cluster genre="anime" subtitle="Anime" text="" />

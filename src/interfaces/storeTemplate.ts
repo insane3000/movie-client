@@ -1,4 +1,3 @@
-
 export type AppInterface = {
   showMenu: boolean;
   search: string;
@@ -9,6 +8,10 @@ export type AppInterface = {
     search: number;
   };
   modal: {
+    show: boolean;
+    id: string;
+  };
+  modalSerie: {
     show: boolean;
     id: string;
   };
@@ -29,6 +32,10 @@ export const appTemplate: AppInterface = {
     search: 0,
   },
   modal: {
+    show: false,
+    id: "",
+  },
+  modalSerie: {
     show: false,
     id: "",
   },

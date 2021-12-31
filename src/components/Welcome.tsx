@@ -121,6 +121,23 @@ const LoginSt = styled.div`
       outline: none;
       margin-bottom: 1rem;
     }
+    .checkbox-label {
+      width: 80%;
+      height: 1rem;
+      display: flex;
+      justify-content: start;
+      align-items: center;
+      margin-bottom: 1rem;
+      .checkbox {
+        margin-right: 0.4rem;
+        margin-left: 0.4rem;
+      }
+      .label {
+        font-family: "Roboto 300";
+        font-size: 1rem;
+        color: #c3c3c3;
+      }
+    }
     input::-ms-reveal,
     input::-ms-clear {
       display: none;
@@ -203,7 +220,24 @@ const LoginSt = styled.div`
         border-radius: 0.5rem;
         border-style: none;
         outline: none;
-        margin-bottom: 2rem;
+        margin-bottom: 1rem;
+      }
+      .checkbox-label {
+        width: 20rem;
+        height: 1rem;
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        margin-bottom: 1rem;
+        .checkbox {
+          margin-right: 0.4rem;
+          margin-left: 0.4rem;
+        }
+        .label {
+          font-family: "Roboto 300";
+          font-size: 1rem;
+          color: #c3c3c3;
+        }
       }
       input::-ms-reveal,
       input::-ms-clear {
@@ -357,14 +391,17 @@ const BlockUserSt = styled.div`
   }
 `;
 const AlertSt = styled.div`
-  width: 100%;
-  height: 1rem;
-  text-align: center;
+  width: 80%;
+  height: auto;
+  text-align: start;
   line-height: 1rem;
   font-family: "Roboto 300";
   font-size: 1rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   color: red;
+  @media only screen and (min-width: 568px) {
+    width: 20rem;
+  }
 `;
 const Welcome = () => {
   const codeInput = useRef<any>(null);
@@ -372,7 +409,7 @@ const Welcome = () => {
   const dispatch = useDispatch();
 
   const [state, setState] = useState({
-    user: "invitado",
+    user: "",
     password: "",
   });
   const [spinner, setSpinner] = useState(false);
@@ -401,7 +438,7 @@ const Welcome = () => {
         localStorage.setItem("role", response.data.role);
         localStorage.setItem("fails", "0");
         navigate(`/browser`);
-        console.log(response);
+        // console.log(response);
       })
       .catch(function (error) {
         setSpinner(false);
@@ -410,7 +447,7 @@ const Welcome = () => {
         setState({ user: "", password: "" });
         codeInput.current.focus();
         localStorage.setItem("fails", `${numberFails + 1}`);
-        numberFails >= 2 && localStorage.setItem("lastFail", `${Date.now() + 10 * 1000}`);
+        numberFails >= 2 && localStorage.setItem("lastFail", `${Date.now() + 60 * 1000 * 10}`);
         numberFails >= 2 && setblockUser(true);
       });
   };
@@ -482,6 +519,16 @@ const Welcome = () => {
       );
     }
   };
+  //!Show Password function
+  const inputPassword = useRef<any>(null);
+  function showPassword() {
+    var x = inputPassword?.current;
+    if (x.type === "password") {
+      x.type = "text";
+    } else {
+      x.type = "password";
+    }
+  }
   return (
     <WelcomeSt>
       <img className="imgBackground" src={Banner} alt="" />
@@ -497,22 +544,34 @@ const Welcome = () => {
             type="text"
             value={state.user}
             onChange={handleChange}
-            //       required
             placeholder="Usuario"
           />
           <input
-            //       ref={codeInput}
+            ref={inputPassword}
             name="password"
             className="cell-input"
             type="password"
             value={state.password}
             onChange={handleChange}
-            //       required
             placeholder="Contraseña"
           />
+          <section className="checkbox-label">
+            <input
+              className="checkbox"
+              type="checkbox"
+              id="showPassword"
+              name="scales"
+              onClick={showPassword}
+            />
+            <label className="label" htmlFor="showPassword">
+              Mostrar contraseña
+            </label>
+          </section>
 
           {numberFails >= 1 && (
-            <AlertSt>Los datos son incorectos. Te quedan {3 - numberFails} intentos.</AlertSt>
+            <AlertSt>
+              Datos incorrectos o suscripción vencida. <br /> Te quedan {3 - numberFails} intentos.
+            </AlertSt>
           )}
 
           <input className="btnSubmit" type="submit" value="Entrar" />

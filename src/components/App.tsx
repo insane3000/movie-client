@@ -12,6 +12,7 @@ import Browser from "./browser/Browser";
 import Welcome from "./Welcome";
 import { StoreInterface } from "interfaces/storeTemplate";
 import Movie from "./browser/pages/Movie";
+import Serie from "./browser/pages/Serie";
 const AppSt = styled.div`
   width: 100vw;
   height: 100vh;
@@ -49,6 +50,7 @@ function App() {
           }}
         />
         {app.modal.show && <Movie />}
+        {app.modalSerie.show && <Serie />}
         <Routes>
           <Route path="/*" element={app.login.token === "" ? <Welcome /> : <Browser />} />
           {app.login.token !== "" && <Route path="/browser/*" element={<Browser />} />}

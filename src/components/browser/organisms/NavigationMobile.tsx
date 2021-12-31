@@ -172,12 +172,12 @@ const NavigationMobile = (props: any) => {
       setShowSearch(false);
     }
   };
-  useEffect(() => {
-    document.addEventListener("click", handleClickOutside, true);
-    return () => {
-      document.removeEventListener("click", handleClickOutside, true);
-    };
-  });
+  //   useEffect(() => {
+  //     document.addEventListener("click", handleClickOutside, true);
+  //     return () => {
+  //       document.removeEventListener("click", handleClickOutside, true);
+  //     };
+  //   });
   // !Open Menu
   const closeMenu = () => {
     dispatch(showMenu(true));
