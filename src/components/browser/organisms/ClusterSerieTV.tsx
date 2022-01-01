@@ -184,7 +184,7 @@ const ClusterSt = styled.div`
   }
 `;
 interface Props {
-  url: string;
+  genre: string;
   subtitle: string;
 }
 // interface MovieIT {
@@ -222,7 +222,7 @@ const MoviesGender = (props: Props) => {
 
   const InitialFetch = async () => {
     await axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/${props.url}?&page=${nextPage}&limit=15`, {
+      .get(`${process.env.REACT_APP_BACKEND_URL}/genre?genre=${props.genre}&page=${nextPage}&limit=15`, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
           id: `${app.login.user}`,

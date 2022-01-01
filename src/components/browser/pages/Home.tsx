@@ -19,7 +19,7 @@ const Home = () => {
       {/* <Banner /> */}
       <Banner2 />
       <JustAdded subtitle="Recien Agregados" />
-      <ClusterSerieTV url="series-admin" subtitle="Series TV" />
+      <ClusterSerieTV genre="series-tv" subtitle="Series TV" />
       <Cluster genre="accion" subtitle="Acción" text="" />
       <Cluster genre="animacion" subtitle="Animación" text="" />
       <Cluster genre="anime" subtitle="Anime" text="" />

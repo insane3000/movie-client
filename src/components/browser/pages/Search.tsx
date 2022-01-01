@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import MoviePoster from "../molecules/MoviePoster";
+import SeriePoster from "../molecules/SeriePoster";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { StoreInterface } from "interfaces/storeTemplate";
@@ -10,6 +10,7 @@ import { useNavigate } from "react-router";
 // *images
 import Spinner03 from "../atoms/Spinner03";
 import { useIntersectionObserver } from "hooks/useIntersectionObserver";
+import MoviePoster from "../molecules/MoviePoster";
 const AllMoviesSt = styled.div`
   // !Estilos para Desktop
   width: 100%;
@@ -247,16 +248,27 @@ const AllMovies = () => {
     <AllMoviesSt>
       <h2 className="title-component">Resultados de busqueda:</h2>
       <div className="container-movies">
-        {state?.map((i: any) => (
-          <MoviePoster
-            key={i._id}
-            id={i._id}
-            img={i.imageM}
-            rating={i.rating}
-            title={i.title}
-            year={i.year}
-          />
-        ))}
+        {state?.map((i: any) => {
+          return i.type === "movie" ? (
+            <MoviePoster
+              key={i._id}
+              id={i._id}
+              img={i.imageM}
+              rating={i.rating}
+              title={i.title}
+              year={i.year}
+            />
+          ) : (
+            <SeriePoster
+              key={i._id}
+              id={i._id}
+              img={i.imageM}
+              rating={i.rating}
+              title={i.title}
+              year={i.year}
+            />
+          );
+        })}
         {state.length === 0 && (
           <section className="no-data">
             <span className="notice">No se encontraron resultados.</span>

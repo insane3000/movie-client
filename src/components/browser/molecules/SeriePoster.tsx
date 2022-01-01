@@ -263,7 +263,7 @@ const MoviePoster = (props: Props) => {
       <section className="container-poster">
         <img
           className="poster"
-          src={`${process.env.REACT_APP_BUCKET_SERIES}${props.img}`}
+          src={`${process.env.REACT_APP_BUCKET}${props.img}`}
           alt=""
           //   loading="lazy"
           onLoad={(e) => handleLoadImg(e)}

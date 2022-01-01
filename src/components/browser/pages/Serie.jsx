@@ -190,7 +190,7 @@ const MovieSt = styled.div`
       .selectSeason {
         width: auto;
         height: 2rem;
-        padding: 0 .5rem;
+        padding: 0 0.5rem;
         outline: none;
         border-style: none;
         border-radius: 0.2rem;
@@ -485,7 +485,7 @@ const Movie = () => {
     setSpinner(true);
 
     await axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/series/${app.modalSerie.id}`, {
+      .get(`${process.env.REACT_APP_BACKEND_URL}/movies/${app.modalSerie.id}`, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
           id: `${app.login.user}`,
@@ -585,7 +585,7 @@ const Movie = () => {
           <div className="container-poster">
             <img
               className="img-movie"
-              src={state.imageL && `${process.env.REACT_APP_BUCKET_SERIES}${state.imageL}`}
+              src={state.imageL && `${process.env.REACT_APP_BUCKET}${state.imageL}`}
               alt=""
               onLoad={(e) => handleLoadImg(e)}
             />
@@ -624,23 +624,24 @@ const Movie = () => {
         </div>
 
         <div className="player-container">
-          {state.link !== "" && (
-            <ReactJWPlayer
-              className="player"
-              playerId="my-unique-id"
-              playerScript="https://api.moviestorecbba.com/static/KB5zFt7A.js"
-              playlist={playlist}
-              type="mp4"
-              preload="auto"
-              customProps={{
-                // playbackRateControls: [1, 1.25, 1.5],
-                autostart: false,
-                cast: {},
-              }}
-            />
-          )}
+          {/* {state.link !== "" && ( */}
+          <ReactJWPlayer
+            className="player"
+            playerId="my-unique-id"
+            playerScript="https://api.moviestorecbba.com/static/KB5zFt7A.js"
+            playlist={playlist}
+            type="mp4"
+            preload="auto"
+            customProps={{
+              // playbackRateControls: [1, 1.25, 1.5],
+              autostart: false,
+              cast: {},
+            }}
+          />
+          {/* )} */}
         </div>
-        {state.genre !== "" && <ClusterSerieTV url="series-admin" subtitle="Series TV" />}
+        {/* {state.genre !== "" && <ClusterSerieTV url="series-admin" subtitle="Series TV" />} */}
+        <ClusterSerieTV genre="series-tv" subtitle="Series TV" />
       </div>
       {errorWindow && (
         <div className="errorWindow">

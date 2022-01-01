@@ -12,6 +12,7 @@ import { useNavigate } from "react-router";
 import { useIntersectionObserver } from "hooks/useIntersectionObserver";
 // import Spinner05 from "../atoms/Spinner05";
 import MoviePoster from "../molecules/MoviePoster";
+import SeriePoster from "../molecules/SeriePoster";
 const ClusterSt = styled.div`
   width: 100vw;
   height: 18rem;
@@ -266,16 +267,27 @@ const MoviesGender = (props: Props) => {
 
       <div className="container-postersArrow">
         <div ref={moviesGenderRef} className="list-posters">
-          {state?.map((i: any) => (
-            <MoviePoster
-              key={i._id}
-              img={i.imageM}
-              id={i._id}
-              rating={i.rating}
-              title={i.title}
-              year={i.year}
-            />
-          ))}
+          {state?.map((i: any) => {
+            return i.type === "movie" ? (
+              <MoviePoster
+                key={i._id}
+                id={i._id}
+                img={i.imageM}
+                rating={i.rating}
+                title={i.title}
+                year={i.year}
+              />
+            ) : (
+              <SeriePoster
+                key={i._id}
+                id={i._id}
+                img={i.imageM}
+                rating={i.rating}
+                title={i.title}
+                year={i.year}
+              />
+            );
+          })}
 
           <section ref={ref} className="loadMore">
             {hasMore ? "Cargando..." : "Llegaste al final."}
