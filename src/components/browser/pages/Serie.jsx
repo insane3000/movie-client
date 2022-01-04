@@ -511,32 +511,35 @@ const Movie = () => {
     setSpinner(true);
 
     await axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/episodes-admin/?serieID=${app.modalSerie.id}`, {
-        //       .get(`${process.env.REACT_APP_BACKEND_URL}/series-complete/${app.modalSerie.id}`, {
-        headers: {
-          authorization: `Bearer ${app.login.token}`,
-          id: `${app.login.user}`,
-          role: `${app.login.role}`,
-        },
-      })
+      .get(
+        `${process.env.REACT_APP_BACKEND_URL}/episodes-admin/?serieID=${app.modalSerie.id}&limit=1000`,
+        {
+          //       .get(`${process.env.REACT_APP_BACKEND_URL}/series-complete/${app.modalSerie.id}`, {
+          headers: {
+            authorization: `Bearer ${app.login.token}`,
+            id: `${app.login.user}`,
+            role: `${app.login.role}`,
+          },
+        }
+      )
       .then(function (response) {
         setSpinner(false);
         response.status === 204 ? setErrorWindow(true) : setEpisodes(response.data.docs);
         const seasonFiltered = response.data.docs.filter((i) => i.season === 1);
         setCurrentSeason(seasonFiltered);
-        const lala = [];
-
+        const seasonSelected = [];
+        console.log(response.data.docs);
         seasonFiltered.map((i) => {
-          lala.push({
-            file: i.link,
+          seasonSelected.push({
+            file: i.link.replace("http", "https"),
             image: `${process.env.REACT_APP_BUCKET_EPISODES}${i.imageL}`,
-            title: `Episodio: ${i.episode}`,
+            title: `${state.title} T:${i.season} Ep:${i.episode}`,
             //     description: "Un dragon llegara...",
           });
           return i;
         });
 
-        setPlaylist(lala);
+        setPlaylist(seasonSelected);
       })
       .catch(function (error) {
         console.log(error);
@@ -568,11 +571,25 @@ const Movie = () => {
   let seasonsQuantity = seasonsArray.filter((item, index) => {
     return seasonsArray.indexOf(item) === index;
   });
+  console.log(state);
   // !Handle set Season
   const handleSeason = (e) => {
     let value = parseInt(e.target.value);
     const seasonFiltered = episodes.filter((i) => i.season === value);
     setCurrentSeason(seasonFiltered);
+    const seasonSelected = [];
+
+    seasonFiltered.map((i) => {
+      seasonSelected.push({
+        file: i.link.replace("http", "https"),
+        image: `${process.env.REACT_APP_BUCKET_EPISODES}${i.imageL}`,
+        title: `${state.title} T:${i.season} Ep:${i.episode}`,
+        //     description: "Un dragon llegara...",
+      });
+      return i;
+    });
+    //     console.log(lala);
+    setPlaylist(seasonSelected);
   };
   return (
     <MovieSt>
@@ -631,7 +648,7 @@ const Movie = () => {
             playerScript="https://api.moviestorecbba.com/static/KB5zFt7A.js"
             playlist={playlist}
             type="mp4"
-            preload="auto"
+            preload="metadata"
             customProps={{
               // playbackRateControls: [1, 1.25, 1.5],
               autostart: false,

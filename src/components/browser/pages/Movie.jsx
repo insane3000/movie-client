@@ -543,7 +543,7 @@ const Movie = () => {
               //       onBeforePlay={() => console.log("onBeforePlay fired!")}
               //       onLoad={() => console.log("allaaallala")}
               type="mp4"
-              preload="auto"
+              preload="metadata"
               customProps={{
                 // playbackRateControls: [1, 1.25, 1.5],
                 autostart: false,
