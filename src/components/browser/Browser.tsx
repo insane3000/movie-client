@@ -24,6 +24,7 @@ import MenuMobile from "./organisms/MenuMobile";
 // import Series from "./pages/Series";
 // *Socket.io
 import socket from "config/Socket";
+import axios from "axios";
 const BrowserSt = styled.div`
   width: 100%;
   height: 100%;
@@ -46,13 +47,22 @@ const User = () => {
   const app = useSelector((store: StoreInterface) => store.app);
 
   useEffect(() => {
+    // ! Screens control
     socket.emit("userID", app.login.user);
-    socket.on("users", (data) => {
+    socket.on("users", async (data) => {
+      const screens = await axios
+        .get(`${process.env.REACT_APP_BACKEND_URL}/client-screens/${app.login.user}`)
+        .then(function (response) {
+          return response.data;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
       let userID = data.filter((i: any) => i.userID === app.login.user);
-      //       console.log(userID.length);
-      if (userID.length > 1) {
+      if (userID.length > screens) {
         navigate("/user-connected-error");
       }
+      //       console.log(screens);
     });
 
     window.addEventListener("popstate", () => dispatch(setModal("", false)));

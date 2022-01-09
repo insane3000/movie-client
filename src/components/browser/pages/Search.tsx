@@ -7,6 +7,7 @@ import { StoreInterface } from "interfaces/storeTemplate";
 import { loginServer } from "redux/actions/appAction";
 import { useNavigate } from "react-router";
 // import Navigation from "components/browser/organisms/Navigation";
+import { useLocation } from "react-router";
 // *images
 import Spinner03 from "../atoms/Spinner03";
 import { useIntersectionObserver } from "hooks/useIntersectionObserver";
@@ -133,6 +134,7 @@ const AllMoviesSt = styled.div`
 // }
 
 const AllMovies = () => {
+  let location = useLocation();
   let navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -143,8 +145,8 @@ const AllMovies = () => {
   const [spinner, setSpinner] = useState(false);
 
   //   console.log(process.env.REACT_APP_BACKEND_URL);
-  // ! ORIGEN
-  const fetchData = async (text1: string) => {
+  // ! first fetch
+  const firstFetch = async (text1: string) => {
     await axios
       .get(`${process.env.REACT_APP_BACKEND_URL}/movie-search?title=${text1}&page=1&limit=20`, {
         headers: {
@@ -154,12 +156,10 @@ const AllMovies = () => {
         },
       })
       .then(function (response: any) {
-        //   dispatch(search(response.data.docs));
         setState(response.data.docs);
         setNextPage(response.data.nextPage);
         setHasMore(response.data.hasNextPage);
         setSpinner(false);
-        // console.log(response);
       })
       .catch(function (error) {
         console.log(error);
@@ -170,8 +170,8 @@ const AllMovies = () => {
         // navigate(`/browser/home`);
       });
   };
-  //! FETCH
-  const fetch = async (text: string) => {
+  //! FETCH for infinity scroll
+  const fetchForInfinityScroll = async (text: string) => {
     await axios
       .get(
         `${process.env.REACT_APP_BACKEND_URL}/movie-search?title=${text}&page=${nextPage}&limit=20`,
@@ -185,11 +185,9 @@ const AllMovies = () => {
       )
       .then(function (response: any) {
         setState((prev: any) => [...prev, ...response.data.docs]);
-        // setState(response.data.docs);
         setNextPage(response.data.nextPage);
         setHasMore(response.data.hasNextPage);
         setSpinner(false);
-        console.log(response.data);
       })
       .catch(function (error) {
         console.log(error);
@@ -212,35 +210,30 @@ const AllMovies = () => {
     false // don't remove the observer after intersected.
   );
 
-  //   useEffect(() => {
-  //     if (isBottomVisible) {
-  //       if (hasMore) {
-  //         setSpinner(true);
-  //         InitialFetch(app.search);
-  //         // console.log("fething");
-  //       }
-  //     }
-  //     // eslint-disable-next-line react-hooks/exhaustive-deps
-  //   }, [isBottomVisible, hasMore]);
   const timerRef = useRef<any>(null);
+  // !First Use Effect
+  const params = new URLSearchParams(location.search);
+  const queryParams: any = params.get("query");
   useEffect(() => {
+    //     setQuery(queryParams);
+//     console.log(queryParams);
     clearTimeout(timerRef.current);
-    if (app.search.length > 1) {
-      timerRef.current = setTimeout(() => fetchData(app.search.toLowerCase()), 500);
-    }
+    //     if (queryParams.length > 1) {
+    timerRef.current = setTimeout(() => firstFetch(queryParams.toLowerCase()), 500);
+    //     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [app.search]);
+  }, [location]);
 
   useEffect(() => {
-    if (app.search.length > 1) {
-      if (isBottomVisible) {
-        if (hasMore) {
-          setSpinner(true);
-          fetch(app.search.toLowerCase());
-          // console.log("fething");
-        }
+    //     if (queryParams.length > 1) {
+    if (isBottomVisible) {
+      if (hasMore) {
+        setSpinner(true);
+        fetchForInfinityScroll(queryParams.toLowerCase());
+        // console.log("fething");
       }
     }
+    //     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isBottomVisible, hasMore]);
 

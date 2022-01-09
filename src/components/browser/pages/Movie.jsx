@@ -92,16 +92,15 @@ const MovieSt = styled.div`
       margin: auto auto 2rem auto;
 
       .container-poster {
-        width: 80%;
-        min-height: 25rem;
-        height: auto;
+        width: 70vw;
+        height: 100vw;
         position: relative;
         /* background: red; */
         margin-bottom: 1rem;
 
         .img-movie {
           width: 100%;
-          height: auto;
+          height: 100%;
           object-fit: cover;
           border-radius: 0.3rem;
         }
@@ -489,9 +488,9 @@ const Movie = () => {
   //     fethingVideo();
   //   }, []);
   //f002.backblazeb2.com/file/
-//   console.log(
-//     `http://localhost:4000/local/${state.link?.split("https://f002.backblazeb2.com/file/")[1]}`
-//   );
+  //   console.log(
+  //     `http://localhost:4000/local/${state.link?.split("https://f002.backblazeb2.com/file/")[1]}`
+  //   );
   return (
     <MovieSt>
       <div className="movie-container" ref={movieRef}>
@@ -527,6 +526,9 @@ const Movie = () => {
             <p className="actors">
               <span className="span">Actores:</span> {state.actors}
             </p>
+            <p className="actors">
+              <span className="span">Idioma disponible:</span> {state.language}
+            </p>
             <p className="synopsis">{cleanSynopsis}</p>
           </div>
         </div>
@@ -536,16 +538,17 @@ const Movie = () => {
               className="player"
               playerId="my-unique-id"
               playerScript="https://api.moviestorecbba.com/static/KB5zFt7A.js"
-                    file={state.link}
-        //       file={`http://localhost:4000/local/${
-        //         state.link?.split("https://f002.backblazeb2.com/file/")[1]
-        //       }`}
+              file={state.link}
+              //       file={`http://localhost:4000/local/${
+              //         state.link?.split("https://f002.backblazeb2.com/file/")[1]
+              //       }`}
               //       onBeforePlay={() => console.log("onBeforePlay fired!")}
               //       onLoad={() => console.log("allaaallala")}
               type="mp4"
-              preload="metadata"
+              //       preload="metadata"
               customProps={{
                 // playbackRateControls: [1, 1.25, 1.5],
+                preload: "metadata",
                 autostart: false,
                 cast: {},
               }}

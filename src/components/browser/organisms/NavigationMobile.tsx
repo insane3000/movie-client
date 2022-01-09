@@ -147,8 +147,7 @@ const NavigationMobile = (props: any) => {
     //     console.log(value.length);
     clearTimeout(timerRef.current);
     if (value.length >= 1) {
-      navigate("/browser/search");
-      //       timerRef.current = setTimeout(() => fetchData(value), 500);
+      navigate(`/browser/search?query=${value}`);
       dispatch(search(value));
     }
     setState(value);
@@ -157,7 +156,7 @@ const NavigationMobile = (props: any) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (state.trim() === "") return notify();
-    navigate("/browser/search");
+    navigate(`/browser/search?query=${state}`);
   };
 
   const [showSearch, setShowSearch] = useState(false);

@@ -242,7 +242,7 @@ interface Props {
   year: string;
 }
 const MoviePoster = (props: Props) => {
-  const { pathname } = useLocation();
+  const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const app = useSelector((store: StoreInterface) => store.app);
@@ -252,9 +252,9 @@ const MoviePoster = (props: Props) => {
     e.currentTarget.complete && setImageLoad(true);
   };
   const handleModal = (id: string) => {
-    //     console.log(id);
+//     console.log(location);
     dispatch(setModal(id, true));
-    !app.modal.show && navigate(pathname);
+    !app.modal.show && navigate(`${location.pathname}${location.search}`);
   };
 
   return (

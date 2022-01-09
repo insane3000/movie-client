@@ -2,11 +2,14 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 // *Images
 import { useDispatch, useSelector } from "react-redux";
-import { setModal } from "redux/actions/appAction";
+import { setModal, setModalSerie } from "redux/actions/appAction";
 import axios from "axios";
 import { StoreInterface } from "interfaces/storeTemplate";
 import Spinner05 from "../atoms/Spinner05";
 import { useLocation, useNavigate } from "react-router-dom";
+// *Icons
+import { RiArrowLeftSLine } from "react-icons/ri";
+import { RiArrowRightSLine } from "react-icons/ri";
 const Banner2St = styled.div`
   width: 100vw;
   height: 85vh;
@@ -21,6 +24,7 @@ const Banner2St = styled.div`
     height: 100%;
     position: absolute;
     object-fit: cover;
+    filter: blur(50px) brightness(20%);
   }
   .gradient-top {
     width: 100%;
@@ -44,7 +48,7 @@ const Banner2St = styled.div`
     position: absolute;
     bottom: 5vh;
     display: flex;
-    flex-direction: row;
+    flex-direction: column-reverse;
     justify-content: center;
     align-items: center;
     /* background: red; */
@@ -59,17 +63,23 @@ const Banner2St = styled.div`
         width: 100%;
         height: auto;
         font-family: "Roboto 900";
-        font-size: 2rem;
+        font-size: 1.5rem;
         line-height: 2rem;
         color: white;
         text-shadow: 1px 1px 5px black;
         text-align: center;
       }
       .genre {
+        width: 100%;
         font-family: "Roboto 300";
         font-size: 1rem;
         color: white;
         text-shadow: 1px 1px 3px black;
+        text-align: center;
+        // !Dots ...
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
       .rating {
         font-family: "Roboto 900";
@@ -116,11 +126,73 @@ const Banner2St = styled.div`
       }
     }
     .poster {
-      width: auto;
-      height: 100%;
-      object-fit: contain;
-      display: none;
-      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+      width: 65vw;
+      height: 90vw;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      /* background: red; */
+      overflow: hidden;
+      margin-bottom: 0.5rem;
+      position: relative;
+      border-radius: 0.3rem;
+      /* overflow: hidden; */
+      .img {
+        width: 100%;
+        height: 100%;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        object-fit: cover;
+      }
+      .premiere-title {
+        position: absolute;
+        top: 0;
+        right: auto;
+        width: auto;
+        height: 5vw;
+        background: #ff0000;
+        color: white;
+        font-family: "Roboto 300";
+        text-transform: uppercase;
+        text-align: center;
+        line-height: 5vw;
+        font-size: 3vw;
+        padding: 0 2vw;
+        /* text-shadow: 1px 1px 3px black; */
+        border-radius: 0 0 0.2rem 0.2rem;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 1px 5px;
+      }
+      .spinnerPosterThumb {
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          /* background: #070707; */
+        }
+    }
+    .btn-slider {
+      background: #ffffff;
+      position: absolute;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      .sysIcon {
+        width: 70%;
+        height: 70%;
+        color: black;
+        /* background: red; */
+      }
+    }
+    .left {
+      left: 0rem;
+    }
+    .right {
+      right: 0rem;
     }
   }
   .spinnerPoster {
@@ -196,10 +268,16 @@ const Banner2St = styled.div`
           text-align: start;
         }
         .genre {
+          width: 100%;
           font-family: "Roboto 300";
-          font-size: 3vw;
+          font-size: 2.5vw;
           color: white;
           text-shadow: 3px 3px 10px black;
+          text-align: start;
+          // !Dots ...
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
         .rating {
           font-family: "Roboto 900";
@@ -246,11 +324,72 @@ const Banner2St = styled.div`
         }
       }
       .poster {
-        width: auto;
-        height: 100%;
-        object-fit: contain;
+        width: 25vw;
+        height: 35vw;
         display: flex;
-        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        justify-content: center;
+        align-items: center;
+        /* background: red; */
+        overflow: hidden;
+        margin-bottom: 0rem;
+        position: relative;
+        border-radius: 0.3rem;
+        .img {
+          width: 100%;
+          height: 100%;
+          box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+          object-fit: cover;
+        }
+        .premiere-title {
+          position: absolute;
+          top: 0;
+          right: auto;
+          width: auto;
+          height: 2rem;
+          background: #ff0000;
+          color: #ffffff;
+          font-family: "Roboto 300";
+          text-transform: uppercase;
+          text-align: center;
+          line-height: 2rem;
+          font-size: 1.2rem;
+          padding: 0 1rem;
+          /* text-shadow: 1px 1px 5px #131313; */
+          border-radius: 0 0 0.3rem 0.3rem;
+          box-shadow: rgba(0, 0, 0, 0.35) 0px 2px 10px;
+        }
+        .spinnerPosterThumb {
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          /* background: #070707; */
+        }
+      }
+      .btn-slider {
+        background: #ffffff;
+        position: absolute;
+        width: 4rem;
+        height: 4rem;
+        border-radius: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        .sysIcon {
+          width: 70%;
+          height: 70%;
+          color: black;
+          /* background: red; */
+        }
+      }
+      .left {
+        left: -2rem;
+      }
+      .right {
+        right: -2rem;
       }
     }
     .spinnerPoster {
@@ -287,7 +426,11 @@ interface MovieIT {
   updatedAt: string;
   year: string;
   _id: string;
+  type: string;
 }
+
+type MoviesIT = [MovieIT];
+
 const Banner = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
@@ -295,23 +438,32 @@ const Banner = () => {
   const app = useSelector((store: StoreInterface) => store.app);
 
   // ! States
+  let [index, setIndex] = useState(0);
+  const [docs, setDocs] = useState<MoviesIT>();
   const [state, setState] = useState<MovieIT>();
 
   const [spinnerPoster, setSpinnerPoster] = useState(true);
+  const [spinnerPosterThumb, SetSpinnerPosterThumb] = useState(true);
   // !Spinner Poster
   const handleLoadImg = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
     e.currentTarget.complete && setSpinnerPoster(false);
   };
 
-  //! Handle modal
+  //! Handle modal MOVIE
   const handleModal = (id: string) => {
     dispatch(setModal(id, true));
     !app.modal.show && navigate(pathname);
   };
+  //! Handle modal SERIE
+  const handleModalSerie = (id: string) => {
+    dispatch(setModalSerie(id, true));
+    !app.modalSerie.show && navigate(pathname);
+  };
+  const year = new Date().getFullYear();
   const fetchData = async () => {
     axios
       //       .get(`${process.env.REACT_APP_BACKEND_URL}/movies/${"61aa49e53cda0c8683b6d6cf"}`, {
-      .get(`${process.env.REACT_APP_BACKEND_URL}/last-premiere?limit=3`, {
+      .get(`${process.env.REACT_APP_BACKEND_URL}/last-premiere?limit=10&year=${year}`, {
         headers: {
           authorization: `Bearer ${app.login.token}`,
           id: `${app.login.user}`,
@@ -326,8 +478,12 @@ const Banner = () => {
         // setMovieId(response.data.movieId);
         // setBanner(response.data.banner);
 
-        setState(response.data.docs[Math.floor(Math.random() * 3)]);
-        // console.log(Math.random() * 5);
+        // setState(response.data.docs[Math.floor(Math.random() * 3)]);
+        // setIndex(0);
+        setDocs(response.data.docs);
+        setState(response.data.docs[0]);
+
+        // console.log(response);
       })
       .catch(function (error) {
         console.log(error);
@@ -357,19 +513,71 @@ const Banner = () => {
           <h1 className="banner-title">{state?.title}</h1>
           <section className="genre">
             {cleanText?.split(".")[0]} {cleanText?.split(".")[1] && "•"} {cleanText?.split(".")[1]}{" "}
-            {cleanText?.split(".")[2] && "•"} {cleanText?.split(".")[2]}
+            {cleanText?.split(".")[2] && " •"} {cleanText?.split(".")[2]}
           </section>
           <h3 className="rating">
             {state?.rating}
             <span className="out-of">/10</span>{" "}
           </h3>
           <section className="btn-container">
-            <button className="button-play" onClick={() => handleModal(`${state?._id}`)}>
-              Ver Ahora
-            </button>
+            {state?.type === "movie" ? (
+              <button className="button-play" onClick={() => handleModal(`${state?._id}`)}>
+                Ver Ahora
+              </button>
+            ) : (
+              <button className="button-play" onClick={() => handleModalSerie(`${state?._id}`)}>
+                Ver Ahora
+              </button>
+            )}
           </section>
         </div>
-        <img className="poster" src={`${process.env.REACT_APP_BUCKET}${state?.imageL}`} alt="" />
+
+        <div className="poster">
+          <img
+            className="img"
+            src={`${process.env.REACT_APP_BUCKET}${state?.imageL}`}
+            alt=""
+            onLoad={(e) => {
+              e.currentTarget.complete && SetSpinnerPosterThumb(false);
+            }}
+            style={spinnerPosterThumb ? { opacity: 0 } : { opacity: 1 }}
+          />
+          <div
+            className="premiere-title"
+            style={spinnerPosterThumb ? { opacity: 0 } : { opacity: 1 }}
+          >
+            {state?.type === "movie" ? "Estreno" : "Nuevos episodios"}
+          </div>
+          {spinnerPosterThumb && (
+            <section className="spinnerPosterThumb">
+              <Spinner05 />
+            </section>
+          )}
+        </div>
+        {index > 0 && (
+          <span
+            className="btn-slider left"
+            onClick={() => {
+              setState(docs && docs[index - 1]);
+              setIndex(index - 1);
+              SetSpinnerPosterThumb(true);
+            }}
+          >
+            <RiArrowLeftSLine className="sysIcon" />
+          </span>
+        )}
+        {index < 9 && (
+          <span
+            className="btn-slider right"
+            onClick={() => {
+              setState(docs && docs[index + 1]);
+              setIndex(index + 1);
+              SetSpinnerPosterThumb(true);
+            }}
+          >
+            <RiArrowRightSLine className="sysIcon" />
+          </span>
+        )}
       </div>
 
       {spinnerPoster && (

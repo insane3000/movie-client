@@ -5,9 +5,9 @@ import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
-import { loginServer, setModal } from "redux/actions/appAction";
+import { loginServer } from "redux/actions/appAction";
 // *Icons
-import CloseIcon from "icons/CloseIcon";
+import { MdKeyboardArrowDown } from "react-icons/md";
 import Spinner05 from "../atoms/Spinner05";
 import Error404 from "components/Error404";
 const MovieSt = styled.div`
@@ -93,16 +93,15 @@ const MovieSt = styled.div`
       margin: auto auto 2rem auto;
 
       .container-poster {
-        width: 80%;
-        min-height: 25rem;
-        height: auto;
+        width: 70vw;
+        height: 100vw;
         position: relative;
         /* background: red; */
         margin-bottom: 1rem;
 
         .img-movie {
           width: 100%;
-          height: auto;
+          height: 100%;
           object-fit: cover;
           border-radius: 0.3rem;
         }
@@ -183,25 +182,46 @@ const MovieSt = styled.div`
     .seasons {
       /* background: blue; */
       width: 90%;
-      height: 2rem;
+      height: auto;
       margin: auto;
       margin-bottom: 1rem;
-
-      .selectSeason {
-        width: auto;
-        height: 2rem;
-        padding: 0 0.5rem;
-        outline: none;
-        border-style: none;
-        border-radius: 0.2rem;
+      .select-arrow {
         background: #5900ff;
-        color: white;
-        font-family: "Roboto 900";
-        font-size: 1rem;
-        option {
-          background: white;
-          color: black;
-          font-family: "Roboto 300";
+        width: 10rem;
+        height: 2.5rem;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 0.3rem;
+        .selectSeason {
+          position: absolute;
+          padding-left: 1rem;
+          width: 100%;
+          height: 2.5rem;
+          outline: none;
+          border-style: none;
+          border-radius: 0.2rem;
+          background: none;
+          color: white;
+          font-family: "Roboto 900";
+          font-size: 1rem;
+          cursor: pointer;
+
+          // !hide arrow
+          appearance: none;
+          option {
+            background: white;
+            color: black;
+            font-family: "Roboto 300";
+          }
+        }
+        .sysIconArrow {
+          width: 1.5rem;
+          height: 1.5rem;
+          position: absolute;
+          right: 0.5rem;
+          color: white;
         }
       }
     }
@@ -397,25 +417,47 @@ const MovieSt = styled.div`
       .seasons {
         /* background: blue; */
         width: 80%;
-        height: 3rem;
+        height: auto;
         margin: auto;
         margin-bottom: 1rem;
 
-        .selectSeason {
-          width: auto;
-          height: 3rem;
-          padding: 0 1rem;
-          outline: none;
-          border-style: none;
-          border-radius: 0.2rem;
+        .select-arrow {
           background: #5900ff;
-          color: white;
-          font-family: "Roboto 900";
-          font-size: 1.2rem;
-          option {
-            background: white;
-            color: black;
-            font-family: "Roboto 300";
+          width: 12rem;
+          height: 3rem;
+          position: relative;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 0.3rem;
+
+          .selectSeason {
+            position: absolute;
+            padding-left: 1rem;
+            width: 100%;
+            height: 3rem;
+            outline: none;
+            border-style: none;
+            border-radius: 0.2rem;
+            background: none;
+            color: white;
+            font-family: "Roboto 900";
+            font-size: 1.2rem;
+            cursor: pointer;
+            // !hide arrow
+            appearance: none;
+            option {
+              background: white;
+              color: black;
+              font-family: "Roboto 300";
+            }
+          }
+          .sysIconArrow {
+            width: 2rem;
+            height: 2rem;
+            position: absolute;
+            right: 0.5rem;
+            color: white;
           }
         }
       }
@@ -465,7 +507,9 @@ const Movie = () => {
   const [errorWindow, setErrorWindow] = useState(false);
   // ! PLAY SEASONS
   const [episodes, setEpisodes] = useState([]);
-  const [currentSeason, setCurrentSeason] = useState([]);
+  //   const [currentSeason, setCurrentSeason] = useState([]);
+  //   console.log(episodes);
+
   // ! PLAY LIST
   const [playlist, setPlaylist] = useState([]);
   //   const modifyLink = state.link?.split(".mp4")[0];
@@ -474,16 +518,16 @@ const Movie = () => {
   const scrollToTop = () => {
     movieRef.current.scrollTop = 0;
   };
-  const handleModal = () => {
-    dispatch(setModal("", false));
-    navigate(-1);
-  };
+  //   const handleModal = () => {
+  //     dispatch(setModal("", false));
+  //     navigate(-1);
+  //   };
 
   //   console.log(state);
   // !Get Serie
   const fetchData = async () => {
+    let localTitle = "";
     setSpinner(true);
-
     await axios
       .get(`${process.env.REACT_APP_BACKEND_URL}/movies/${app.modalSerie.id}`, {
         headers: {
@@ -493,9 +537,8 @@ const Movie = () => {
         },
       })
       .then(function (response) {
-        setSpinner(false);
         response.status === 204 ? setErrorWindow(true) : setState(response.data);
-        // console.log(response);
+        localTitle = response.data.title;
       })
       .catch(function (error) {
         console.log(error);
@@ -505,11 +548,6 @@ const Movie = () => {
         localStorage.setItem("role", "");
         navigate(`/`);
       });
-  };
-  // !Get Episodes
-  const fetchEpisodes = async () => {
-    setSpinner(true);
-
     await axios
       .get(
         `${process.env.REACT_APP_BACKEND_URL}/episodes-admin/?serieID=${app.modalSerie.id}&limit=1000`,
@@ -525,15 +563,18 @@ const Movie = () => {
       .then(function (response) {
         setSpinner(false);
         response.status === 204 ? setErrorWindow(true) : setEpisodes(response.data.docs);
-        const seasonFiltered = response.data.docs.filter((i) => i.season === 1);
-        setCurrentSeason(seasonFiltered);
+        // console.log(response.data.docs);
+        const seasonFiltered = response.data.docs.filter(
+          (i) => i.season === response.data.docs[0].season
+        );
+        // setCurrentSeason(seasonFiltered);
         const seasonSelected = [];
-        console.log(response.data.docs);
+        // console.log(response.data.docs);
         seasonFiltered.map((i) => {
           seasonSelected.push({
-            file: i.link.replace("http", "https"),
+            file: `https://${i.link.split("://")[1]}`,
             image: `${process.env.REACT_APP_BUCKET_EPISODES}${i.imageL}`,
-            title: `${state.title} T:${i.season} Ep:${i.episode}`,
+            title: `${localTitle} T:${i.season} Ep:${i.episode}`,
             //     description: "Un dragon llegara...",
           });
           return i;
@@ -550,13 +591,17 @@ const Movie = () => {
         navigate(`/`);
       });
   };
+  // !Get Episodes
+  //   const fetchEpisodes = async () => {
+  //     setSpinner(true);
+  //   };
   useEffect(() => {
     setSpinnerPoster(true);
     fetchData();
-    fetchEpisodes();
+    //     fetchEpisodes();
     scrollToTop();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [app.modal.id]);
+  }, [app.modalSerie.id]);
   //!para validar query
   //   let genero = state.genre.slice(0, 4).toLowerCase();
 
@@ -571,17 +616,17 @@ const Movie = () => {
   let seasonsQuantity = seasonsArray.filter((item, index) => {
     return seasonsArray.indexOf(item) === index;
   });
-  console.log(state);
+  //   console.log(state);
   // !Handle set Season
   const handleSeason = (e) => {
     let value = parseInt(e.target.value);
     const seasonFiltered = episodes.filter((i) => i.season === value);
-    setCurrentSeason(seasonFiltered);
+    //     setCurrentSeason(seasonFiltered);
     const seasonSelected = [];
 
     seasonFiltered.map((i) => {
       seasonSelected.push({
-        file: i.link.replace("http", "https"),
+        file: `https://${i.link.split("://")[1]}`,
         image: `${process.env.REACT_APP_BUCKET_EPISODES}${i.imageL}`,
         title: `${state.title} T:${i.season} Ep:${i.episode}`,
         //     description: "Un dragon llegara...",
@@ -631,13 +676,16 @@ const Movie = () => {
         </div>
 
         <div className="seasons">
-          <select onChange={handleSeason} className="selectSeason" name="" id="">
-            {seasonsQuantity.map((i) => (
-              <option key={i} value={i}>
-                Temporada: {i}
-              </option>
-            ))}
-          </select>
+          <section className="select-arrow">
+            <MdKeyboardArrowDown className="sysIconArrow" />
+            <select onChange={handleSeason} className="selectSeason" name="" id="">
+              {seasonsQuantity.map((i) => (
+                <option key={i} value={i}>
+                  Temporada: {i}
+                </option>
+              ))}
+            </select>
+          </section>
         </div>
 
         <div className="player-container">
@@ -648,9 +696,11 @@ const Movie = () => {
             playerScript="https://api.moviestorecbba.com/static/KB5zFt7A.js"
             playlist={playlist}
             type="mp4"
-            preload="metadata"
+            //     preload="metadata"
             customProps={{
               // playbackRateControls: [1, 1.25, 1.5],
+              defaultBandwidthEstimate: 400000,
+              preload: "metadata",
               autostart: false,
               cast: {},
             }}

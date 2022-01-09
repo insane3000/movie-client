@@ -243,7 +243,7 @@ interface Props {
 }
 const MoviePoster = (props: Props) => {
   //   console.log(props);
-  const { pathname } = useLocation();
+  const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const app = useSelector((store: StoreInterface) => store.app);
@@ -255,7 +255,7 @@ const MoviePoster = (props: Props) => {
   const handleModal = (id: string) => {
     //     console.log(id);
     dispatch(setModalSerie(id, true));
-    !app.modalSerie.show && navigate(pathname);
+    !app.modal.show && navigate(`${location.pathname}${location.search}`);
   };
 
   return (

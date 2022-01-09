@@ -45,6 +45,7 @@ const UpdateUserSt = styled.div`
         height: 1rem;
         position: absolute;
         top: -1.2rem;
+        left: 0;
         font-family: "Roboto 300";
         font-size: 0.9rem;
         color: #b9b9b9;
@@ -116,6 +117,7 @@ const UpdateUserSt = styled.div`
           font-family: "Roboto 900";
           font-size: 1.5rem;
         }
+
         .name {
           text-transform: capitalize;
         }
@@ -134,6 +136,7 @@ interface User {
   phone: string;
   date: string;
   role: string;
+  screens: number;
 }
 const UpdateUser = () => {
   let navigate = useNavigate();
@@ -148,12 +151,13 @@ const UpdateUser = () => {
     phone: "",
     date: "",
     role: "",
+    screens: 0,
   });
-
+  console.log(state);
   useEffect(() => {
     const fetchData = async () => {
       await axios
-        .get(`${process.env.REACT_APP_BACKEND_URL}/client/${app.login.user}`, {
+        .get(`${process.env.REACT_APP_BACKEND_URL}/client-profile/${app.login.user}`, {
           headers: {
             authorization: `Bearer ${app.login.token}`,
             id: `${app.login.user}`,
@@ -161,15 +165,7 @@ const UpdateUser = () => {
           },
         })
         .then(function (response) {
-          setState(() => ({
-            ...state,
-            user: response.data.user,
-            password: response.data.password,
-            name: response.data.name,
-            phone: response.data.phone,
-            date: response.data.date,
-          }));
-          console.log(response);
+          setState(response.data);
         })
         .catch(function (error) {
           console.log(error);
@@ -212,6 +208,29 @@ const UpdateUser = () => {
           <span className="label">Fecha de vencimiento:</span>
           <span className="data date">
             {new Date(state.date).toLocaleDateString("es-ES", options)}
+          </span>
+        </section>
+        <section
+          className="section "
+          style={
+            state.screens === 1
+              ? { background: "#6200FF", textAlign: "center", border: "none" }
+              : state.screens === 2
+              ? { background: "#ff004c", textAlign: "center", border: "none" }
+              : state.screens === 4
+              ? { background: "#ffe600", color: "black", textAlign: "center", border: "none" }
+              : { background: "none" }
+          }
+        >
+          <span className="label">Plan:</span>
+          <span className="data">
+            {state.screens === 1
+              ? "basic"
+              : state.screens === 2
+              ? "standar"
+              : state.screens === 4
+              ? "premium"
+              : ""}
           </span>
         </section>
       </div>

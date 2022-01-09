@@ -89,7 +89,7 @@ const MenuSt = styled.div`
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      border-bottom: 0.0625rem solid #1a1a1a;
+      /* border-bottom: 0.0625rem solid #1a1a1a; */
       .logo-img {
         width: 5rem;
         height: 5rem;
@@ -141,6 +141,8 @@ const MenuSt = styled.div`
       flex-direction: column;
       justify-content: center;
       align-items: flex-start;
+      border-top: 0.0625rem solid #1a1a1a;
+
       border-bottom: 0.0625rem solid #1a1a1a;
       padding: 0rem 0.5rem;
       /* font-family: "Roboto 700";
@@ -247,6 +249,9 @@ const MenuMobile = () => {
         </NavLink>
         <NavLink className="home" to="/browser/premieres" onClick={closeMenu}>
           <PremieresIcon className="sysIconHome" /> Estrenos
+        </NavLink>
+        <NavLink className="home" to="/browser/category/series-tv" onClick={closeMenu}>
+          <PremieresIcon className="sysIconHome" /> Series TV
         </NavLink>
         <NavLink className="home" to="/browser/profile" onClick={closeMenu}>
           <UserIconLight className="sysIconHome" /> Perfil

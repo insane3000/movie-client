@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import MoviePoster from "../molecules/MoviePoster";
+import SeriePoster from "../molecules/SeriePoster";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { StoreInterface } from "interfaces/storeTemplate";
@@ -36,7 +37,7 @@ const AllMoviesSt = styled.div`
     justify-content: center;
     align-content: flex-start;
     gap: 1rem;
-    margin-top: .5rem;
+    margin-top: 0.5rem;
     margin-bottom: 1rem;
     /* padding: 0 10rem; */
   }
@@ -175,16 +176,27 @@ const AllMovies = () => {
     <AllMoviesSt>
       <h2 className="title-component">Estrenos</h2>
       <div className="container-movies">
-        {state?.map((i: any) => (
-          <MoviePoster
-            key={i._id}
-            id={i._id}
-            img={i.imageM}
-            rating={i.rating}
-            title={i.title}
-            year={i.year}
-          />
-        ))}
+        {state?.map((i: any) => {
+          return i.type === "movie" ? (
+            <MoviePoster
+              key={i._id}
+              id={i._id}
+              img={i.imageM}
+              rating={i.rating}
+              title={i.title}
+              year={i.year}
+            />
+          ) : (
+            <SeriePoster
+              key={i._id}
+              id={i._id}
+              img={i.imageM}
+              rating={i.rating}
+              title={i.title}
+              year={i.year}
+            />
+          );
+        })}
       </div>
       <section ref={ref} className="loadMore">
         {!hasMore && "Llegaste al final."}

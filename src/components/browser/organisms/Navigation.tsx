@@ -51,10 +51,10 @@ const NavigationSt = styled.nav`
         height: 2rem;
         padding: 0 0.5rem;
       }
-      .active {
+      /* .active {
         color: #ffffff;
         font-family: "Roboto 900";
-      }
+      } */
     }
     .showSearchBtn {
       position: absolute;
@@ -176,7 +176,7 @@ const Navigation = (props: any) => {
     const value = e.currentTarget.value.trim();
     clearTimeout(timerRef.current);
     if (value.length >= 1) {
-      navigate("/browser/search");
+      navigate(`/browser/search?query=${value}`);
       dispatch(search(value));
     }
     setState(value);
@@ -185,7 +185,7 @@ const Navigation = (props: any) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (state.trim() === "") return notify();
-    navigate("/browser/search");
+    navigate(`/browser/search?query=${state}`);
   };
 
   const logout = () => {
@@ -210,12 +210,12 @@ const Navigation = (props: any) => {
       setShowSearch(false);
     }
   };
-//   useEffect(() => {
-//     document.addEventListener("click", handleClickOutside, true);
-//     return () => {
-//       document.removeEventListener("click", handleClickOutside, true);
-//     };
-//   });
+  //   useEffect(() => {
+  //     document.addEventListener("click", handleClickOutside, true);
+  //     return () => {
+  //       document.removeEventListener("click", handleClickOutside, true);
+  //     };
+  //   });
   return (
     <NavigationSt style={{ background: props.bg }}>
       <Link
@@ -234,6 +234,11 @@ const Navigation = (props: any) => {
         <NavLink className="li" to="/browser/premieres">
           Estrenos
         </NavLink>
+
+        <NavLink className="li" to="/browser/category/series-tv">
+          Series TV
+        </NavLink>
+
         <NavLink className="li" to="/browser/category">
           Categorías
         </NavLink>
