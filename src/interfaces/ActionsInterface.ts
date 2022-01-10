@@ -29,5 +29,21 @@ interface modalSerie {
   id: string;
   payload: Boolean;
 }
+interface modalReport {
+  type: ActionType.MODAL_REPORT;
+  show: boolean;
+  idMovie: string;
+  title: string;
+  imageS: string;
+  imageL: string;
+  message: string;
+}
 
-export type ActionsInterface = showMenu | loginServer | search | scroll | modal | modalSerie;
+export type ActionsInterface =
+  | showMenu
+  | loginServer
+  | search
+  | scroll
+  | modal
+  | modalSerie
+  | modalReport;

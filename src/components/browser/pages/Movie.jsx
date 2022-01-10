@@ -5,11 +5,13 @@ import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
-import { loginServer, setModal } from "redux/actions/appAction";
+import { loginServer, setModal, setModalReport } from "redux/actions/appAction";
+import { useLocation } from "react-router";
 // *Icons
 import CloseIcon from "icons/CloseIcon";
 import Spinner05 from "../atoms/Spinner05";
 import Error404 from "components/Error404";
+import { MdSdCardAlert } from "react-icons/md";
 const MovieSt = styled.div`
   position: fixed;
   top: 0;
@@ -178,7 +180,77 @@ const MovieSt = styled.div`
         }
       }
     }
+    .seasons {
+      /* background: blue; */
+      width: 90%;
+      height: auto;
+      margin: auto;
+      margin-bottom: 0.5rem;
+      position: relative;
+      .select-arrow {
+        background: #5900ff;
+        width: 7.7rem;
+        height: 2rem;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 0.3rem;
+        .selectSeason {
+          position: absolute;
+          padding-left: 0.5rem;
+          width: 100%;
+          height: 2rem;
+          outline: none;
+          border-style: none;
+          border-radius: 0.2rem;
+          background: none;
+          color: white;
+          font-family: "Roboto 900";
+          font-size: 0.8rem;
+          cursor: pointer;
 
+          // !hide arrow
+          appearance: none;
+          option {
+            background: white;
+            color: black;
+            font-family: "Roboto 300";
+          }
+        }
+        .sysIconArrow {
+          width: 1.5rem;
+          height: 1.5rem;
+          position: absolute;
+          right: 0.2rem;
+          color: white;
+        }
+      }
+      .report {
+        background: #ffd000;
+        width: 9rem;
+        height: 2rem;
+        position: absolute;
+        right: 0;
+        top: 0;
+        font-family: "Roboto 900";
+        color: #000000;
+        font-size: 0.8rem;
+        text-align: center;
+        border-radius: 0.2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        .sysIconReport {
+          width: 1.2rem;
+          height: 1.2rem;
+          margin-left: 0.2rem;
+          color: black;
+          /* background: red; */
+        }
+      }
+    }
     .player-container {
       width: 90%;
       min-height: 10rem;
@@ -368,7 +440,75 @@ const MovieSt = styled.div`
           }
         }
       }
+      .seasons {
+        /* background: blue; */
+        width: 80%;
+        height: auto;
+        margin: auto;
+        margin-bottom: 1rem;
 
+        .select-arrow {
+          background: #5900ff;
+          width: 12rem;
+          height: 3rem;
+          position: relative;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 0.3rem;
+
+          .selectSeason {
+            position: absolute;
+            padding-left: 1rem;
+            width: 100%;
+            height: 3rem;
+            outline: none;
+            border-style: none;
+            border-radius: 0.2rem;
+            background: none;
+            color: white;
+            font-family: "Roboto 900";
+            font-size: 1.2rem;
+            cursor: pointer;
+            // !hide arrow
+            appearance: none;
+            option {
+              background: white;
+              color: black;
+              font-family: "Roboto 300";
+            }
+          }
+          .sysIconArrow {
+            width: 2rem;
+            height: 2rem;
+            position: absolute;
+            right: 0.5rem;
+            color: white;
+          }
+        }
+        .report {
+          background: #ffd000;
+          width: 14rem;
+          height: 3rem;
+          position: absolute;
+          right: 0;
+          top: 0;
+          font-family: "Roboto 900";
+          color: #000000;
+          font-size: 1.2rem;
+          line-height: 3rem;
+          text-align: center;
+          border-radius: 0.2rem;
+          cursor: pointer;
+          .sysIconReport {
+            width: 1.5rem;
+            height: 1.5rem;
+            margin-left: 0.5rem;
+            color: black;
+            /* background: red; */
+          }
+        }
+      }
       .player-container {
         width: 80%;
         min-height: 30rem;
@@ -405,6 +545,7 @@ const movieTemplate = {
 };
 const Movie = () => {
   // const params = useParams();
+  const location = useLocation();
   let navigate = useNavigate();
   const dispatch = useDispatch();
   const app = useSelector((store) => store.app);
@@ -491,6 +632,12 @@ const Movie = () => {
   //   console.log(
   //     `http://localhost:4000/local/${state.link?.split("https://f002.backblazeb2.com/file/")[1]}`
   //   );
+  //! handle REPORT MODAL
+  const handlerReportModal = (id) => {
+    //     console.log(location);
+    dispatch(setModalReport(true, state._id, state.title, state.imageS, state.imageL, ""));
+    !app.report.show && navigate(`${location.pathname}${location.search}`);
+  };
   return (
     <MovieSt>
       <div className="movie-container" ref={movieRef}>
@@ -532,6 +679,23 @@ const Movie = () => {
             <p className="synopsis">{cleanSynopsis}</p>
           </div>
         </div>
+
+        <div className="seasons">
+          <section className="select-arrow" style={{ background: "none" }}>
+            {/* <MdKeyboardArrowDown className="sysIconArrow" />
+            <select onChange={handleSeason} className="selectSeason" name="" id="">
+              {seasonsQuantity.map((i) => (
+                <option key={i} value={i}>
+                  Temporada: {i}
+                </option>
+              ))}
+            </select> */}
+          </section>
+          <section className="report" title="Reportar un problema." onClick={handlerReportModal}>
+            Reportar problema <MdSdCardAlert className="sysIconReport" />
+          </section>
+        </div>
+
         <div className="player-container">
           {state.link !== "" && (
             <ReactJWPlayer

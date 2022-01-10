@@ -16,7 +16,7 @@ import Categories from "./pages/Categories";
 // import Welcome from "./pages/Welcome";
 import { useDispatch, useSelector } from "react-redux";
 import { StoreInterface } from "interfaces/storeTemplate";
-import { setModal, setModalSerie } from "redux/actions/appAction";
+import { setModal, setModalReport, setModalSerie } from "redux/actions/appAction";
 import Navigation from "./organisms/Navigation";
 import NavigationMobile from "./organisms/NavigationMobile";
 import { useLocation } from "react-router";
@@ -67,6 +67,7 @@ const User = () => {
 
     window.addEventListener("popstate", () => dispatch(setModal("", false)));
     window.addEventListener("popstate", () => dispatch(setModalSerie("", false)));
+    window.addEventListener("popstate", () => dispatch(setModalReport(false, "", "", "", "", "")));
     return () => {
       window.removeEventListener("popstate", dispatch);
       //       window.removeEventListener("popstate", dispatch);

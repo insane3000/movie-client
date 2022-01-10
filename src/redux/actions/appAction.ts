@@ -51,10 +51,26 @@ export const setModal = (id: string, data: Boolean) => (dispatch: Dispatch<Actio
 // !Seteando  SERIE
 export const setModalSerie =
   (id: string, data: Boolean) => (dispatch: Dispatch<ActionsInterface>) => {
-//     console.log(id);
+    //     console.log(id);
     dispatch({
       type: ActionType.MODAL_SERIE,
       id: id,
       payload: data,
+    });
+  };
+
+// !Seteando  MODAL REPORT
+export const setModalReport =
+  (show: boolean, idMovie: string, title: string, imageS: string, imageL: string, message: string) =>
+  (dispatch: Dispatch<ActionsInterface>) => {
+    //     console.log(show, id, title, img, message);
+    dispatch({
+      type: ActionType.MODAL_REPORT,
+      show,
+      idMovie,
+      title,
+      imageS,
+      imageL,
+      message,
     });
   };

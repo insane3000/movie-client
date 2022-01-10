@@ -5,9 +5,11 @@ import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
-import { loginServer } from "redux/actions/appAction";
+import { loginServer, setModalReport } from "redux/actions/appAction";
+import { useLocation } from "react-router";
 // *Icons
 import { MdKeyboardArrowDown } from "react-icons/md";
+import { MdSdCardAlert } from "react-icons/md";
 import Spinner05 from "../atoms/Spinner05";
 import Error404 from "components/Error404";
 const MovieSt = styled.div`
@@ -184,11 +186,12 @@ const MovieSt = styled.div`
       width: 90%;
       height: auto;
       margin: auto;
-      margin-bottom: 1rem;
+      margin-bottom: 0.5rem;
+      position: relative;
       .select-arrow {
         background: #5900ff;
-        width: 10rem;
-        height: 2.5rem;
+        width: 7.7rem;
+        height: 2rem;
         position: relative;
         display: flex;
         justify-content: center;
@@ -196,16 +199,16 @@ const MovieSt = styled.div`
         border-radius: 0.3rem;
         .selectSeason {
           position: absolute;
-          padding-left: 1rem;
+          padding-left: 0.5rem;
           width: 100%;
-          height: 2.5rem;
+          height: 2rem;
           outline: none;
           border-style: none;
           border-radius: 0.2rem;
           background: none;
           color: white;
           font-family: "Roboto 900";
-          font-size: 1rem;
+          font-size: 0.8rem;
           cursor: pointer;
 
           // !hide arrow
@@ -220,8 +223,32 @@ const MovieSt = styled.div`
           width: 1.5rem;
           height: 1.5rem;
           position: absolute;
-          right: 0.5rem;
+          right: 0.2rem;
           color: white;
+        }
+      }
+      .report {
+        background: #ffd000;
+        width: 9rem;
+        height: 2rem;
+        position: absolute;
+        right: 0;
+        top: 0;
+        font-family: "Roboto 900";
+        color: #000000;
+        font-size: 0.8rem;
+        text-align: center;
+        border-radius: 0.2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        .sysIconReport {
+          width: 1.2rem;
+          height: 1.2rem;
+          margin-left: 0.2rem;
+          color: black;
+          /* background: red; */
         }
       }
     }
@@ -460,6 +487,28 @@ const MovieSt = styled.div`
             color: white;
           }
         }
+        .report {
+          background: #ffd000;
+          width: 14rem;
+          height: 3rem;
+          position: absolute;
+          right: 0;
+          top: 0;
+          font-family: "Roboto 900";
+          color: #000000;
+          font-size: 1.2rem;
+          line-height: 3rem;
+          text-align: center;
+          border-radius: 0.2rem;
+          cursor: pointer;
+          .sysIconReport {
+            width: 1.5rem;
+            height: 1.5rem;
+            margin-left: 0.5rem;
+            color: black;
+            /* background: red; */
+          }
+        }
       }
       .player-container {
         width: 80%;
@@ -497,6 +546,7 @@ const movieTemplate = {
 };
 const Movie = () => {
   // const params = useParams();
+  const location = useLocation();
   let navigate = useNavigate();
   const dispatch = useDispatch();
   const app = useSelector((store) => store.app);
@@ -508,7 +558,6 @@ const Movie = () => {
   // ! PLAY SEASONS
   const [episodes, setEpisodes] = useState([]);
   //   const [currentSeason, setCurrentSeason] = useState([]);
-  //   console.log(episodes);
 
   // ! PLAY LIST
   const [playlist, setPlaylist] = useState([]);
@@ -598,8 +647,7 @@ const Movie = () => {
   useEffect(() => {
     setSpinnerPoster(true);
     fetchData();
-    //     fetchEpisodes();
-    scrollToTop();
+        scrollToTop();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [app.modalSerie.id]);
   //!para validar query
@@ -635,6 +683,12 @@ const Movie = () => {
     });
     //     console.log(lala);
     setPlaylist(seasonSelected);
+  };
+  //! handle REPORT MODAL
+  const handlerReportModal = (id) => {
+//     console.log(location);
+    dispatch(setModalReport(true, state._id, state.title, state.imageS, state.imageL, ""));
+    !app.report.show && navigate(`${location.pathname}${location.search}`);
   };
   return (
     <MovieSt>
@@ -686,6 +740,9 @@ const Movie = () => {
               ))}
             </select>
           </section>
+          <section className="report" title="Reportar un problema." onClick={handlerReportModal}>
+            Reportar problema <MdSdCardAlert className="sysIconReport" />
+          </section>
         </div>
 
         <div className="player-container">
@@ -699,7 +756,7 @@ const Movie = () => {
             //     preload="metadata"
             customProps={{
               // playbackRateControls: [1, 1.25, 1.5],
-              defaultBandwidthEstimate: 400000,
+              //       defaultBandwidthEstimate: 400000,
               preload: "metadata",
               autostart: false,
               cast: {},

@@ -1,6 +1,14 @@
 export type AppInterface = {
   showMenu: boolean;
   search: string;
+  report: {
+    show: boolean;
+    idMovie: string;
+    title: string;
+    imageS: string;
+    imageL: string;
+    message: string;
+  };
   scroll: {
     home: number;
     movies: number;
@@ -25,6 +33,14 @@ export type AppInterface = {
 export const appTemplate: AppInterface = {
   showMenu: false,
   search: "",
+  report: {
+    show: false,
+    idMovie: "",
+    title: "",
+    imageS: "",
+    imageL: "",
+    message: "",
+  },
   scroll: {
     home: 0,
     movies: 0,
