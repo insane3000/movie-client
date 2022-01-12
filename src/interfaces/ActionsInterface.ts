@@ -9,6 +9,7 @@ interface loginServer {
   user: string;
   token: string;
   role: string;
+  name: string;
 }
 interface search {
   type: ActionType.SEARCH;

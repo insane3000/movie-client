@@ -38,7 +38,8 @@ function App() {
       loginServer(
         `${localStorage.getItem("user") === null ? "" : localStorage.getItem("user")}`,
         `${localStorage.getItem("token") === null ? "" : localStorage.getItem("token")}`,
-        `${localStorage.getItem("role") === null ? "" : localStorage.getItem("role")}`
+        `${localStorage.getItem("role") === null ? "" : localStorage.getItem("role")}`,
+        `${localStorage.getItem("name") === null ? "" : localStorage.getItem("name")}`
       )
     );
   }, [dispatch]);

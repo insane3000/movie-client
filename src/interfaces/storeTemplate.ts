@@ -27,6 +27,7 @@ export type AppInterface = {
     user: string;
     token: string;
     role: string;
+    name: string;
   };
   // CashRegister: CashRegisterIT;
 };
@@ -59,6 +60,7 @@ export const appTemplate: AppInterface = {
     user: "",
     token: "",
     role: "",
+    name: "",
   },
   // CashRegister: cashRegisterTemplate,
 };

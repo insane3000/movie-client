@@ -189,10 +189,11 @@ const Navigation = (props: any) => {
   };
 
   const logout = () => {
-    dispatch(loginServer("", "", ""));
+    dispatch(loginServer("", "", "", ""));
     localStorage.setItem("token", "");
     localStorage.setItem("user", "");
     localStorage.setItem("role", "");
+    localStorage.setItem("name", "");
     localStorage.setItem("fails", "0");
     navigate(`/`);
     //     socket.emit("closeUserID", app.login.user); //TODO falta hacer esta parte

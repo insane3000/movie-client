@@ -5,10 +5,10 @@ import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
-import { loginServer, setModal, setModalReport } from "redux/actions/appAction";
+import { loginServer, setModalReport } from "redux/actions/appAction";
 import { useLocation } from "react-router";
 // *Icons
-import CloseIcon from "icons/CloseIcon";
+// import CloseIcon from "icons/CloseIcon";
 import Spinner05 from "../atoms/Spinner05";
 import Error404 from "components/Error404";
 import { MdSdCardAlert } from "react-icons/md";
@@ -57,33 +57,12 @@ const MovieSt = styled.div`
     height: 100vh;
     background: #1a1720;
     background: #080808;
-    /* padding-top: 4rem; */
+    padding-top: 4rem;
+    padding-bottom: 2rem;
     overflow-y: scroll;
     z-index: 1;
     position: relative;
-    .close-div {
-      /* background: red; */
-      width: 100%;
-      height: 3rem;
-      position: sticky;
-      top: 0;
-      z-index: 1;
-
-      .sysClose {
-        position: absolute;
-        top: 1rem;
-        right: 1rem;
-        font-size: 3rem;
-        background: white;
-        border-radius: 100%;
-        color: black;
-        cursor: pointer;
-        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
-        &:hover {
-          background: #d6d6d6;
-        }
-      }
-    }
+ 
     .container-poster-data {
       width: 90%;
       height: auto;
@@ -322,30 +301,7 @@ const MovieSt = styled.div`
       overflow-y: scroll;
       z-index: 1;
       position: relative;
-      .close-div {
-        /* background: red; */
-        width: 100%;
-        height: 5rem;
-        position: sticky;
-        top: 0;
-        z-index: 1;
-
-        .sysClose {
-          position: absolute;
-          top: 2rem;
-          right: 2rem;
-          font-size: 4rem;
-          background: white;
-          border-radius: 100%;
-          color: black;
-          cursor: pointer;
-          box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
-
-          &:hover {
-            background: #d6d6d6;
-          }
-        }
-      }
+  
       .container-poster-data {
         width: 80%;
         height: auto;
@@ -561,10 +517,10 @@ const Movie = () => {
   const scrollToTop = () => {
     movieRef.current.scrollTop = 0;
   };
-  const handleModal = () => {
-    dispatch(setModal("", false));
-    navigate(-1);
-  };
+//   const handleModal = () => {
+//     dispatch(setModal("", false));
+//     navigate(-1);
+//   };
 
   //   console.log(state);
 
@@ -641,9 +597,7 @@ const Movie = () => {
   return (
     <MovieSt>
       <div className="movie-container" ref={movieRef}>
-        <div className="close-div">
-          <CloseIcon className="sysClose" onClick={handleModal} />
-        </div>
+        
 
         <div className="container-poster-data">
           <div className="container-poster">
@@ -713,6 +667,7 @@ const Movie = () => {
               customProps={{
                 // playbackRateControls: [1, 1.25, 1.5],
                 preload: "metadata",
+                defaultBandwidthEstimate: 200000000,
                 autostart: false,
                 cast: {},
               }}

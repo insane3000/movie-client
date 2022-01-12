@@ -432,10 +432,19 @@ const Welcome = () => {
         // if (response.data.login) {
         //   return navigate(`/asdasdasddas`);
         // }
-        dispatch(loginServer(response.data._id, response.data.token, response.data.role));
+        // console.log(response);
+        dispatch(
+          loginServer(
+            response.data._id,
+            response.data.token,
+            response.data.role,
+            response.data.name
+          )
+        );
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("user", response.data._id);
         localStorage.setItem("role", response.data.role);
+        localStorage.setItem("name", response.data.name);
         localStorage.setItem("fails", "0");
         navigate(`/browser`);
         // console.log(response);

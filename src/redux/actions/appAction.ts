@@ -12,13 +12,15 @@ export const showMenu = (data: boolean) => (dispatch: Dispatch<ActionsInterface>
 };
 // !Seteando LOGIN
 export const loginServer =
-  (user: string, token: string, role: string) => (dispatch: Dispatch<ActionsInterface>) => {
+  (user: string, token: string, role: string, name: string) =>
+  (dispatch: Dispatch<ActionsInterface>) => {
     // console.log(data);
     dispatch({
       type: ActionType.LOGIN,
       user,
       token,
       role,
+      name,
     });
   };
 // !Seteando SEARCH
@@ -61,7 +63,14 @@ export const setModalSerie =
 
 // !Seteando  MODAL REPORT
 export const setModalReport =
-  (show: boolean, idMovie: string, title: string, imageS: string, imageL: string, message: string) =>
+  (
+    show: boolean,
+    idMovie: string,
+    title: string,
+    imageS: string,
+    imageL: string,
+    message: string
+  ) =>
   (dispatch: Dispatch<ActionsInterface>) => {
     //     console.log(show, id, title, img, message);
     dispatch({

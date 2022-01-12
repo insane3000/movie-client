@@ -161,10 +161,11 @@ const Genre = () => {
       })
       .catch(function (error) {
         console.log(error);
-        dispatch(loginServer("", "", ""));
+        dispatch(loginServer("", "", "", ""));
         localStorage.setItem("token", "");
         localStorage.setItem("user", "");
         localStorage.setItem("role", "");
+        localStorage.setItem("name", "");
         // navigate(`/browser/home`);
       });
   };
@@ -187,10 +188,11 @@ const Genre = () => {
       })
       .catch(function (error) {
         console.log(error);
-        dispatch(loginServer("", "", ""));
+        dispatch(loginServer("", "", "", ""));
         localStorage.setItem("token", "");
         localStorage.setItem("user", "");
         localStorage.setItem("role", "");
+        localStorage.setItem("name", "");
         navigate(`/`);
       });
   };
