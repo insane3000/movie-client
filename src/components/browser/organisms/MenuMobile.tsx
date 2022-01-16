@@ -15,6 +15,7 @@ import PremieresIcon from "icons/PremieresIcon";
 import UserIconLight from "icons/UserIconLight";
 import VideoIcon from "icons/VideoIcon";
 import CloseIcon from "icons/CloseIcon";
+import { VscBookmark } from "react-icons/vsc";
 
 const MenuSt = styled.div`
   position: fixed;
@@ -252,10 +253,13 @@ const MenuMobile = () => {
           <PremieresIcon className="sysIconHome" /> Estrenos
         </NavLink>
         <NavLink className="home" to="/browser/category/series-tv" onClick={closeMenu}>
-          <PremieresIcon className="sysIconHome" /> Series TV
+          <PremieresIcon className="sysIconHome" /> Series Tv
         </NavLink>
         <NavLink className="home" to="/browser/profile" onClick={closeMenu}>
           <UserIconLight className="sysIconHome" /> Perfil
+        </NavLink>
+        <NavLink className="home" to="/browser/plans" onClick={closeMenu}>
+          <VscBookmark className="sysIconHome" /> Planes
         </NavLink>
         {/* <NavLink className="home series" to="/browser/series" onClick={closeMenu}>
           Series

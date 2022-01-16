@@ -4,7 +4,7 @@ import ClusterSerieTV from "../organisms/ClusterSerieTV";
 import JustAdded from "../organisms/JustAdded";
 
 // import Banner from "../organisms/Banner";
-import Banner2 from "../organisms/Banner2";
+import Banner from "../organisms/Banner";
 const HomeSt = styled.div`
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
@@ -17,7 +17,7 @@ const Home = () => {
   return (
     <HomeSt>
       {/* <Banner /> */}
-      <Banner2 />
+      <Banner />
       <JustAdded subtitle="Recien Agregados" />
       <ClusterSerieTV genre="series-tv" subtitle="Series TV" />
       <Cluster genre="accion" subtitle="Acción" text="" />

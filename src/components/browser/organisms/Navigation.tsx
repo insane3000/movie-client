@@ -32,7 +32,7 @@ const NavigationSt = styled.nav`
     }
     .ul {
       display: grid;
-      grid-template-columns: repeat(5, auto);
+      grid-template-columns: repeat(6, auto);
       grid-template-rows: 3rem;
       gap: 1rem;
       margin-left: 3rem;
@@ -237,7 +237,7 @@ const Navigation = (props: any) => {
         </NavLink>
 
         <NavLink className="li" to="/browser/category/series-tv">
-          Series TV
+          Series Tv
         </NavLink>
 
         <NavLink className="li" to="/browser/category">
@@ -245,6 +245,9 @@ const Navigation = (props: any) => {
         </NavLink>
         <NavLink className="li" to="/browser/profile">
           Perfil
+        </NavLink>
+        <NavLink className="li" to="/browser/plans">
+          Planes
         </NavLink>
       </section>
 

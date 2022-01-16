@@ -153,7 +153,7 @@ const UpdateUser = () => {
     role: "",
     screens: 0,
   });
-  console.log(state);
+//   console.log(state);
   useEffect(() => {
     const fetchData = async () => {
       await axios
@@ -219,18 +219,18 @@ const UpdateUser = () => {
               : state.screens === 2
               ? { background: "#ff004c", textAlign: "center", border: "none" }
               : state.screens === 4
-              ? { background: "#ffe600", color: "black", textAlign: "center", border: "none" }
+              ? { background: "#ffe600", color: "black", textAlign: "center", border: "none", }
               : { background: "none" }
           }
         >
           <span className="label">Plan:</span>
           <span className="data">
             {state.screens === 1
-              ? "basic"
+              ? "Basic"
               : state.screens === 2
-              ? "standar"
+              ? "Standar"
               : state.screens === 4
-              ? "premium"
+              ? "Premium"
               : ""}
           </span>
         </section>

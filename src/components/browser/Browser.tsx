@@ -25,6 +25,7 @@ import MenuMobile from "./organisms/MenuMobile";
 // *Socket.io
 import socket from "config/Socket";
 import axios from "axios";
+import Plans from "./pages/Plans";
 const BrowserSt = styled.div`
   width: 100%;
   height: 100%;
@@ -111,6 +112,7 @@ const User = () => {
         <Route path="/category/*" element={<Categories />} />
         <Route path="/search" element={<Search />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/plans" element={<Plans />} />
         {/* <Route path="/series" element={<Series />} /> */}
         <Route path="/*" element={<Error404 />} />
       </Routes>

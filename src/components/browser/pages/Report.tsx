@@ -427,6 +427,7 @@ const Report = () => {
           name="message"
           onChange={handleMessage}
           value={state.message}
+          required
         >
           {state.message}
         </textarea>

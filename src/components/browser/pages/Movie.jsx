@@ -62,7 +62,7 @@ const MovieSt = styled.div`
     overflow-y: scroll;
     z-index: 1;
     position: relative;
- 
+
     .container-poster-data {
       width: 90%;
       height: auto;
@@ -301,7 +301,7 @@ const MovieSt = styled.div`
       overflow-y: scroll;
       z-index: 1;
       position: relative;
-  
+
       .container-poster-data {
         width: 80%;
         height: auto;
@@ -517,10 +517,10 @@ const Movie = () => {
   const scrollToTop = () => {
     movieRef.current.scrollTop = 0;
   };
-//   const handleModal = () => {
-//     dispatch(setModal("", false));
-//     navigate(-1);
-//   };
+  //   const handleModal = () => {
+  //     dispatch(setModal("", false));
+  //     navigate(-1);
+  //   };
 
   //   console.log(state);
 
@@ -597,8 +597,6 @@ const Movie = () => {
   return (
     <MovieSt>
       <div className="movie-container" ref={movieRef}>
-        
-
         <div className="container-poster-data">
           <div className="container-poster">
             <img
@@ -657,6 +655,7 @@ const Movie = () => {
               playerId="my-unique-id"
               playerScript="https://api.moviestorecbba.com/static/KB5zFt7A.js"
               file={state.link}
+              //       file="http://192.168.160.131:4000/movies/Ai%20Rising.mp4"
               //       file={`http://localhost:4000/local/${
               //         state.link?.split("https://f002.backblazeb2.com/file/")[1]
               //       }`}
@@ -666,10 +665,11 @@ const Movie = () => {
               //       preload="metadata"
               customProps={{
                 // playbackRateControls: [1, 1.25, 1.5],
-                preload: "metadata",
+                // preload: "auto",
                 defaultBandwidthEstimate: 200000000,
                 autostart: false,
                 cast: {},
+                hlsjsdefault : true,
               }}
             />
           )}

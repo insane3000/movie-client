@@ -62,7 +62,7 @@ const MovieSt = styled.div`
     overflow-y: scroll;
     z-index: 1;
     position: relative;
- 
+
     .container-poster-data {
       width: 90%;
       height: auto;
@@ -301,7 +301,7 @@ const MovieSt = styled.div`
       overflow-y: scroll;
       z-index: 1;
       position: relative;
-    
+
       .container-poster-data {
         width: 80%;
         height: auto;
@@ -712,9 +712,10 @@ const Movie = () => {
             customProps={{
               // playbackRateControls: [1, 1.25, 1.5],
               defaultBandwidthEstimate: 200000000,
-              preload: "metadata",
+              //       preload: "metadata",
               autostart: false,
               cast: {},
+              hlsjsdefault: true,
             }}
           />
           {/* )} */}
