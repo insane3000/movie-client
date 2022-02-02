@@ -24,7 +24,7 @@ const MoviesPosterSt = styled.div`
   .container-poster {
     width: 100%;
     height: calc(100% - 3rem);
-    border-radius: 0.5rem;
+    /* border-radius: 0.5rem; */
     box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
     border: 0.125rem solid transparent;
     overflow: hidden;
@@ -135,7 +135,7 @@ const MoviesPosterSt = styled.div`
     .container-poster {
       width: 100%;
       height: calc(100% - 3rem);
-      border-radius: 0.5rem;
+      /* border-radius: 0.5rem; */
       box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
       border: 0.125rem solid transparent;
       overflow: hidden;

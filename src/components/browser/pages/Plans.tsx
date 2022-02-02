@@ -4,11 +4,20 @@ const PlansSt = styled.div`
   height: calc(100% - 5rem);
   /* background: #131212; */
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  p {
+    margin-top: 1rem;
+    font-family: "Roboto 300";
+    font-size: 1rem;
+    color: #c7c7c7;
+    /* background: red; */
+    width: 80%;
+  }
   .plans-container {
     width: 100%;
-    height: 40rem;
+    height: auto;
     /* background: red; */
     display: grid;
     grid-template-columns: repeat(3, 30%);
@@ -36,7 +45,7 @@ const PlansSt = styled.div`
         width: 100%;
         height: 100%;
         line-height: 5rem;
-        background: #161616;
+        background: #080012;
         text-align: start;
         padding: 0 5rem;
         font-family: "Roboto 700";
@@ -53,7 +62,7 @@ const PlansSt = styled.div`
         width: 100%;
         height: 100%;
         /* line-height: 5rem; */
-        background: #161616;
+        background: #080012;
         /* background: red; */
         display: flex;
         flex-direction: column;
@@ -76,22 +85,18 @@ const PlansSt = styled.div`
   @media only screen and (min-width: 568px) {
     width: 100%;
     height: calc(100% - 5rem);
-    /* background: #131212; */
     display: flex;
     justify-content: center;
     align-items: center;
     .plans-container {
       width: 84rem;
-      height: 40rem;
-      /* background: red; */
+      height: auto;
       display: grid;
       grid-template-columns: 20rem 20rem 20rem 20rem;
       grid-template-rows: 100%;
-      /* gap: 1rem; */
       justify-content: center;
       align-content: center;
       .plan {
-        /* background: #0c0c0c; */
         display: grid;
         grid-template-columns: 100%;
         grid-template-rows: 15rem 5rem 5rem 5rem 5rem;
@@ -110,7 +115,7 @@ const PlansSt = styled.div`
           width: 100%;
           height: 100%;
           line-height: 5rem;
-          background: #161616;
+          background: #080012;
           text-align: start;
           padding: 0 5rem;
           font-family: "Roboto 700";
@@ -127,7 +132,7 @@ const PlansSt = styled.div`
           width: 100%;
           height: 100%;
           /* line-height: 5rem; */
-          background: #161616;
+          background: #080012;
           display: flex;
           flex-direction: column;
           justify-content: space-evenly;
@@ -229,6 +234,7 @@ const Plans = () => {
           <section className="section button"></section>
         </div>
       </div>
+      <p>Velocidad mínima por pantalla 15Mbps</p>
     </PlansSt>
   );
 };

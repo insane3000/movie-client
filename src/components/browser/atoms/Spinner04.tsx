@@ -7,14 +7,14 @@ const Spinner03St = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #0e0a18;
-  background: #060606;
+  background: #000000ae;
+
 
   position: absolute;
   .html-spinner {
     width: 2.5rem;
     height: 2.5rem;
-    border: 0.25rem solid #817f7c;
+    border: 0.25rem solid #ffffff16;
     border-top: 0.25rem solid white;
     border-radius: 50%;
   }

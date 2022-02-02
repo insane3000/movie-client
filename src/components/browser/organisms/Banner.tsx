@@ -12,13 +12,14 @@ import { RiArrowLeftSLine } from "react-icons/ri";
 import { RiArrowRightSLine } from "react-icons/ri";
 const Banner2St = styled.div`
   width: 100vw;
-  height: 85vh;
+  height: 35rem;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  position: absolute;
+  position: relative;
   top: 0;
+  /* background: red; */
   .image-bg {
     width: 100%;
     height: 100%;
@@ -68,6 +69,10 @@ const Banner2St = styled.div`
         color: white;
         text-shadow: 1px 1px 5px black;
         text-align: center;
+        // !Dots ...
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
       .genre {
         width: 100%;
@@ -135,8 +140,10 @@ const Banner2St = styled.div`
       overflow: hidden;
       margin-bottom: 0.5rem;
       position: relative;
-      border-radius: 0.3rem;
+      /* border-radius: 0.3rem; */
       /* overflow: hidden; */
+      /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
+      cursor: pointer;
       .img {
         width: 100%;
         height: 100%;
@@ -210,13 +217,14 @@ const Banner2St = styled.div`
   // !Estilos para Desktop
   @media only screen and (min-width: 568px) {
     width: 100vw;
-    height: 95vh;
+    height: 35rem;
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    position: absolute;
-    top: 0;
+    position: relative;
+    /* top: 5vw; */
+    /* background: red; */
     .image-bg {
       width: 100%;
       height: 100%;
@@ -261,11 +269,15 @@ const Banner2St = styled.div`
           width: 100%;
           height: auto;
           font-family: "Roboto 900";
-          font-size: 5vw;
-          line-height: 5vw;
+          font-size: 4vw;
+          line-height: 4vw;
           color: white;
           text-shadow: 5px 5px 10px black;
           text-align: start;
+          //! Dots ...
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: normal;
         }
         .genre {
           width: 100%;
@@ -320,12 +332,12 @@ const Banner2St = styled.div`
               background: #dfdfdf;
               transition: 0.1s;
             }
-          }
+          } 
         }
       }
       .poster {
-        width: 25vw;
-        height: 35vw;
+        width: 20rem;
+        height: 30rem;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -333,27 +345,30 @@ const Banner2St = styled.div`
         overflow: hidden;
         margin-bottom: 0rem;
         position: relative;
-        border-radius: 0.3rem;
+        /* border-radius: 0.3rem; */
+
+        box-shadow: none;
+        cursor: pointer;
         .img {
           width: 100%;
           height: 100%;
-          box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
           object-fit: cover;
+          box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
         }
         .premiere-title {
           position: absolute;
           top: 0;
           right: auto;
           width: auto;
-          height: 2rem;
+          height: 2vw;
           background: #ff0000;
           color: #ffffff;
           font-family: "Roboto 300";
           text-transform: uppercase;
           text-align: center;
-          line-height: 2rem;
-          font-size: 1.2rem;
-          padding: 0 1rem;
+          line-height: 2vw;
+          font-size: 1vw;
+          padding: 0 1vw;
           /* text-shadow: 1px 1px 5px #131313; */
           border-radius: 0 0 0.3rem 0.3rem;
           box-shadow: rgba(0, 0, 0, 0.35) 0px 2px 10px;
@@ -501,14 +516,14 @@ const Banner = () => {
 
   return (
     <Banner2St>
-      <img
+      {/* <img
         className="image-bg"
         src={`${process.env.REACT_APP_BUCKET}${state?.imageL}`}
         alt=""
         onLoad={(e) => handleLoadImg(e)}
-      />
-      <div className="gradient-top"></div>
-      <div className="gradient-bottom"></div>
+      /> */}
+      {/* <div className="gradient-top"></div>
+      <div className="gradient-bottom"></div> */}
 
       <div className="data-poster">
         <div className="data">
@@ -534,13 +549,21 @@ const Banner = () => {
           </section>
         </div>
 
-        <div className="poster">
+        <div
+          className="poster"
+          onClick={() =>
+            state?.type === "movie"
+              ? handleModal(`${state?._id}`)
+              : handleModalSerie(`${state?._id}`)
+          }
+        >
           <img
             className="img"
             src={`${process.env.REACT_APP_BUCKET}${state?.imageL}`}
             alt=""
             onLoad={(e) => {
               e.currentTarget.complete && SetSpinnerPosterThumb(false);
+              handleLoadImg(e);
             }}
             style={spinnerPosterThumb ? { opacity: 0 } : { opacity: 1 }}
           />
@@ -578,11 +601,11 @@ const Banner = () => {
         )}
       </div>
 
-      {spinnerPoster && (
+      {/* {spinnerPoster && (
         <section className="spinnerPoster">
           <Spinner05 />
         </section>
-      )}
+      )} */}
     </Banner2St>
   );
 };

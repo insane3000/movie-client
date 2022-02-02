@@ -62,7 +62,7 @@ const MenuSt = styled.div`
   .menuDetails {
     width: 80%;
     height: 100%;
-    background: #0e0d0d;
+    background: #131212;
     position: absolute;
     left: 0;
     top: 0;
@@ -253,7 +253,7 @@ const MenuMobile = () => {
           <PremieresIcon className="sysIconHome" /> Estrenos
         </NavLink>
         <NavLink className="home" to="/browser/category/series-tv" onClick={closeMenu}>
-          <PremieresIcon className="sysIconHome" /> Series Tv
+          <PremieresIcon className="sysIconHome" /> Series TV
         </NavLink>
         <NavLink className="home" to="/browser/profile" onClick={closeMenu}>
           <UserIconLight className="sysIconHome" /> Perfil

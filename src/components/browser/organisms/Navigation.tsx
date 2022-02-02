@@ -111,23 +111,23 @@ const SearchSt = styled.form`
     justify-content: space-evenly;
     align-items: center;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    border-radius: 0.3rem;
+    border-radius: 1rem;
     background: #1f1d1d;
-    background: #ebebeb;
+    background: #000000cc;
 
     .search-input {
       height: 100%;
       width: calc(100% - 3rem);
       padding: 0 1rem;
       font-family: "Roboto 300";
-      color: black;
+      /* color: black; */
       font-size: 1rem;
       outline: none;
       border-style: none;
       background: none;
       background: none;
-      color: #000000;
-      border-radius: 0.3rem;
+      color: #ffffff;
+      border-radius: 1rem;
     }
     .btn-submit {
       width: 3rem;
@@ -142,13 +142,12 @@ const SearchSt = styled.form`
         padding: 0.5rem;
         background: none;
         transition: 0.1s;
-        color: #161616;
+        color: #6e6e6e;
         background: none;
-        &:hover {
-          /* transform: scale(1.1); */
+        /* &:hover {
           transition: 0.1s;
           color: #000000;
-        }
+        } */
       }
     }
     animation-name: example;
@@ -237,7 +236,7 @@ const Navigation = (props: any) => {
         </NavLink>
 
         <NavLink className="li" to="/browser/category/series-tv">
-          Series Tv
+          Series TV
         </NavLink>
 
         <NavLink className="li" to="/browser/category">
@@ -271,6 +270,7 @@ const Navigation = (props: any) => {
             onChange={(e) => handleChangeSearch(e)}
             //     minLength={1}
             autoFocus
+            onFocus={(e) => e.target.select()}
           />
           <button className="btn-submit" type="submit">
             <SearchIcon className="icon-submit" />

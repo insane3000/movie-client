@@ -77,7 +77,7 @@ const UpdateUserSt = styled.div`
     justify-content: start;
     align-items: center;
     .userContainer {
-      background: #0c0c0c;
+      background: #080012;
       width: 25rem;
       height: 33rem;
       display: flex;
@@ -153,7 +153,7 @@ const UpdateUser = () => {
     role: "",
     screens: 0,
   });
-//   console.log(state);
+  //   console.log(state);
   useEffect(() => {
     const fetchData = async () => {
       await axios
@@ -219,7 +219,7 @@ const UpdateUser = () => {
               : state.screens === 2
               ? { background: "#ff004c", textAlign: "center", border: "none" }
               : state.screens === 4
-              ? { background: "#ffe600", color: "black", textAlign: "center", border: "none", }
+              ? { background: "#ffe600", color: "black", textAlign: "center", border: "none" }
               : { background: "none" }
           }
         >

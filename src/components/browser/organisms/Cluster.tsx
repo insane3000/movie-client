@@ -73,7 +73,7 @@ const ClusterSt = styled.div`
       grid-auto-columns: 9rem;
       /* grid-auto-flow: column dense; */
       grid-template-rows: 100%;
-      gap: 0.5rem;
+      gap: 0.1rem;
       overflow-x: scroll;
       overflow-y: hidden;
       // !Firefox
@@ -88,7 +88,7 @@ const ClusterSt = styled.div`
       .loadMore {
         width: 9rem;
         background: transparent;
-        background: #1d1d1d;
+        background: #000000ae;
 
         display: flex;
         justify-content: center;
@@ -134,7 +134,7 @@ const ClusterSt = styled.div`
         width: 4rem;
         height: 100%;
         position: absolute;
-        background: #000000;
+        background: #000000ae;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -161,16 +161,16 @@ const ClusterSt = styled.div`
         grid-auto-flow: column;
         grid-auto-columns: 13rem;
         grid-template-rows: 100%;
-        gap: 1rem;
+        gap: .5rem;
         overflow-x: scroll;
         overflow-y: hidden;
         // !Firefox
-        scrollbar-color: #070707 #070707;
+        scrollbar-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0);
         scrollbar-width: thin;
         .loadMore {
           width: 13rem;
           background: transparent;
-          background: #1d1d1d;
+          background: #000000ae;
 
           display: flex;
           justify-content: center;

@@ -110,7 +110,7 @@ body{
     font-size: 20px;
   }
 }
-// !Media query a partir de (Lg-Ultrawide-2560*1080) + (2K-2560*1440) 
+/* // !Media query a partir de (Lg-Ultrawide-2560*1080) + (2K-2560*1440) 
 @media only screen and (min-width: 2560px) {
   html{
     font-size: 28px;
@@ -133,6 +133,6 @@ body{
   html{
     font-size:80px;
   }
-} 
+}  */
 `;
 export default GlobalStyle;

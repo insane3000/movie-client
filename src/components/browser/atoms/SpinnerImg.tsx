@@ -8,8 +8,8 @@ const SpinnerSt = styled.div`
   align-items: center;
   position: absolute;
   top: 0;
-  background:#090711;
-  background: #060606;
+  background: #000000ae;
+
   .sk-chase {
     width: 40px;
     height: 40px;

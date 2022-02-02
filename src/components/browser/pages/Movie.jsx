@@ -28,8 +28,8 @@ const MovieSt = styled.div`
   .loader {
     width: 100vw;
     height: 1000vh;
-    background: #1a1720;
-    background: #080808;
+    background: #080012;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -42,8 +42,8 @@ const MovieSt = styled.div`
   .errorWindow {
     width: 100vw;
     height: 100vh;
-    background: #1a1720;
-    background: #080808;
+    background: #080012;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -55,8 +55,13 @@ const MovieSt = styled.div`
   .movie-container {
     width: 100vw;
     height: 100vh;
-    background: #1a1720;
-    background: #080808;
+    background: rgb(0, 0, 0);
+    background: linear-gradient(
+      159deg,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(18, 1, 64, 1) 48%,
+      rgba(35, 2, 46, 1) 100%
+    );
     padding-top: 4rem;
     padding-bottom: 2rem;
     overflow-y: scroll;
@@ -83,14 +88,14 @@ const MovieSt = styled.div`
           width: 100%;
           height: 100%;
           object-fit: cover;
-          border-radius: 0.3rem;
+          /* border-radius: 0.3rem; */
         }
         .spinnerPoster {
           width: 100%;
           height: 100%;
           top: 0;
           position: absolute;
-          background: #0f0f0f;
+          background: #080012;
         }
       }
       .container-data {
@@ -269,8 +274,8 @@ const MovieSt = styled.div`
     .loader {
       width: 100vw;
       height: 100vh;
-      background: #1a1720;
-      background: #080808;
+      background: #080012;
+
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -282,8 +287,7 @@ const MovieSt = styled.div`
     .errorWindow {
       width: 100vw;
       height: 100vh;
-      background: #1a1720;
-      background: #080808;
+      background: #080012;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -295,8 +299,13 @@ const MovieSt = styled.div`
     .movie-container {
       width: 100vw;
       height: 100vh;
-      background: #1a1720;
-      background: #080808;
+      background: rgb(0, 0, 0);
+      background: linear-gradient(
+        159deg,
+        rgba(0, 0, 0, 1) 0%,
+        rgba(18, 1, 64, 1) 48%,
+        rgba(35, 2, 46, 1) 100%
+      );
       /* padding-top: 4rem; */
       overflow-y: scroll;
       z-index: 1;
@@ -319,14 +328,14 @@ const MovieSt = styled.div`
             width: 100%;
             height: auto;
             object-fit: cover;
-            border-radius: 0.3rem;
+            /* border-radius: 0.3rem; */
           }
           .spinnerPoster {
             width: 100%;
             height: 100%;
             top: 0;
             position: absolute;
-            background: #0f0f0f;
+            background: #080012;
           }
         }
         .container-data {
@@ -655,7 +664,7 @@ const Movie = () => {
               playerId="my-unique-id"
               playerScript="https://api.moviestorecbba.com/static/KB5zFt7A.js"
               file={state.link}
-              //       file="http://192.168.160.131:4000/movies/Ai%20Rising.mp4"
+              //       file="http://192.168.0.248:8080/movies/300.mp4"
               //       file={`http://localhost:4000/local/${
               //         state.link?.split("https://f002.backblazeb2.com/file/")[1]
               //       }`}
@@ -666,10 +675,10 @@ const Movie = () => {
               customProps={{
                 // playbackRateControls: [1, 1.25, 1.5],
                 // preload: "auto",
-                defaultBandwidthEstimate: 200000000,
+                // defaultBandwidthEstimate: 200000000,
                 autostart: false,
                 cast: {},
-                hlsjsdefault : true,
+                // hlsjsdefault: true,
               }}
             />
           )}

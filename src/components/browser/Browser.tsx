@@ -47,6 +47,15 @@ const User = () => {
   const dispatch = useDispatch();
   const app = useSelector((store: StoreInterface) => store.app);
 
+  //   db.episodes.updateMany(
+  //         { link: { $regex: 'http://media.moviestorecbba.com/series-tv/' } },
+  //         [{
+  //           $set: { link: {
+  //             $replaceOne: { input: "$link", find: "http://media.moviestorecbba.com/series-tv/", replacement: " https://f002.backblazeb2.com/file/msc-series-tv/" }
+  //           }}
+  //         }]
+  //       )
+
   useEffect(() => {
     // ! Screens control
     socket.emit("userID", app.login.user);
@@ -81,7 +90,7 @@ const User = () => {
   const [maintenance, setMaintenance] = useState(false);
   const handleScroll = useCallback((e) => {
     //     console.log(e.target.scrollTop);
-    e.target.scrollTop > 0 ? setBg("#070707") : setBg("");
+    e.target.scrollTop > 0 ? setBg("#0e0e0ef6") : setBg("");
   }, []);
   // ! Scroll to TOP
   const scrollToTop = () => {

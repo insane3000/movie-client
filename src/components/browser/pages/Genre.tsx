@@ -307,11 +307,11 @@ const Genre = () => {
         {!hasMore && "Llegaste al final."}
         {spinner && <Spinner03 />}
       </section>
-      {loader && (
+      {/* {loader && (
         <div className="loader-genre">
           <Spinner03 />
         </div>
-      )}
+      )} */}
     </GenreSt>
   );
 };

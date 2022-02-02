@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 // *Icons
 import SearchIcon from "icons/SearchIcon";
-import MenuIcon from "icons/MenuIcon";
+import { IoIosMenu } from "react-icons/io";
 import { useDispatch } from "react-redux";
 import { restartScroll, search, showMenu } from "redux/actions/appAction";
 import toast from "react-hot-toast";
@@ -79,23 +79,23 @@ const SearchMobileSt = styled.form`
   justify-content: space-evenly;
   align-items: center;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  border-radius: 0.3rem;
+  border-radius: 1rem;
   background: #1f1d1d;
   background: #ebebeb;
+  background: #201f1fcc;
 
   .search-input {
     height: 100%;
     width: calc(100% - 3rem);
     padding: 0 1rem;
     font-family: "Roboto 300";
-    color: black;
     font-size: 1rem;
     outline: none;
     border-style: none;
     background: none;
     background: none;
-    color: #000000;
-    border-radius: 0.3rem;
+    color: #ffffff;
+    border-radius: 1rem;
   }
   .btn-submit {
     width: 3rem;
@@ -110,13 +110,12 @@ const SearchMobileSt = styled.form`
       padding: 0.5rem;
       background: none;
       transition: 0.1s;
-      color: #161616;
+      color: #6e6e6e;
       background: none;
-      &:hover {
-        /* transform: scale(1.1); */
+      /* &:hover {
         transition: 0.1s;
         color: #000000;
-      }
+      } */
     }
   }
   animation-name: exampleMobile;
@@ -184,7 +183,7 @@ const NavigationMobile = (props: any) => {
   return (
     <NavigationMobileSt style={{ background: props.bg }}>
       <button className="hamburgerBtn" onClick={closeMenu}>
-        <MenuIcon className="sysIconMenu" />
+        <IoIosMenu className="sysIconMenu" />
       </button>
       {!showSearch && (
         <Link
@@ -215,6 +214,7 @@ const NavigationMobile = (props: any) => {
             placeholder="Buscar..."
             onChange={(e) => handleChangeSearch(e)}
             autoFocus
+            onFocus={(e) => e.target.select()}
           />
           <button className="btn-submit" type="submit">
             <SearchIcon className="icon-submit" />

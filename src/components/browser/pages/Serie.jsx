@@ -28,8 +28,7 @@ const MovieSt = styled.div`
   .loader {
     width: 100vw;
     height: 1000vh;
-    background: #1a1720;
-    background: #080808;
+    background: #080012;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -42,8 +41,7 @@ const MovieSt = styled.div`
   .errorWindow {
     width: 100vw;
     height: 100vh;
-    background: #1a1720;
-    background: #080808;
+    background: #080012;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -55,8 +53,13 @@ const MovieSt = styled.div`
   .movie-container {
     width: 100vw;
     height: 100vh;
-    background: #1a1720;
-    background: #080808;
+    background: rgb(0, 0, 0);
+    background: linear-gradient(
+      159deg,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(18, 1, 64, 1) 48%,
+      rgba(35, 2, 46, 1) 100%
+    );
     padding-top: 4rem;
     padding-bottom: 2rem;
     overflow-y: scroll;
@@ -83,14 +86,14 @@ const MovieSt = styled.div`
           width: 100%;
           height: 100%;
           object-fit: cover;
-          border-radius: 0.3rem;
+          /* border-radius: 0.3rem; */
         }
         .spinnerPoster {
           width: 100%;
           height: 100%;
           top: 0;
           position: absolute;
-          background: #0f0f0f;
+          background: #080012;
         }
       }
       .container-data {
@@ -158,6 +161,15 @@ const MovieSt = styled.div`
           /* margin-top: 1rem; */
         }
       }
+    }
+    .note {
+      width: 90%;
+      height: auto;
+      margin: auto;
+      margin-bottom: 0.5rem;
+      color: #ff0055;
+      font-family: "Roboto 300";
+      font-size: 0.8rem;
     }
     .seasons {
       /* background: blue; */
@@ -269,8 +281,7 @@ const MovieSt = styled.div`
     .loader {
       width: 100vw;
       height: 100vh;
-      background: #1a1720;
-      background: #080808;
+      background: #080012;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -282,8 +293,7 @@ const MovieSt = styled.div`
     .errorWindow {
       width: 100vw;
       height: 100vh;
-      background: #1a1720;
-      background: #080808;
+      background: #080012;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -295,8 +305,13 @@ const MovieSt = styled.div`
     .movie-container {
       width: 100vw;
       height: 100vh;
-      background: #1a1720;
-      background: #080808;
+      background: rgb(0, 0, 0);
+      background: linear-gradient(
+        159deg,
+        rgba(0, 0, 0, 1) 0%,
+        rgba(18, 1, 64, 1) 48%,
+        rgba(35, 2, 46, 1) 100%
+      );
       padding-top: 4rem;
       overflow-y: scroll;
       z-index: 1;
@@ -319,14 +334,14 @@ const MovieSt = styled.div`
             width: 100%;
             height: auto;
             object-fit: cover;
-            border-radius: 0.3rem;
+            /* border-radius: 0.3rem; */
           }
           .spinnerPoster {
             width: 100%;
             height: 100%;
             top: 0;
             position: absolute;
-            background: #0f0f0f;
+            background: #080012;
           }
         }
         .container-data {
@@ -395,6 +410,16 @@ const MovieSt = styled.div`
             margin-top: 1rem;
           }
         }
+      }
+      .note {
+        width: 80%;
+        height: auto;
+        margin: auto;
+        margin-bottom: 1rem;
+        background-attachment: fixed;
+        color: #ff0055;
+        font-family: "Roboto 300";
+        font-size: 1.2rem;
       }
       .seasons {
         /* background: blue; */
@@ -465,6 +490,7 @@ const MovieSt = styled.div`
           }
         }
       }
+
       .player-container {
         width: 80%;
         min-height: 30rem;
@@ -684,6 +710,10 @@ const Movie = () => {
           </div>
         </div>
 
+        <div className="note">
+          NOTA: Algunos intros están en ingles, luego toda la serie esta normal.
+        </div>
+
         <div className="seasons">
           <section className="select-arrow">
             <MdKeyboardArrowDown className="sysIconArrow" />
@@ -711,11 +741,11 @@ const Movie = () => {
             //     preload="metadata"
             customProps={{
               // playbackRateControls: [1, 1.25, 1.5],
-              defaultBandwidthEstimate: 200000000,
-              //       preload: "metadata",
+              //       defaultBandwidthEstimate: 200000000,
+              preload: "metadata",
               autostart: false,
               cast: {},
-              hlsjsdefault: true,
+              //       hlsjsdefault: true,
             }}
           />
           {/* )} */}

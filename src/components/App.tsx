@@ -17,7 +17,14 @@ import Report from "./browser/pages/Report";
 const AppSt = styled.div`
   width: 100vw;
   height: 100vh;
-  background: #070707;
+  /* background: #070707; */
+  background: rgb(0, 0, 0);
+  background: linear-gradient(
+    159deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(18, 1, 64, 1) 48%,
+    rgba(35, 2, 46, 1) 100%
+  );
   position: relative;
   .toast {
     width: auto;
