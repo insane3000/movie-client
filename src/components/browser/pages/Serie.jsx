@@ -219,7 +219,7 @@ const MovieSt = styled.div`
       }
       .report {
         background: #ffd000;
-        width: 9rem;
+        width: 9.5rem;
         height: 2rem;
         position: absolute;
         right: 0;
