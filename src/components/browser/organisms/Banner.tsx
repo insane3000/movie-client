@@ -270,7 +270,7 @@ const Banner2St = styled.div`
           height: auto;
           font-family: "Roboto 900";
           font-size: 4vw;
-          line-height: 4vw;
+          line-height: 4.5vw;
           color: white;
           text-shadow: 5px 5px 10px black;
           text-align: start;

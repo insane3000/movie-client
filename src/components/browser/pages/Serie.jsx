@@ -580,7 +580,7 @@ const Movie = () => {
       });
     await axios
       .get(
-        `${process.env.REACT_APP_BACKEND_URL}/episodes-admin/?serieID=${app.modalSerie.id}&limit=1000`,
+        `${process.env.REACT_APP_BACKEND_URL}/episodes-admin?serieID=${app.modalSerie.id}&limit=1000`,
         {
           //       .get(`${process.env.REACT_APP_BACKEND_URL}/series-complete/${app.modalSerie.id}`, {
           headers: {
@@ -602,7 +602,7 @@ const Movie = () => {
         // console.log(response.data.docs);
         seasonFiltered.map((i) => {
           seasonSelected.push({
-            file: `https://${i.link.split("://")[1]}`,
+            file: i.link,
             image: `${process.env.REACT_APP_BUCKET_EPISODES}${i.imageL}`,
             title: `${localTitle} T:${i.season} Ep:${i.episode}`,
             //     description: "Un dragon llegara...",
@@ -625,13 +625,17 @@ const Movie = () => {
   //   const fetchEpisodes = async () => {
   //     setSpinner(true);
   //   };
+  const ref = useRef(null);
+  const reset = () => {
+    ref.current.selectedIndex = 0;
+  };
   useEffect(() => {
     setSpinnerPoster(true);
     fetchData();
     scrollToTop();
+    reset();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [app.modalSerie.id]);
-  //!para validar query
   //   let genero = state.genre.slice(0, 4).toLowerCase();
 
   const cleanText = state.genre?.replace("|", ".");
@@ -655,7 +659,7 @@ const Movie = () => {
 
     seasonFiltered.map((i) => {
       seasonSelected.push({
-        file: `https://${i.link.split("://")[1]}`,
+        file: i.link,
         image: `${process.env.REACT_APP_BUCKET_EPISODES}${i.imageL}`,
         title: `${state.title} T:${i.season} Ep:${i.episode}`,
         //     description: "Un dragon llegara...",
@@ -717,7 +721,7 @@ const Movie = () => {
         <div className="seasons">
           <section className="select-arrow">
             <MdKeyboardArrowDown className="sysIconArrow" />
-            <select onChange={handleSeason} className="selectSeason" name="" id="">
+            <select onChange={handleSeason} className="selectSeason" name="" id="" ref={ref}>
               {seasonsQuantity.map((i) => (
                 <option key={i} value={i}>
                   Temporada: {i}
