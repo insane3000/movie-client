@@ -14,6 +14,7 @@ import { StoreInterface } from "interfaces/storeTemplate";
 import Movie from "./browser/pages/Movie";
 import Serie from "./browser/pages/Serie";
 import Report from "./browser/pages/Report";
+
 const AppSt = styled.div`
   width: 100vw;
   height: 100vh;
@@ -50,6 +51,7 @@ function App() {
       )
     );
   }, [dispatch]);
+
   return (
     <Router>
       <AppSt id="app">

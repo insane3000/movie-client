@@ -122,10 +122,10 @@ const SearchMobileSt = styled.form`
   animation-duration: 0.3s;
   @keyframes exampleMobile {
     from {
-      width: 2.5rem;
+      opacity: 0;
     }
     to {
-      width: 18rem;
+      opacity: 1;
     }
   }
   @media only screen and (min-width: 568px) {
@@ -142,12 +142,13 @@ const NavigationMobile = (props: any) => {
 
   // !Handle change con busqueda automarica cada .5seg
   const handleChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.currentTarget.value.trim();
-    //     console.log(value.length);
+    const value = e.currentTarget.value.trim().replace(/[^a-zA-Z 0-9.]+/g, "");
     clearTimeout(timerRef.current);
-    if (value.length >= 1) {
-      navigate(`/browser/search?query=${value}`);
-      dispatch(search(value));
+    if (value.length >= 2) {
+      timerRef.current = setTimeout(() => {
+        navigate(`/browser/search?query=${value}`);
+        dispatch(search(value));
+      }, 500);
     }
     setState(value);
   };
@@ -158,24 +159,20 @@ const NavigationMobile = (props: any) => {
     navigate(`/browser/search?query=${state}`);
   };
 
-  const [showSearch, setShowSearch] = useState(false);
-  // !Test Icons Search***************************************
-  let refMobile = useRef<any>(null);
-
-  const handleClickOutside = (event: any) => {
-    setShowSearch(true);
-    if (refMobile.current && !refMobile.current.contains(event.target)) {
-      props.onClickOutside && props.onClickOutside();
-      //       console.log("click");
-      setShowSearch(false);
-    }
-  };
-  //   useEffect(() => {
-  //     document.addEventListener("click", handleClickOutside, true);
-  //     return () => {
-  //       document.removeEventListener("click", handleClickOutside, true);
-  //     };
-  //   });
+  //! CLICK OUTSIDE SEARCH
+  const [isOpen, setIsOpen] = useState(false);
+  const searchContainerRef = useRef<any>(null);
+  useEffect(() => {
+    const handler = (e: any) => {
+      if (!searchContainerRef.current?.contains(e.target)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => {
+      document.removeEventListener("mousedown", handler);
+    };
+  }, []);
   // !Open Menu
   const closeMenu = () => {
     dispatch(showMenu(true));
@@ -185,7 +182,7 @@ const NavigationMobile = (props: any) => {
       <button className="hamburgerBtn" onClick={closeMenu}>
         <IoIosMenu className="sysIconMenu" />
       </button>
-      {!showSearch && (
+      {!isOpen && (
         <Link
           className="title"
           to="/browser/home"
@@ -198,14 +195,14 @@ const NavigationMobile = (props: any) => {
       <button
         className="showSearchBtn"
         type="submit"
-        onClick={() => setShowSearch(true)}
-        style={showSearch ? { display: "none" } : { display: "flex" }}
+        onClick={() => setIsOpen(true)}
+        style={isOpen ? { display: "none" } : { display: "flex" }}
       >
         <SearchIcon className="icon-submit" />
       </button>
 
-      {showSearch && (
-        <SearchMobileSt onSubmit={handleSubmit} ref={refMobile}>
+      {isOpen && (
+        <SearchMobileSt onSubmit={handleSubmit} ref={searchContainerRef}>
           <input
             ref={searchRefMobile}
             className="search-input"

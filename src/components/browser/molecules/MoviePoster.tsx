@@ -252,7 +252,7 @@ const MoviePoster = (props: Props) => {
     e.currentTarget.complete && setImageLoad(true);
   };
   const handleModal = (id: string) => {
-//     console.log(location);
+    //     console.log(location);
     dispatch(setModal(id, true));
     !app.modal.show && navigate(`${location.pathname}${location.search}`);
   };

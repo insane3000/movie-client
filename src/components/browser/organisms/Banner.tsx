@@ -336,7 +336,7 @@ const Banner2St = styled.div`
         }
       }
       .poster {
-        width: 20rem;
+        width: 22rem;
         height: 30rem;
         display: flex;
         justify-content: center;

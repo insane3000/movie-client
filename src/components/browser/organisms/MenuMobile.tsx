@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { loginServer, showMenu } from "redux/actions/appAction";
 import styled from "styled-components";
 import { useNavigate } from "react-router";
+import { useAddToHomescreenPrompt } from "hooks/useAddToHomescreenPrompt";
 
 // *images
 import Logo512 from "img/logo512.png";
@@ -15,7 +16,9 @@ import PremieresIcon from "icons/PremieresIcon";
 import UserIconLight from "icons/UserIconLight";
 import VideoIcon from "icons/VideoIcon";
 import CloseIcon from "icons/CloseIcon";
-import { VscBookmark } from "react-icons/vsc";
+import PlansIcon from "icons/PlansIcon";
+import InstallAppIcon from "icons/InstallAppIcon";
+import SeriesIcon from "icons/SeriesIcon";
 
 const MenuSt = styled.div`
   position: fixed;
@@ -109,7 +112,7 @@ const MenuSt = styled.div`
       line-height: 3rem;
       /* overflow: hidden; */
       display: flex;
-      flex-direction: row;
+      /* flex-direction: row; */
       justify-content: start;
       align-items: center;
       /* border-bottom: 0.0625rem solid #1a1a1a; */
@@ -119,9 +122,14 @@ const MenuSt = styled.div`
       font-size: 1rem;
       text-decoration: none;
       .sysIconHome {
-        /* background: red; */
+        width: 2rem;
+        height: 2rem;
         font-size: 2rem;
         padding: 0.25rem;
+      }
+      p {
+        width: calc(100% - 3rem);
+        height: 3rem;
       }
     }
     .active {
@@ -166,7 +174,6 @@ const MenuSt = styled.div`
         font-size: 1rem;
         text-decoration: none;
         .sysIconHome {
-          /* background: red; */
           font-size: 2rem;
           padding: 0.25rem;
         }
@@ -237,6 +244,7 @@ const MenuMobile = () => {
   //   const handleClose = () => {
   //     dispatch(showMenu(false));
   //   };
+
   return (
     <MenuSt>
       <div className="gradient" onClick={closeMenu}></div>
@@ -247,20 +255,24 @@ const MenuMobile = () => {
         </div>
 
         <NavLink className="home" to="/browser/home" onClick={closeMenu}>
-          <HomeIcon className="sysIconHome" /> Inicio
+          <HomeIcon className="sysIconHome" /> <p>Inicio</p>
         </NavLink>
-        <NavLink className="home" to="/browser/premieres" onClick={closeMenu}>
-          <PremieresIcon className="sysIconHome" /> Estrenos
+        <NavLink className="home" to="/browser/premieres?page=1" onClick={closeMenu}>
+          <PremieresIcon className="sysIconHome" /> <p>Estrenos</p>
         </NavLink>
-        <NavLink className="home" to="/browser/category/series-tv" onClick={closeMenu}>
-          <PremieresIcon className="sysIconHome" /> Series TV
+        <NavLink className="home" to="/browser/genre/series-tv?page=1" onClick={closeMenu}>
+          <SeriesIcon className="sysIconHome" /> <p>Series TV</p>
         </NavLink>
         <NavLink className="home" to="/browser/profile" onClick={closeMenu}>
-          <UserIconLight className="sysIconHome" /> Perfil
+          <UserIconLight className="sysIconHome" /> <p>Perfil</p>
         </NavLink>
         <NavLink className="home" to="/browser/plans" onClick={closeMenu}>
-          <VscBookmark className="sysIconHome" /> Planes
+          <PlansIcon className="sysIconHome" /> <p>Planes</p>
         </NavLink>
+        {/* <p className="home">
+          <InstallAppIcon className="sysIconHome" />
+          <p>Install App</p>
+        </p> */}
         {/* <NavLink className="home series" to="/browser/series" onClick={closeMenu}>
           Series
         </NavLink> */}
@@ -272,7 +284,7 @@ const MenuMobile = () => {
             {color.map((i) => (
               <Link
                 className="li"
-                to={`/browser/category/${i.to}`}
+                to={`/browser/genre/${i.to}?page=1`}
                 key={i.name}
                 onClick={closeMenu}
               >
@@ -283,7 +295,7 @@ const MenuMobile = () => {
         </div>
 
         <span className="home" onClick={logout} title="salir">
-          <ExitIcon2 className="sysIconHome" /> Salir
+          <ExitIcon2 className="sysIconHome" /> <p>Salir</p>
         </span>
       </div>
       <CloseIcon className="sysClose" onClick={closeMenu} />

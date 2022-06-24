@@ -5,13 +5,16 @@ import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
-import { loginServer, setModalReport } from "redux/actions/appAction";
+import { loginServer, setModalReport, setModalSerie } from "redux/actions/appAction";
 import { useLocation } from "react-router";
+import devtools from "../../../../node_modules/devtools-detect/index.js";
+
 // *Icons
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { MdSdCardAlert } from "react-icons/md";
 import Spinner05 from "../atoms/Spinner05";
 import Error404 from "components/Error404";
+// import socket from "config/Socket";
 const MovieSt = styled.div`
   position: fixed;
   top: 0;
@@ -630,12 +633,44 @@ const Movie = () => {
     ref.current.selectedIndex = 0;
   };
   useEffect(() => {
+    //     // ! Screens control
+    //     socket.emit("userID", app.login.user);
+    //     socket.on("users", async (data) => {
+    //       const screens = await axios
+    //         .get(`${process.env.REACT_APP_BACKEND_URL}/client-screens/${app.login.user}`)
+    //         .then(function (response) {
+    //           return response.data;
+    //         })
+    //         .catch(function (error) {
+    //           console.log(error);
+    //         });
+    //       let userID = data.filter((i) => i.userID === app.login.user);
+    //       if (userID.length > screens) {
+    //         navigate("/user-connected-error");
+    //       }
+    //     });
     setSpinnerPoster(true);
     fetchData();
     scrollToTop();
     reset();
+    // !Devtools
+    if (
+      !/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+    ) {
+      if (devtools.isOpen) {
+        navigate("/devtools");
+        dispatch(setModalSerie("", false));
+      }
+      window.addEventListener("devtoolschange", (event) => {
+        if (event.detail.isOpen) {
+          navigate("/devtools");
+          dispatch(setModalSerie("", false));
+        }
+      });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [app.modalSerie.id]);
+  //!para validar query
   //   let genero = state.genre.slice(0, 4).toLowerCase();
 
   const cleanText = state.genre?.replace("|", ".");
@@ -735,24 +770,22 @@ const Movie = () => {
         </div>
 
         <div className="player-container">
-          {/* {state.link !== "" && ( */}
-          <ReactJWPlayer
-            className="player"
-            playerId="my-unique-id"
-            playerScript="https://api.moviestorecbba.com/static/KB5zFt7A.js"
-            playlist={playlist}
-            type="mp4"
-            //     preload="metadata"
-            customProps={{
-              // playbackRateControls: [1, 1.25, 1.5],
-              //       defaultBandwidthEstimate: 200000000,
-              preload: "metadata",
-              autostart: false,
-              cast: {},
-              //       hlsjsdefault: true,
-            }}
-          />
-          {/* )} */}
+          {playlist.length !== 0 && (
+            <ReactJWPlayer
+              className="player"
+              playerId="my-unique-id"
+              //       playerScript="https://api.moviestorecbba.com/static/KB5zFt7A.js"
+              //       playerScript="https://cdn.jwplayer.com/libraries/OdX1sCZx.js"
+              playerScript="//content.jwplatform.com/libraries/KB5zFt7A.js"
+              playlist={playlist}
+              type="mp4"
+              customProps={{
+                preload: "metadata",
+                autostart: false,
+                cast: {},
+              }}
+            />
+          )}
         </div>
         {/* {state.genre !== "" && <ClusterSerieTV url="series-admin" subtitle="Series TV" />} */}
         <ClusterSerieTV genre="series-tv" subtitle="Series TV" />

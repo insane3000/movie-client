@@ -1,17 +1,19 @@
 import styled from "styled-components";
-import ReactJWPlayer from "react-jw-player";
 import Cluster from "../organisms/Cluster";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
-import { loginServer, setModalReport } from "redux/actions/appAction";
+import { loginServer, setModal, setModalReport } from "redux/actions/appAction";
 import { useLocation } from "react-router";
+import Player from "./Player";
+import devtools from "../../../../node_modules/devtools-detect/index.js";
 // *Icons
 // import CloseIcon from "icons/CloseIcon";
 import Spinner05 from "../atoms/Spinner05";
 import Error404 from "components/Error404";
 import { MdSdCardAlert } from "react-icons/md";
+import { StoreInterface } from "interfaces/storeTemplate";
 const MovieSt = styled.div`
   position: fixed;
   top: 0;
@@ -233,20 +235,6 @@ const MovieSt = styled.div`
           color: black;
           /* background: red; */
         }
-      }
-    }
-    .player-container {
-      width: 90%;
-      min-height: 10rem;
-      height: fit-content;
-      margin: auto;
-      /* margin-bottom: 2rem; */
-      /* overflow: hidden; */
-      background: black;
-      .player {
-        width: 100%;
-        height: 100%;
-        margin: 0;
       }
     }
   }
@@ -474,20 +462,6 @@ const MovieSt = styled.div`
           }
         }
       }
-      .player-container {
-        width: 80%;
-        min-height: 30rem;
-        height: fit-content;
-        margin: auto;
-        margin-bottom: 2rem;
-        /* overflow: hidden; */
-        background: black;
-        .player {
-          width: 100%;
-          height: 100%;
-          margin: 0;
-        }
-      }
     }
   }
 `;
@@ -507,13 +481,14 @@ const movieTemplate = {
   imageL: "",
   imageM: "",
   imageS: "",
+  language: "",
 };
 const Movie = () => {
   // const params = useParams();
   const location = useLocation();
   let navigate = useNavigate();
   const dispatch = useDispatch();
-  const app = useSelector((store) => store.app);
+  const app = useSelector((store: StoreInterface) => store.app);
 
   const [state, setState] = useState(movieTemplate);
   const [spinner, setSpinner] = useState(false);
@@ -522,7 +497,7 @@ const Movie = () => {
 
   //   const modifyLink = state.link?.split(".mp4")[0];
   // ! Scroll to TOP
-  const movieRef = useRef();
+  const movieRef = useRef<any>(null);
   const scrollToTop = () => {
     movieRef.current.scrollTop = 0;
   };
@@ -551,17 +526,37 @@ const Movie = () => {
       })
       .catch(function (error) {
         console.log(error);
-        dispatch(loginServer("", "", ""));
+        dispatch(loginServer("", "", "", ""));
         localStorage.setItem("token", "");
         localStorage.setItem("user", "");
         localStorage.setItem("role", "");
         navigate(`/`);
       });
   };
+
+  //   console.log("DevTools orientation:", devtools.orientation);
+
+  // !USE EFFECT
   useEffect(() => {
     setSpinnerPoster(true);
     fetchData();
     scrollToTop();
+    // !Devtools
+    if (
+      !/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+    ) {
+      if (devtools.isOpen) {
+        navigate("/devtools");
+        dispatch(setModal("", false));
+      }
+      window.addEventListener("devtoolschange", (event) => {
+        if (event.detail.isOpen) {
+          navigate("/devtools");
+          dispatch(setModal("", false));
+        }
+      });
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [app.modal.id]);
   //!para validar query
@@ -570,7 +565,7 @@ const Movie = () => {
   const cleanText = state.genre?.replace("|", ".");
   const cleanSynopsis = state.synopsis.replace("(FILMAFFINITY)", "");
   // !Spinner Poster
-  const handleLoadImg = (e) => {
+  const handleLoadImg = (e: any) => {
     e.currentTarget.complete && setSpinnerPoster(false);
   };
   // !Blob
@@ -598,11 +593,12 @@ const Movie = () => {
   //     `http://localhost:4000/local/${state.link?.split("https://f002.backblazeb2.com/file/")[1]}`
   //   );
   //! handle REPORT MODAL
-  const handlerReportModal = (id) => {
+  const handlerReportModal = () => {
     //     console.log(location);
     dispatch(setModalReport(true, state._id, state.title, state.imageS, state.imageL, ""));
     !app.report.show && navigate(`${location.pathname}${location.search}`);
   };
+
   return (
     <MovieSt>
       <div className="movie-container" ref={movieRef}>
@@ -657,32 +653,8 @@ const Movie = () => {
           </section>
         </div>
 
-        <div className="player-container">
-          {state.link !== "" && (
-            <ReactJWPlayer
-              className="player"
-              playerId="my-unique-id"
-              playerScript="https://api.moviestorecbba.com/static/KB5zFt7A.js"
-              file={state.link}
-              //       file="http://192.168.0.248:8080/movies/300.mp4"
-              //       file={`http://localhost:4000/local/${
-              //         state.link?.split("https://f002.backblazeb2.com/file/")[1]
-              //       }`}
-              //       onBeforePlay={() => console.log("onBeforePlay fired!")}
-              //       onLoad={() => console.log("allaaallala")}
-              type="mp4"
-              //       preload="metadata"
-              customProps={{
-                // playbackRateControls: [1, 1.25, 1.5],
-                // preload: "auto",
-                // defaultBandwidthEstimate: 200000000,
-                autostart: false,
-                cast: {},
-                // hlsjsdefault: true,
-              }}
-            />
-          )}
-        </div>
+        <div className="player-container">{state.link !== "" && <Player link={state.link} />}</div>
+
         {state.genre !== "" && <Cluster genre={state.folder} subtitle="Relacionados" text="" />}
       </div>
       {errorWindow && (

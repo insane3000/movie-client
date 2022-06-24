@@ -110,7 +110,7 @@ const Categories = () => {
 
   return (
     <CategoriesSt>
-      <Routes>
+      {/* <Routes>
         <Route
           path="/"
           element={
@@ -118,9 +118,8 @@ const Categories = () => {
               {color.map((i) => (
                 <Link
                   className="category"
-                  to={`/browser/category/${i.to}`}
+                  to={`/browser/category/${i.to}?page=1`}
                   key={i.name}
-                  // style={{ background: `#${i.color}` }}
                 >
                   <span className="text">{i.name}</span>
                 </Link>
@@ -129,7 +128,14 @@ const Categories = () => {
           }
         />
         <Route path="/:genre" element={<Genre />} />
-      </Routes>
+      </Routes> */}
+      <section className="list-categories">
+        {color.map((i) => (
+          <Link className="category" to={`/browser/genre/${i.to}?page=1`} key={i.name}>
+            <span className="text">{i.name}</span>
+          </Link>
+        ))}
+      </section>
     </CategoriesSt>
   );
 };

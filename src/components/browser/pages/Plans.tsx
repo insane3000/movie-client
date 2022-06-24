@@ -234,7 +234,7 @@ const Plans = () => {
           <section className="section button"></section>
         </div>
       </div>
-      <p>Velocidad mínima por pantalla 15Mbps</p>
+      <p>Velocidad mínima recomendada por pantalla 15Mbps.</p>
     </PlansSt>
   );
 };

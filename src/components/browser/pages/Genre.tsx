@@ -274,6 +274,9 @@ const Genre = () => {
     case "western":
       genero = "Western";
       break;
+    case "series-tv":
+      genero = "Series TV";
+      break;
     default:
       break;
   }

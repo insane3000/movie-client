@@ -7,13 +7,10 @@ import "fonts/fonts.css";
 import Home from "components/browser/pages/Home";
 import Premieres from "components/browser/pages/Premieres";
 import styled from "styled-components";
-import Movie from "components/browser/pages/Movie";
 import Search from "components/browser/pages/Search";
 import Profile from "components/browser/pages/Profile";
 import Error404 from "../Error404";
-import Maintenance from "../Maintenance";
 import Categories from "./pages/Categories";
-// import Welcome from "./pages/Welcome";
 import { useDispatch, useSelector } from "react-redux";
 import { StoreInterface } from "interfaces/storeTemplate";
 import { setModal, setModalReport, setModalSerie } from "redux/actions/appAction";
@@ -21,11 +18,12 @@ import Navigation from "./organisms/Navigation";
 import NavigationMobile from "./organisms/NavigationMobile";
 import { useLocation } from "react-router";
 import MenuMobile from "./organisms/MenuMobile";
-// import Series from "./pages/Series";
 // *Socket.io
 import socket from "config/Socket";
 import axios from "axios";
 import Plans from "./pages/Plans";
+import Genre from "./pages/Genre";
+import DevTools from "components/DevTools";
 const BrowserSt = styled.div`
   width: 100%;
   height: 100%;
@@ -47,15 +45,6 @@ const User = () => {
   const dispatch = useDispatch();
   const app = useSelector((store: StoreInterface) => store.app);
 
-  //   db.episodes.updateMany(
-  //         { link: { $regex: 'http://media.moviestorecbba.com/series-tv/' } },
-  //         [{
-  //           $set: { link: {
-  //             $replaceOne: { input: "$link", find: "http://media.moviestorecbba.com/series-tv/", replacement: " https://f002.backblazeb2.com/file/msc-series-tv/" }
-  //           }}
-  //         }]
-  //       )
-
   useEffect(() => {
     // ! Screens control
     socket.emit("userID", app.login.user);
@@ -72,7 +61,6 @@ const User = () => {
       if (userID.length > screens) {
         navigate("/user-connected-error");
       }
-      //       console.log(screens);
     });
 
     window.addEventListener("popstate", () => dispatch(setModal("", false)));
@@ -87,7 +75,6 @@ const User = () => {
   const refScroll = useRef<any>();
 
   const [bg, setBg] = useState("");
-  const [maintenance, setMaintenance] = useState(false);
   const handleScroll = useCallback((e) => {
     //     console.log(e.target.scrollTop);
     e.target.scrollTop > 0 ? setBg("#0e0e0ef6") : setBg("");
@@ -111,18 +98,18 @@ const User = () => {
   }, [pathname, scrollToTopCallback]);
   return (
     <BrowserSt id="app" ref={refScroll}>
-      {!maintenance && <Navigation bg={bg} />}
-      {!maintenance && <NavigationMobile bg={bg} />}
+      <Navigation bg={bg} />
+      <NavigationMobile bg={bg} />
       <Routes>
-        <Route path="/" element={maintenance ? <Maintenance /> : <Home />} />
+        <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
         <Route path="/premieres" element={<Premieres />} />
-        <Route path="/movie/:id" element={<Movie />} />
-        <Route path="/category/*" element={<Categories />} />
+        <Route path="/category" element={<Categories />} />
         <Route path="/search" element={<Search />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/plans" element={<Plans />} />
-        {/* <Route path="/series" element={<Series />} /> */}
+        <Route path="/genre/:genre" element={<Genre />} />
+        <Route path="/devtools" element={<DevTools />} />
         <Route path="/*" element={<Error404 />} />
       </Routes>
 

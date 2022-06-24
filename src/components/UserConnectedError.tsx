@@ -15,6 +15,7 @@ const ErrorSt = styled.div`
   justify-content: center;
   align-items: center;
   overflow: hidden;
+
   h1 {
     font-family: "Roboto 900", sans-serif;
     font-weight: 900;

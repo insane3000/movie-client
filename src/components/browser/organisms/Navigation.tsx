@@ -151,13 +151,13 @@ const SearchSt = styled.form`
       }
     }
     animation-name: example;
-    animation-duration: 0.4s;
+    animation-duration: 0.1s;
     @keyframes example {
       from {
-        width: 2.5rem;
+        opacity: 0;
       }
       to {
-        width: 20rem;
+        opacity: 1;
       }
     }
   }
@@ -172,11 +172,13 @@ const Navigation = (props: any) => {
 
   // !Handle change con busqueda automarica cada .5seg
   const handleChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.currentTarget.value.trim();
+    const value = e.currentTarget.value.trim().replace(/[^a-zA-Z 0-9.]+/g, "");
     clearTimeout(timerRef.current);
-    if (value.length >= 1) {
-      navigate(`/browser/search?query=${value}`);
-      dispatch(search(value));
+    if (value.length >= 2) {
+      timerRef.current = setTimeout(() => {
+        navigate(`/browser/search?query=${value}`);
+        dispatch(search(value));
+      }, 500);
     }
     setState(value);
   };
@@ -198,24 +200,22 @@ const Navigation = (props: any) => {
     //     socket.emit("closeUserID", app.login.user); //TODO falta hacer esta parte
   };
 
-  const [showSearch, setShowSearch] = useState(false);
-  // !Test Icons Search***************************************
-  let ref = useRef<any>(null);
+  //   const [showSearch, setShowSearch] = useState(false);
+  //! CLICK OUTSIDE SEARCH
+  const [isOpen, setIsOpen] = useState(false);
+  const searchContainerRef = useRef<any>(null);
+  useEffect(() => {
+    const handler = (e: any) => {
+      if (!searchContainerRef.current?.contains(e.target)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => {
+      document.removeEventListener("mousedown", handler);
+    };
+  }, []);
 
-  const handleClickOutside = (event: any) => {
-    setShowSearch(true);
-    if (ref.current && !ref.current.contains(event.target)) {
-      props.onClickOutside && props.onClickOutside();
-      //       console.log("click");
-      setShowSearch(false);
-    }
-  };
-  //   useEffect(() => {
-  //     document.addEventListener("click", handleClickOutside, true);
-  //     return () => {
-  //       document.removeEventListener("click", handleClickOutside, true);
-  //     };
-  //   });
   return (
     <NavigationSt style={{ background: props.bg }}>
       <Link
@@ -231,11 +231,11 @@ const Navigation = (props: any) => {
           Inicio
         </NavLink>
 
-        <NavLink className="li" to="/browser/premieres">
+        <NavLink className="li" to="/browser/premieres?page=1">
           Estrenos
         </NavLink>
 
-        <NavLink className="li" to="/browser/category/series-tv">
+        <NavLink className="li" to="/browser/genre/series-tv?page=1">
           Series TV
         </NavLink>
 
@@ -253,14 +253,14 @@ const Navigation = (props: any) => {
       <button
         className="showSearchBtn"
         type="submit"
-        onClick={() => setShowSearch(true)}
-        style={showSearch ? { display: "none" } : { display: "flex" }}
+        onClick={() => setIsOpen(true)}
+        style={isOpen ? { display: "none" } : { display: "flex" }}
       >
         <SearchIcon className="icon-submit" />
       </button>
 
-      {showSearch && (
-        <SearchSt onSubmit={handleSubmit} ref={ref}>
+      {isOpen && (
+        <SearchSt onSubmit={handleSubmit} ref={searchContainerRef}>
           <input
             ref={searchRef}
             className="search-input"
